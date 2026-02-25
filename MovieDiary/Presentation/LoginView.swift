@@ -1,0 +1,17 @@
+import SwiftUI
+
+struct LoginView: View {
+    @Environment(UserSessionStore.self) var userSessionStore
+    var body: some View {
+        NavigationStack {
+            Button("Login") {
+                userSessionStore.startSession()
+            }
+            .navigationTitle("Profile")
+        }
+    }
+}
+
+#Preview {
+    LoginView()
+}
