@@ -36,7 +36,15 @@ public struct ListSectionState<T>: Identifiable {
 
 @MainActor
 @Observable
-public final class ListDataStore {
+public final class ListDataStore: Store {
+
+    private var client: HTTPClientProtocol?
+
+    public func injectClient(_ httpClient: any NetworkClient.HTTPClientProtocol) {
+        client = httpClient
+    }
+
+    public init() { }
 
     // MARK: - MOVIES
 
@@ -58,12 +66,7 @@ public final class ListDataStore {
     private var topRatedTvState: ListSectionState<TvModel> = .init("Top Rated")
     private var airingTodayTvState: ListSectionState<TvModel> = .init("Airing Today")
 
-    private let listNetworkManager: ListNetworkManagerProtocol
     private let logger = Logger(category: "ListDataStore")
-
-    public init(listNetworkManager: ListNetworkManagerProtocol) {
-        self.listNetworkManager = listNetworkManager
-    }
 
     public func fetchPopular() async {
         do {
@@ -94,7 +97,7 @@ public final class ListDataStore {
     public func fetchUpcomingMovies() async {
         do {
             logger.info("Starting to fetch upcoming movies")
-            let response = try await listNetworkManager.getUpcomingMovies(page: 1)
+            let response = try await getUpcomingMovies(page: 1)
             upcomingMoviesState.inject(response.results)
         } catch {
             logger.error("Failed to fetch upcoming movies: \(error)")
@@ -104,7 +107,7 @@ public final class ListDataStore {
     public func fetchAiringTodayTvShows() async {
         do {
             logger.info("Starting to fetch airing today tv")
-            let response = try await listNetworkManager.getAiringTodayTv(page: 1)
+            let response = try await getAiringTodayTv(page: 1)
             airingTodayTvState.inject(response.results)
         } catch {
             logger.error("Failed to fetch airing today tv shows: \(error)")
@@ -114,7 +117,7 @@ public final class ListDataStore {
     private func fetchPopularMovies() async throws -> [MovieModel] {
         do {
             logger.info("Starting to fetch popular movies")
-            let response = try await listNetworkManager.getPopularMovies(page: 1)
+            let response = try await getPopularMovies(page: 1)
             return response.results
         } catch {
             logger.error("Failed to fetch popular movies: \(error)")
@@ -125,7 +128,7 @@ public final class ListDataStore {
     private func fetchPopularTv() async throws -> [TvModel] {
         do {
             logger.info("Starting to fetch popular tv")
-            let response = try await listNetworkManager.getPopularTv(page: 1)
+            let response = try await getPopularTv(page: 1)
             return response.results
         } catch {
             logger.error("Failed to fetch popular tv shows: \(error)")
@@ -136,7 +139,7 @@ public final class ListDataStore {
     private func fetchTopRatedMovies() async throws -> [MovieModel] {
         do {
             logger.info("Starting to fetch top rated movies")
-            let response = try await listNetworkManager.getTopRatedMovies(page: 1)
+            let response = try await getTopRatedMovies(page: 1)
             return response.results
         } catch {
             logger.error("Failed to fetch top rated movies: \(error)")
@@ -147,11 +150,54 @@ public final class ListDataStore {
     private func fetchTopRatedTv() async throws -> [TvModel] {
         do {
             logger.info("Starting to fetch top rated tv")
-            let response = try await listNetworkManager.getTopRatedTv(page: 1)
+            let response = try await getTopRatedTv(page: 1)
             return response.results
         } catch {
             logger.error("Failed to fetch top rated tv shows: \(error)")
             throw error
         }
     }
+
+    public func getPopularMovies(page: Int) async throws -> MovieListResponseModel {
+        guard let client else { throw StoreError.missingClient }
+        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .movies, page: page))
+        return model
+    }
+
+    public func getPopularTv(page: Int) async throws -> TvListResponseModel {
+        guard let client else { throw StoreError.missingClient }
+        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .tvShows, page: page))
+        return model
+    }
+
+    // MARK: - TOP RATED
+
+    public func getTopRatedMovies(page: Int) async throws -> MovieListResponseModel {
+        guard let client else { throw StoreError.missingClient }
+        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .movies, page: page))
+        return model
+    }
+
+    public func getTopRatedTv(page: Int) async throws -> TvListResponseModel {
+        guard let client else { throw StoreError.missingClient }
+        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .tvShows, page: page))
+        return model
+    }
+
+    // MARK: MOVIES
+
+    public func getUpcomingMovies(page: Int) async throws -> MovieListResponseModel {
+        guard let client else { throw StoreError.missingClient }
+        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.moviesUpcoming(page: page))
+        return model
+    }
+
+    // MARK: - TV SHOWS
+
+    public func getAiringTodayTv(page: Int) async throws -> TvListResponseModel {
+        guard let client else { throw StoreError.missingClient }
+        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.tvShowsAiringToday(page: page))
+        return model
+    }
+
 }

@@ -1,17 +1,17 @@
 import Foundation
 
-enum CommonEndpoint: Endpoint {
-    
+public enum CommonEndpoint: Endpoint {
+
     case configuration
     
-    func path() -> String {
+    public func path() -> String {
         switch self {
         case .configuration:
             "/configuration"
         }
     }
     
-    func queryItems() -> [URLQueryItem]? {
+    public func queryItems() -> [URLQueryItem]? {
         switch self {
         default: nil
         }

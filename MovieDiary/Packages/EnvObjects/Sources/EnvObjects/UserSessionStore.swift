@@ -4,15 +4,22 @@ import NetworkClient
 import AuthenticationServices
 import OSLog
 
+@MainActor
 @Observable
-final class UserSessionStore: NSObject {
+public final class UserSessionStore: NSObject, Store {
+
+    public func injectClient(_ httpClient: any NetworkClient.HTTPClientProtocol) {
+        self.client = httpClient
+    }
     
-    var user: TmdbUser?
-    var userRatedMoviesList: UserRatedMovieListResponse?
+
+    private var client: HTTPClientProtocol?
+
+    public var user: TmdbUser?
+    public var userRatedMoviesList: UserRatedMovieListResponse?
     var currentSessionId: String?
     var shouldAuthenticateApp: Bool = false
-    
-    private let userSessionNetworkmanager: UserSessionNetworkManagerProtocol
+
     private let sessionStorage: UserSessionStoreProtocol
     
     private var authSession: ASWebAuthenticationSession?
@@ -23,16 +30,15 @@ final class UserSessionStore: NSObject {
     
     private let logger = Logger(category: "UserSessionStore")
     
-    init(userSessionNetworkmanager: UserSessionNetworkManagerProtocol, sessionStorage: UserSessionStoreProtocol) {
-        self.userSessionNetworkmanager = userSessionNetworkmanager
+    public init(sessionStorage: UserSessionStoreProtocol) {
         self.sessionStorage = sessionStorage
     }
     
-    func fetchCurrentUser() async {
+    public func fetchCurrentUser() async {
         do {
             logger.info("Starting to fetch current user")
             guard let currentSessionId = sessionStorage.loadSession() else { return }
-            user = try await userSessionNetworkmanager.getCurrentUser(sessionId: currentSessionId)
+            user = try await getCurrentUser(sessionId: currentSessionId)
             logger.info("Successfully fetched current user")
             await fetchUserData()
         } catch {
@@ -40,11 +46,11 @@ final class UserSessionStore: NSObject {
         }
     }
     
-    func fetchUserData() async {
+    public func fetchUserData() async {
         do {
             logger.info("Starting to fetch user rated movies")
             guard let currentSessionId = sessionStorage.loadSession() else { return }
-            async let userRatedMoviesResponse = await userSessionNetworkmanager.getUserRatedMoviesList(page: 1, sessionId: currentSessionId)
+            async let userRatedMoviesResponse = await getUserRatedMoviesList(page: 1, sessionId: currentSessionId)
             let data = try await userRatedMoviesResponse
             self.userRatedMoviesList = data
             logger.info("Successfully fetched user rated movies")
@@ -53,7 +59,7 @@ final class UserSessionStore: NSObject {
         }
     }
     
-    func startSession() {
+    public func startSession() {
         Task {
             do {
                 let requestToken: String
@@ -61,7 +67,7 @@ final class UserSessionStore: NSObject {
                 if let currentRequestToken {
                     requestToken = currentRequestToken
                 } else {
-                    requestToken = try await userSessionNetworkmanager.getRequestToken()
+                    requestToken = try await getRequestToken()
                 }
                 
                 let authURL = URL(
@@ -114,7 +120,7 @@ final class UserSessionStore: NSObject {
         }
 
         do {
-            let sessionId = try await userSessionNetworkmanager.createSession(requestToken: currentRequestToken)
+            let sessionId = try await createSession(requestToken: currentRequestToken)
             sessionStorage.save(sessionId: sessionId)
             currentSessionId = sessionStorage.loadSession()
             if let currentSessionId {
@@ -125,12 +131,43 @@ final class UserSessionStore: NSObject {
             logger.error("Error fetching sessionId: \(error.localizedDescription)")
         }
     }
-    
+
+    private struct RequestTokenResponse: Decodable {
+        let success: Bool
+        let request_token: String
+    }
+
+    private struct SessionResponse: Decodable {
+        let success: Bool
+        let session_id: String
+    }
+
+    public func getCurrentUser(sessionId: String) async throws -> TmdbUser {
+        guard let client else { throw URLError(.unknown) }
+        return try await client.get(endpoint: UserEndpoint.currentUser(sessionID: sessionId))
+    }
+
+    public func getRequestToken() async throws -> String {
+        guard let client else { throw URLError(.unknown) }
+        let model: RequestTokenResponse = try await client.get(endpoint: UserEndpoint.requestToken)
+        return model.request_token
+    }
+
+    public func createSession(requestToken: String) async throws -> String {
+        guard let client else { throw URLError(.unknown) }
+        let model: SessionResponse = try await client.post(endpoint: UserEndpoint.createSession(requestToken: requestToken))
+        return model.session_id
+    }
+
+    public func getUserRatedMoviesList(page: Int, sessionId: String) async throws -> UserRatedMovieListResponse {
+        guard let client else { throw URLError(.unknown) }
+        return try await client.get(endpoint: UserEndpoint.userRatedMoviesList(sessionId: sessionId))
+    }
 }
 
 extension UserSessionStore: ASWebAuthenticationPresentationContextProviding {
 
-    func presentationAnchor(
+    public func presentationAnchor(
         for session: ASWebAuthenticationSession
     ) -> ASPresentationAnchor {
         UIApplication.shared

@@ -1,12 +1,12 @@
 import Foundation
 
-enum UserEndpoint: Endpoint {
+public enum UserEndpoint: Endpoint {
     case requestToken
     case currentUser(sessionID: String)
     case createSession(requestToken: String)
     case userRatedMoviesList(sessionId: String)
     
-    func path() -> String {
+    public func path() -> String {
         switch self {
         case .requestToken:
             "/authentication/token/new"
@@ -19,7 +19,7 @@ enum UserEndpoint: Endpoint {
         }
     }
     
-    func queryItems() -> [URLQueryItem]? {
+    public func queryItems() -> [URLQueryItem]? {
         switch self {
         case .requestToken:
             return nil
@@ -32,7 +32,7 @@ enum UserEndpoint: Endpoint {
         }
     }
     
-    var jsonValue: Encodable? {
+    public var jsonValue: Encodable? {
         switch self {
         case let .createSession(requestToken):
             return [

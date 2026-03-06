@@ -1,7 +1,7 @@
 import Foundation
 import Models
 
-enum ListEndpoint {
+public enum ListEndpoint {
     case popular(type: ListType, page: Int)
     case topRated(type: ListType, page: Int)
 
@@ -11,7 +11,8 @@ enum ListEndpoint {
 }
 
 extension ListEndpoint: Endpoint {
-    func path() -> String {
+
+    public func path() -> String {
         switch self {
         case let .popular(type, _):
             return "/\(type.endpointPathComponent)/popular"
@@ -24,7 +25,7 @@ extension ListEndpoint: Endpoint {
         }
     }
     
-    func queryItems() -> [URLQueryItem]? {
+    public func queryItems() -> [URLQueryItem]? {
         switch self {
         default:
             return nil

@@ -14,7 +14,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "Models", path: "../Models"),
+        .package(name: "EnvObjects", path: "../EnvObjects"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "DetailsUI",
             dependencies: [
-                .product(name: "Models", package: "Models")
+                .product(name: "EnvObjects", package: "EnvObjects")
             ]
         ),
 

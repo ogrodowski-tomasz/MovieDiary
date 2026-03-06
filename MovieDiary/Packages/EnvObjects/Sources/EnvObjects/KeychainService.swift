@@ -3,14 +3,16 @@ import AuthenticationServices
 import Foundation
 import Security
 
-protocol UserSessionStoreProtocol: Sendable {
+public protocol UserSessionStoreProtocol: Sendable {
     func save(sessionId: String)
     func loadSession() -> String?
 }
 
-struct KeychainService: UserSessionStoreProtocol {
+public struct KeychainService: UserSessionStoreProtocol {
 
-    func save(sessionId: String) {
+    public init() { }
+
+    public func save(sessionId: String) {
         let data = Data(sessionId.utf8)
 
         let query: [String: Any] = [
@@ -23,7 +25,7 @@ struct KeychainService: UserSessionStoreProtocol {
         SecItemAdd(query as CFDictionary, nil)
     }
 
-    func loadSession() -> String? {
+    public func loadSession() -> String? {
 
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,

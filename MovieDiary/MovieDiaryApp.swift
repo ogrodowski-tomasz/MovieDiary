@@ -5,32 +5,20 @@ import SwiftUI
 
 @main
 struct MovieDiaryApp: App {
-    
+
     let keychainService = KeychainService()
     @State private var userSessionStore: UserSessionStore
     @State private var commonDataStore: CommonDataStore
     @State private var listDataStore: ListDataStore
     @State private var router = Router()
+    let httpClient = HTTPClient()
 
     init() {
-        let httpClient = HTTPClient()
-        userSessionStore = UserSessionStore(
-            userSessionNetworkmanager: UserSessionNetworkManager(
-                client: httpClient
-            ),
-            sessionStorage: keychainService
-        )
-        commonDataStore = CommonDataStore(
-            commonNetworkManager: CommonNetworkManager(
-                client: httpClient
-            )
-        )
-        listDataStore = ListDataStore(
-            listNetworkManager: ListNetworkManager(
-                client: httpClient
-            )
-        )
+        userSessionStore = UserSessionStore(sessionStorage: keychainService)
+        commonDataStore = CommonDataStore()
+        listDataStore = ListDataStore()
     }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -38,7 +26,10 @@ struct MovieDiaryApp: App {
                 .environment(commonDataStore)
                 .environment(listDataStore)
                 .environment(router)
+                .environment(\.httpClient, httpClient)
                 .task {
+                    userSessionStore.injectClient(httpClient)
+                    commonDataStore.injectClient(httpClient)
                     await userSessionStore.fetchCurrentUser()
                     await commonDataStore.getConfiguration()
                 }

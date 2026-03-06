@@ -5,11 +5,11 @@ import ListUI
 
 struct MainView: View {
     @Environment(UserSessionStore.self) var userSessionStore
-
     @Environment(ListDataStore.self) var dataStore
 
-    @State private var viewDidAppear: Bool = false
+    @Environment(\.httpClient) var client
 
+    @State private var viewDidAppear: Bool = false
     @State private var selectedList: ListType = .movies
 
     var body: some View {
@@ -40,12 +40,12 @@ struct MainView: View {
                     }
                 }
             })
-
-            .navigationTitle("List")
             .navigationBarTitleDisplayMode(.inline)
 
         .task {
+            #warning("Improve")
             guard !viewDidAppear else { return }
+            dataStore.injectClient(client)
             await dataStore.fetchPopular()
             await dataStore.fetchTopRated()
             await dataStore.fetchAiringTodayTvShows()

@@ -112,7 +112,7 @@ private struct CarouselPreviewWrapper: View {
     @State private var commonDataStore: CommonDataStore
 
     init() {
-        _commonDataStore = State(initialValue: .init(commonNetworkManager: CommonNetworkManager(client: HTTPClient())))
+        _commonDataStore = State(initialValue: .init())
         commonDataStore.configuration = .sample
     }
 

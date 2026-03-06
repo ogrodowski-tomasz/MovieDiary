@@ -1,4 +1,5 @@
 import SwiftUI
+import EnvObjects
 
 struct LoginView: View {
     @Environment(UserSessionStore.self) var userSessionStore
