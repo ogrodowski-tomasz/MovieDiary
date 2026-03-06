@@ -1,18 +1,19 @@
 import SwiftUI
 import Models
 import EnvObjects
-import ListUI
 
-struct MainView: View {
+public struct MainView: View {
     @Environment(UserSessionStore.self) var userSessionStore
     @Environment(ListDataStore.self) var dataStore
 
     @Environment(\.httpClient) var client
 
+    public init() { }
+
     @State private var viewDidAppear: Bool = false
     @State private var selectedList: ListType = .movies
 
-    var body: some View {
+    public var body: some View {
             Picker("Source", selection: $selectedList) {
                 ForEach(ListType.allCases, id: \.self) { type in
                     Text(type.title)

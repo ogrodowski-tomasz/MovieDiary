@@ -1,5 +1,5 @@
 import EnvObjects
-import DetailsUI
+import ListUI
 import SwiftUI
 
 struct ContentView: View {
