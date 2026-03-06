@@ -16,6 +16,7 @@ enum ListType {
 
 enum ListEndpoint {
     case popular(ListType)
+    case topRated(ListType)
 }
 
 extension ListEndpoint: Endpoint {
@@ -23,12 +24,14 @@ extension ListEndpoint: Endpoint {
         switch self {
         case .popular(let listType):
             return "/\(listType.pathComponent)/popular"
+        case .topRated(let listType):
+            return "/\(listType.pathComponent)/top_rated"
         }
     }
     
     func queryItems() -> [URLQueryItem]? {
         switch self {
-        case .popular(let listType):
+        default:
             return nil
         }
     }

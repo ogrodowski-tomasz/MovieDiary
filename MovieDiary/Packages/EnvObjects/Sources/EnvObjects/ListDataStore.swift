@@ -35,6 +35,9 @@ public final class ListDataStore {
     public var popularMoviesState: ListSectionState<MovieModel> = .init()
     public var popularTvState: ListSectionState<TvModel> = .init()
 
+    public var topRatedMoviesState: ListSectionState<MovieModel> = .init()
+    public var topRatedTvState: ListSectionState<TvModel> = .init()
+
     private let listNetworkManager: ListNetworkManagerProtocol
     private let logger = Logger(category: "ListDataStore")
 
@@ -52,6 +55,19 @@ public final class ListDataStore {
             popularTvState.inject(fetched.1)
         } catch {
             logger.error("Failed to fetch popular: \(error)")
+        }
+    }
+
+    public func fetchTopRated() async {
+        do {
+            logger.info("Starting to fetch top rated")
+            async let movies = try await fetchTopRatedMovies()
+            async let tvShows = try await fetchTopRatedTv()
+            let fetched = try await (movies, tvShows)
+            topRatedMoviesState.inject(fetched.0)
+            topRatedTvState.inject(fetched.1)
+        } catch {
+            logger.error("Failed to fetch top rated: \(error)")
         }
     }
 
@@ -74,6 +90,28 @@ public final class ListDataStore {
             return response.results
         } catch {
             logger.error("Failed to fetch popular tv shows: \(error)")
+            throw error
+        }
+    }
+
+    private func fetchTopRatedMovies() async throws -> [MovieModel] {
+        do {
+            logger.info("Starting to fetch top rated movies")
+            let response = try await listNetworkManager.getTopRatedMovies(page: 1)
+            return response.results
+        } catch {
+            logger.error("Failed to fetch top rated movies: \(error)")
+            throw error
+        }
+    }
+
+    private func fetchTopRatedTv() async throws -> [TvModel] {
+        do {
+            logger.info("Starting to fetch top rated tv")
+            let response = try await listNetworkManager.getTopRatedTv(page: 1)
+            return response.results
+        } catch {
+            logger.error("Failed to fetch top rated tv shows: \(error)")
             throw error
         }
     }

@@ -24,10 +24,28 @@ struct MainView: View {
 
                     if dataStore.popularTvState.showData {
                         Text("Popular TV")
+                            .padding(.top)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .padding(.horizontal)
                         CarouselListView(items: dataStore.popularTvState.abbreviatedList, showMore: dataStore.popularTvState.showMoreVisible)
+                    }
+
+                    if dataStore.topRatedMoviesState.showData {
+                        Text("Top Rated Movies")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                        CarouselListView(items: dataStore.topRatedMoviesState.abbreviatedList, showMore: dataStore.topRatedMoviesState.showMoreVisible)
+                    }
+
+                    if dataStore.topRatedTvState.showData {
+                        Text("Top Rated TV")
+                            .padding(.top)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                        CarouselListView(items: dataStore.topRatedTvState.abbreviatedList, showMore: dataStore.topRatedTvState.showMoreVisible)
                     }
                 }
             })
@@ -38,6 +56,7 @@ struct MainView: View {
         .task {
             guard !viewDidAppear else { return }
             await dataStore.fetchPopular()
+            await dataStore.fetchTopRated()
             viewDidAppear = true
         }
     }
