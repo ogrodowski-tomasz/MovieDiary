@@ -13,36 +13,45 @@ extension MovieModel: CarouselModel {}
 extension TvModel: CarouselModel {}
 
 public struct CarouselListView<Item: CarouselModel>: View {
+    let title: LocalizedStringResource
     let items: [Item]
     let showMore: Bool
 
-    public init(items: [Item], showMore: Bool) {
+    public init(title: LocalizedStringResource, items: [Item], showMore: Bool) {
+        self.title = title
         self.items = items
         self.showMore = showMore
     }
 
     public var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(alignment: .center, spacing: 12) {
-                ForEach(items) { item in
-                    CarouselCell(item: item)
-                }
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.horizontal)
 
-                if showMore {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "arrow.right")
-                            .foregroundStyle(.primary)
-                            .padding()
-                            .background(Color.yellow)
-                            .clipShape(.circle)
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(alignment: .center, spacing: 12) {
+                    ForEach(items) { item in
+                        CarouselCell(item: item)
                     }
-                }
 
+                    if showMore {
+                        Button {
+
+                        } label: {
+                            Image(systemName: "arrow.right")
+                                .foregroundStyle(.primary)
+                                .padding()
+                                .background(Color.yellow)
+                                .clipShape(.circle)
+                        }
+                    }
+
+                }
+                .padding(.horizontal)
+                .frame(minHeight: 250)
             }
-            .padding(.horizontal)
-            .frame(minHeight: 250)
         }
     }
 }
@@ -95,7 +104,7 @@ private struct CarouselPreviewWrapper: View {
     }
 
     var body: some View {
-        CarouselListView(items: MovieModel.sampleList, showMore: true)
+        CarouselListView(title: "Top Rated", items: MovieModel.sampleList, showMore: true)
             .environment(commonDataStore)
     }
 }

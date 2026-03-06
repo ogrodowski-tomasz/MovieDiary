@@ -17,6 +17,10 @@ enum ListType {
 enum ListEndpoint {
     case popular(ListType)
     case topRated(ListType)
+
+    case moviesUpcoming(page: Int)
+
+    case tvShowsAiringToday(page: Int)
 }
 
 extension ListEndpoint: Endpoint {
@@ -26,6 +30,10 @@ extension ListEndpoint: Endpoint {
             return "/\(listType.pathComponent)/popular"
         case .topRated(let listType):
             return "/\(listType.pathComponent)/top_rated"
+        case .moviesUpcoming:
+            return "/movie/upcoming"
+        case .tvShowsAiringToday:
+            return "/tv/airing_today"
         }
     }
     

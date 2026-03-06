@@ -6,6 +6,8 @@ public protocol ListNetworkManagerProtocol: Sendable {
     func getPopularTv(page: Int) async throws -> TvListResponseModel
     func getTopRatedMovies(page: Int) async throws -> MovieListResponseModel
     func getTopRatedTv(page: Int) async throws -> TvListResponseModel
+    func getUpcomingMovies(page: Int) async throws -> MovieListResponseModel
+    func getAiringTodayTv(page: Int) async throws -> TvListResponseModel
 }
 
 public struct ListNetworkManager: ListNetworkManagerProtocol {
@@ -37,6 +39,20 @@ public struct ListNetworkManager: ListNetworkManagerProtocol {
 
     public func getTopRatedTv(page: Int) async throws -> TvListResponseModel {
         let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(.tvShows(page: page)))
+        return model
+    }
+
+    // MARK: MOVIES
+
+    public func getUpcomingMovies(page: Int) async throws -> MovieListResponseModel {
+        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.moviesUpcoming(page: page))
+        return model
+    }
+
+    // MARK: - TV SHOWS
+
+    public func getAiringTodayTv(page: Int) async throws -> TvListResponseModel {
+        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.tvShowsAiringToday(page: page))
         return model
     }
 }

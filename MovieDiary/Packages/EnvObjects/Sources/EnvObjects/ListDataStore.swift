@@ -4,6 +4,8 @@ import NetworkClient
 import OSLog
 
 public struct ListSectionState<T> {
+    public let title: LocalizedStringResource
+
     var fullList: [T]
     public var abbreviatedList: [T] {
         Array(fullList.prefix(limiter))
@@ -17,7 +19,8 @@ public struct ListSectionState<T> {
         fullList.count > abbreviatedList.count
     }
 
-    init(fullList: [T] = []) {
+    init(_ title: LocalizedStringResource, fullList: [T] = []) {
+        self.title = title
         self.fullList = fullList
     }
 
@@ -32,11 +35,17 @@ public struct ListSectionState<T> {
 @Observable
 public final class ListDataStore {
 
-    public var popularMoviesState: ListSectionState<MovieModel> = .init()
-    public var popularTvState: ListSectionState<TvModel> = .init()
+    // MARK: - MOVIES
 
-    public var topRatedMoviesState: ListSectionState<MovieModel> = .init()
-    public var topRatedTvState: ListSectionState<TvModel> = .init()
+    public var popularMoviesState: ListSectionState<MovieModel> = .init("Popular")
+    public var topRatedMoviesState: ListSectionState<MovieModel> = .init("Top Rated")
+    public var upcomingMoviesState: ListSectionState<MovieModel> = .init("Upcoming")
+
+    // MARK: - TV SHOWS
+
+    public var popularTvState: ListSectionState<TvModel> = .init("Popular")
+    public var topRatedTvState: ListSectionState<TvModel> = .init("Top Rated")
+    public var airingTodayTvState: ListSectionState<TvModel> = .init("Airing Today")
 
     private let listNetworkManager: ListNetworkManagerProtocol
     private let logger = Logger(category: "ListDataStore")
@@ -71,6 +80,25 @@ public final class ListDataStore {
         }
     }
 
+    public func fetchUpcomingMovies() async {
+        do {
+            logger.info("Starting to fetch upcoming movies")
+            let response = try await listNetworkManager.getUpcomingMovies(page: 1)
+            upcomingMoviesState.inject(response.results)
+        } catch {
+            logger.error("Failed to fetch upcoming movies: \(error)")
+        }
+    }
+
+    public func fetchAiringTodayTvShows() async {
+        do {
+            logger.info("Starting to fetch airing today tv")
+            let response = try await listNetworkManager.getAiringTodayTv(page: 1)
+            airingTodayTvState.inject(response.results)
+        } catch {
+            logger.error("Failed to fetch airing today tv shows: \(error)")
+        }
+    }
 
     private func fetchPopularMovies() async throws -> [MovieModel] {
         do {
