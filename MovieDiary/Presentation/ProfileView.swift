@@ -31,26 +31,3 @@ struct ProfileView: View {
         }
     }
 }
-
-struct ProfileViewWrapper: View {
-    
-    @State private var commonDataStore = CommonDataStore(
-        commonNetworkManager: CommonNetworkManager(
-            client: MockHTTPClient()
-        )
-    )
-    
-    var body: some View {
-        NavigationStack {
-            ProfileView(user: .empty, rated: .empty)
-                .environment(commonDataStore)
-                .task {
-                    await commonDataStore.getConfiguration()
-                }
-        }
-    }
-}
-
-#Preview {
-    ProfileViewWrapper()
-}

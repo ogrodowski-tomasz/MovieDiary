@@ -9,6 +9,8 @@ extension UserEndpoint: StubEndpoint {
             return "TmdbUserStaticData"
         case .userRatedMoviesList:
             return "UserRatedMoviesListStaticData"
+        case .requestToken:
+            return "RequestTokenStaticData"
         default:
             return nil
         }

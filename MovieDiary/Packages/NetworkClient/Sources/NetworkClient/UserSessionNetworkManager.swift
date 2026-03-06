@@ -43,5 +43,4 @@ public struct UserSessionNetworkManager: UserSessionNetworkManagerProtocol {
     public func getUserRatedMoviesList(page: Int, sessionId: String) async throws -> UserRatedMovieListResponse {
         return try await client.get(endpoint: UserEndpoint.userRatedMoviesList(sessionId: sessionId))
     }
-    
 }
