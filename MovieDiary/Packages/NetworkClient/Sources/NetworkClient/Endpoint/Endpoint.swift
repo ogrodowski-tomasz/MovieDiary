@@ -1,13 +1,13 @@
 import Foundation
 
-protocol Endpoint: Sendable {
+public protocol Endpoint: Sendable {
     func path() -> String
     func queryItems() -> [URLQueryItem]?
     var jsonValue: Encodable? { get }
     var mockFileName: String? { get }
 }
 
-extension Endpoint {
+public extension Endpoint {
     var jsonValue: Encodable? {
         return nil
     }

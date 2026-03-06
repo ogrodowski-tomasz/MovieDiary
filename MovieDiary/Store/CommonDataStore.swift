@@ -1,4 +1,6 @@
 import Foundation
+import NetworkClient
+import Models
 import OSLog
 
 @Observable
@@ -7,11 +9,11 @@ final class CommonDataStore {
     
     var configuration: AppConfiguration?
     
-    private let commonNetworkManager: CommonNetworkManagerProtocol
+    private let commonNetworkManager: NetworkClient.CommonNetworkManagerProtocol
     
     private let logger = Logger(category: "CommonDataStore")
     
-    init(commonNetworkManager: CommonNetworkManagerProtocol) {
+    init(commonNetworkManager: NetworkClient.CommonNetworkManagerProtocol) {
         self.commonNetworkManager = commonNetworkManager
     }
     

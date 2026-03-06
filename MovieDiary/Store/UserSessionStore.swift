@@ -1,4 +1,6 @@
 import Foundation
+import Models
+import NetworkClient
 import AuthenticationServices
 import OSLog
 
@@ -66,7 +68,7 @@ final class UserSessionStore: NSObject {
                     string:
                     "https://www.themoviedb.org/authenticate/\(requestToken)?redirect_to=myapp://auth"
                 )!
-                
+                currentRequestToken = requestToken
                 startWebAuth(token: requestToken, url: authURL)
             } catch {
                 
@@ -117,6 +119,7 @@ final class UserSessionStore: NSObject {
             currentSessionId = sessionStorage.loadSession()
             if let currentSessionId {
                 logger.info("Obtained current sessionId: \(currentSessionId)")
+                await fetchUserData()
             }
         } catch {
             logger.error("Error fetching sessionId: \(error.localizedDescription)")

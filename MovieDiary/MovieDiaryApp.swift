@@ -1,3 +1,5 @@
+import Models
+import NetworkClient
 import SwiftUI
 
 @main

@@ -1,3 +1,5 @@
+import NetworkClient
+import Models
 import SwiftUI
 
 struct ProfileView: View {

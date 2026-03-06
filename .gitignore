@@ -2,7 +2,7 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-AppKey/
+Packages/NetworkClient/Sources/NetworkClient/AppKey.swift
 
 ## Build generated
 build/

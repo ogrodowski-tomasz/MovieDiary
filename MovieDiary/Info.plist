@@ -8,7 +8,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.ogrodowskitomasz.MovieDiary</string>
+			<string>com.ogrodowskitomaszdev.MovieDiary</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>myapp</string>

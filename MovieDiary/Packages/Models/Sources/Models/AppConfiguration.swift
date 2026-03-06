@@ -1,8 +1,8 @@
 import Foundation
 
-struct AppConfiguration: Codable {
-    let changeKeys: [String]
-    let images: Images
+public struct AppConfiguration: Codable {
+    public let changeKeys: [String]
+    public let images: Images
 
     enum CodingKeys: String, CodingKey {
         case changeKeys = "change_keys"
@@ -10,11 +10,11 @@ struct AppConfiguration: Codable {
     }
 }
 
-struct Images: Codable {
-    let baseURL: String
-    let secureBaseURL: String
-    let backdropSizes, logoSizes, posterSizes, profileSizes: [String]
-    let stillSizes: [String]
+public struct Images: Codable {
+    public let baseURL: String
+    public let secureBaseURL: String
+    public let backdropSizes, logoSizes, posterSizes, profileSizes: [String]
+    public let stillSizes: [String]
 
     enum CodingKeys: String, CodingKey {
         case baseURL = "base_url"
@@ -26,13 +26,13 @@ struct Images: Codable {
         case stillSizes = "still_sizes"
     }
     
-    func profileMainPosterSize() -> String? {
+    public func profileMainPosterSize() -> String? {
         guard !profileSizes.isEmpty else { return nil }
         guard profileSizes.count > 2 else { return profileSizes.first }
         return profileSizes[3]
     }
     
-    func withPath(_ path: String) -> URL? {
+    public func withPath(_ path: String) -> URL? {
         guard let url = URL(string: secureBaseURL), let size = profileMainPosterSize() else { return nil }
         return url.appending(path: "/\(size)/").appending(path: path)
     }

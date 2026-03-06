@@ -1,9 +1,9 @@
 import Foundation
 
-enum AppEnvironment {
+public enum AppEnvironment: Sendable {
     case prod
     
-    var host: String {
+    public var host: String {
         switch self {
         case .prod:
             return "api.themoviedb.org"

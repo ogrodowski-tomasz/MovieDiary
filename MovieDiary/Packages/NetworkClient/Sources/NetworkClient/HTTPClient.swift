@@ -1,13 +1,15 @@
 import Foundation
+import Models
+import Utils
 import OSLog
 
-protocol HTTPClientProtocol: Sendable {
+public protocol HTTPClientProtocol: Sendable {
     func get<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity
     func post<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity
 }
 
-struct HTTPClient: HTTPClientProtocol {
-    
+public struct HTTPClient: HTTPClientProtocol {
+
     let environment: AppEnvironment
     let urlSession: URLSession
     
@@ -16,17 +18,17 @@ struct HTTPClient: HTTPClientProtocol {
     }
     
     private let logger = Logger(category: "HTTPClient")
-    
-    init(environment: AppEnvironment = .prod) {
+
+    public init(environment: AppEnvironment = .prod) {
         self.environment = environment
         urlSession = URLSession.shared
     }
     
-    func post<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity {
+    public func post<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity {
         try await makeEntityRequest(endpoint: endpoint, httpMethod: "POST")
     }
     
-    func get<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity {
+    public func get<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity {
         try await makeEntityRequest(endpoint: endpoint, httpMethod: "GET")
     }
     
@@ -75,13 +77,15 @@ struct HTTPClient: HTTPClientProtocol {
     }
 }
 
-struct MockHTTPClient: HTTPClientProtocol {
-    
-    func get<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
+public struct MockHTTPClient: HTTPClientProtocol {
+
+    public init() { }
+
+    public func get<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
         try getStaticData(endpoint: endpoint)
     }
     
-    func post<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
+    public func post<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
         try getStaticData(endpoint: endpoint)
     }
     

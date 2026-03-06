@@ -1,9 +1,9 @@
 import Foundation
 
-struct UserRatedMovieListResponse: Codable {
-    let page: Int
-    let results: [UserRatedMovieModel]
-    let totalPages, totalResults: Int
+public struct UserRatedMovieListResponse: Codable {
+    public let page: Int
+    public let results: [UserRatedMovieModel]
+    public let totalPages, totalResults: Int
 
     enum CodingKeys: String, CodingKey {
         case page, results
@@ -12,18 +12,18 @@ struct UserRatedMovieListResponse: Codable {
     }
 }
 
-struct UserRatedMovieModel: Codable, Identifiable {
-    let adult: Bool
-    let backdropPath: String
-    let genreIDS: [Int]
-    let id: Int
-    let originalLanguage, overview: String
-    let originalTitle: String?
-    let popularity: Double
-    let posterPath, releaseDate, title: String
-    let video: Bool
-    let voteAverage: Double
-    let voteCount, rating: Int
+public struct UserRatedMovieModel: Codable, Identifiable {
+    public let adult: Bool
+    public let backdropPath: String
+    public let genreIDS: [Int]
+    public let id: Int
+    public let originalLanguage, overview: String
+    public let originalTitle: String?
+    public let popularity: Double
+    public let posterPath, releaseDate, title: String
+    public let video: Bool
+    public let voteAverage: Double
+    public let voteCount, rating: Int
 
     enum CodingKeys: String, CodingKey {
         case adult
@@ -42,8 +42,8 @@ struct UserRatedMovieModel: Codable, Identifiable {
     }
 }
 
-extension UserRatedMovieListResponse {
-    static let empty: Self = .init(page: 1, results: [
+public extension UserRatedMovieListResponse {
+    @MainActor static let empty: Self = .init(page: 1, results: [
         .init(adult: false, backdropPath: "/dXwXcBGK8LJ6UQVvuWM3qG6m6Co.jpg", genreIDS: [10749, 10402, 18], id: 440298, originalLanguage: "pl", overview: "A man and a woman meet in the ruins of post-war Poland. With vastly different backgrounds and temperaments, they are fatally mismatched and yet drawn to each other.", originalTitle: "Zimna Wojna", popularity: 1.6217, posterPath: "/6rbS8oPIgUMhQgIX8oGVTtlNgLR.jpg", releaseDate: "2018-06-08", title: "Cold Waaar", video: false, voteAverage: 0, voteCount: 0, rating: 0)
     ], totalPages: 1, totalResults: 1)
 }
