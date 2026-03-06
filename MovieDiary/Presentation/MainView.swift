@@ -1,5 +1,7 @@
 import SwiftUI
 import Models
+import EnvObjects
+import ListUI
 
 struct MainView: View {
     @Environment(UserSessionStore.self) var userSessionStore
@@ -10,35 +12,28 @@ struct MainView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                if dataStore.popularMoviesState.showData {
+            ScrollView(.vertical, content: {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    if dataStore.popularMoviesState.showData {
+                        Text("Popular Movies")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                        CarouselListView(items: dataStore.popularMoviesState.abbreviatedList, showMore: dataStore.popularMoviesState.showMoreVisible)
+                    }
 
-                    Section("Movies") {
-                        ForEach(dataStore.popularMoviesState.abbreviatedList) { movie in
-                            NavigationLink(movie.title, destination: Text(movie.overview))
-                        }
-                        if dataStore.popularMoviesState.showMoreVisible {
-                            Button("Show more", systemImage: "chevron.right") {
-
-                            }
-                        }
+                    if dataStore.popularTvState.showData {
+                        Text("Popular TV")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                        CarouselListView(items: dataStore.popularTvState.abbreviatedList, showMore: dataStore.popularTvState.showMoreVisible)
                     }
                 }
+            })
 
-                if dataStore.popularMoviesState.showData {
-                    Section("TV Shows") {
-                        ForEach(dataStore.popularTvState.abbreviatedList) { show in
-                            NavigationLink(show.name ?? "missing", destination: Text(show.overview ?? "missing"))
-                        }
-                        if dataStore.popularTvState.showMoreVisible {
-                            Button("Show more", systemImage: "chevron.right") {
-
-                            }
-                        }
-                    }
-                }
-            }
             .navigationTitle("List")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .task {
             guard !viewDidAppear else { return }

@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     
     @Environment(UserSessionStore.self) var userSessionStore
-    @State private var selectedTab: AppTab = .profile
+    @State private var selectedTab: AppTab = .main
     
     var body: some View {
         TabView(selection: $selectedTab) {

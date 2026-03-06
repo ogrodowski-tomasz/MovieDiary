@@ -5,19 +5,19 @@ import OSLog
 
 @Observable
 @MainActor
-final class CommonDataStore {
-    
-    var configuration: AppConfiguration?
-    
+public final class CommonDataStore {
+
+    public var configuration: AppConfiguration?
+
     private let commonNetworkManager: NetworkClient.CommonNetworkManagerProtocol
     
     private let logger = Logger(category: "CommonDataStore")
     
-    init(commonNetworkManager: NetworkClient.CommonNetworkManagerProtocol) {
+    public init(commonNetworkManager: NetworkClient.CommonNetworkManagerProtocol) {
         self.commonNetworkManager = commonNetworkManager
     }
     
-    func getConfiguration() async {
+    public func getConfiguration() async {
         do {
             logger.info("Starting to fetch configuration")
             let configuration = try await commonNetworkManager.getAppConfiguration()

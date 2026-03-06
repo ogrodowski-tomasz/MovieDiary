@@ -3,17 +3,17 @@ import Models
 import NetworkClient
 import OSLog
 
-struct ListSectionState<T> {
+public struct ListSectionState<T> {
     var fullList: [T]
-    var abbreviatedList: [T] {
+    public var abbreviatedList: [T] {
         Array(fullList.prefix(limiter))
     }
 
-    var showData: Bool {
+    public var showData: Bool {
         !abbreviatedList.isEmpty
     }
 
-    var showMoreVisible: Bool {
+    public var showMoreVisible: Bool {
         fullList.count > abbreviatedList.count
     }
 
@@ -21,7 +21,7 @@ struct ListSectionState<T> {
         self.fullList = fullList
     }
 
-    private let limiter = 3
+    private let limiter = 6
 
     mutating func inject(_ newElements: [T]) {
         fullList.append(contentsOf: newElements)
@@ -30,19 +30,19 @@ struct ListSectionState<T> {
 
 @MainActor
 @Observable
-final class ListDataStore {
+public final class ListDataStore {
 
-    var popularMoviesState: ListSectionState<MovieModel> = .init()
-    var popularTvState: ListSectionState<TvModel> = .init()
+    public var popularMoviesState: ListSectionState<MovieModel> = .init()
+    public var popularTvState: ListSectionState<TvModel> = .init()
 
     private let listNetworkManager: ListNetworkManagerProtocol
     private let logger = Logger(category: "ListDataStore")
 
-    init(listNetworkManager: ListNetworkManagerProtocol) {
+    public init(listNetworkManager: ListNetworkManagerProtocol) {
         self.listNetworkManager = listNetworkManager
     }
 
-    func fetchPopular() async {
+    public func fetchPopular() async {
         do {
             logger.info("Starting to fetch popular")
             async let movies = try await fetchPopularMovies()

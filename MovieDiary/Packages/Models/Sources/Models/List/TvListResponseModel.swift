@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TvListResponseModel: Codable {
+public struct TvListResponseModel: Codable, Sendable {
     public let page: Int
     public let results: [TvModel]
     public let totalPages, totalResults: Int
@@ -19,16 +19,18 @@ public struct TvListResponseModel: Codable {
     }
 }
 
-public struct TvModel: Codable, Identifiable {
+public struct TvModel: Codable, Identifiable, Sendable {
     public let adult: Bool?
     public let backdropPath: String?
+    public let title: String
+    public let posterPath: String
     public let genreIDS: [Int]?
     public let id: Int
     public let originCountry: [String]?
     public let originalLanguage: String?
-    public let originalName, overview: String?
+    public let originalTitle, overview: String?
     public let popularity: Double?
-    public let posterPath, firstAirDate, name: String?
+    public let firstAirDate: String?
     public let voteAverage: Double?
     public let voteCount: Int?
 
@@ -39,11 +41,11 @@ public struct TvModel: Codable, Identifiable {
         case id
         case originCountry = "origin_country"
         case originalLanguage = "original_language"
-        case originalName = "original_name"
+        case originalTitle = "original_name"
         case overview, popularity
         case posterPath = "poster_path"
         case firstAirDate = "first_air_date"
-        case name
+        case title = "name"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
@@ -55,12 +57,12 @@ public struct TvModel: Codable, Identifiable {
         self.id = id
         self.originCountry = originCountry
         self.originalLanguage = originalLanguage
-        self.originalName = originalName
+        self.originalTitle = originalName
         self.overview = overview
         self.popularity = popularity
         self.posterPath = posterPath
         self.firstAirDate = firstAirDate
-        self.name = name
+        self.title = name
         self.voteAverage = voteAverage
         self.voteCount = voteCount
     }
