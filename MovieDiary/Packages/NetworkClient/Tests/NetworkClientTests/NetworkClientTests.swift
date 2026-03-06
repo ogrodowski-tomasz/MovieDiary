@@ -1,6 +1,12 @@
 import Testing
+import Models
 @testable import NetworkClient
 
 @Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+
+    let client = MockHTTPClient()
+
+    let data: UserRatedMovieListResponse = try await client.get(endpoint: UserEndpoint.userRatedMoviesList(sessionId: "xxxxx"))
+
+    #expect(data.results.first?.title == "StubMovieTitle")
 }

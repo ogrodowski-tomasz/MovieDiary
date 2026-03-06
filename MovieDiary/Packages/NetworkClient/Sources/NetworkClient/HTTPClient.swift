@@ -77,26 +77,4 @@ public struct HTTPClient: HTTPClientProtocol {
     }
 }
 
-public struct MockHTTPClient: HTTPClientProtocol {
 
-    public init() { }
-
-    public func get<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
-        try getStaticData(endpoint: endpoint)
-    }
-    
-    public func post<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
-        try getStaticData(endpoint: endpoint)
-    }
-    
-    private func getStaticData<Entity: Decodable>(endpoint: any Endpoint) throws -> Entity {
-        guard let file = endpoint.mockFileName, !file.isEmpty,
-              let path = Bundle.main.path(forResource: file, ofType: "json"),
-              let data = FileManager.default.contents(atPath: path) else {
-            throw URLError(.badServerResponse)
-        }
-
-        let decoder = JSONDecoder()
-        return try decoder.decode(Entity.self, from: data)
-    }
-}

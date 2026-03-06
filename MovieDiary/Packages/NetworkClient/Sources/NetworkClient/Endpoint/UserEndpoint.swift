@@ -42,15 +42,4 @@ enum UserEndpoint: Endpoint {
             return nil
         }
     }
-    
-    var mockFileName: String? {
-        switch self {
-        case .currentUser:
-            return "TmdbUserStaticData"
-        case .userRatedMoviesList:
-            return "UserRatedMoviesListStaticData"
-        default:
-            return nil
-        }
-    }
 }

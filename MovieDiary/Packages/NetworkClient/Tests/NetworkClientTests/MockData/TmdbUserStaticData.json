@@ -1,0 +1,16 @@
+{
+    "avatar": {
+        "gravatar": {
+            "hash": "3e5575ccb1c22df37fd20a8ae3ed6d48"
+        },
+        "tmdb": {
+            "avatar_path": "/fJ9azA8uhW1FV5ZyVlrhK5DBOis.png"
+        }
+    },
+    "id": 12719379,
+    "iso_639_1": "pl",
+    "iso_3166_1": "PL",
+    "name": "Tomasz Ogrodowski",
+    "include_adult": false,
+    "username": "tomaszinio"
+}

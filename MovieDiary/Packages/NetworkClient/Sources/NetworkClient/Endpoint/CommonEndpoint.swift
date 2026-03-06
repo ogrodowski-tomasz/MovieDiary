@@ -16,11 +16,4 @@ enum CommonEndpoint: Endpoint {
         default: nil
         }
     }
-    
-    var mockFileName: String? {
-        switch self {
-        case .configuration:
-            "AppConfigurationStaticData"
-        }
-    }
 }
