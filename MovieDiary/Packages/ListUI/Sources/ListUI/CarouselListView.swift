@@ -7,12 +7,19 @@ public protocol CarouselModel: Identifiable {
     var posterPath: String { get }
     var title: String { get }
     var id: Int { get }
+    var listType: ListType { get }
 }
 
-extension MovieModel: CarouselModel {}
-extension TvModel: CarouselModel {}
+extension MovieModel: CarouselModel {
+    public var listType: ListType { .movies }
+}
+extension TvModel: CarouselModel {
+    public var listType: ListType { .tvShows }
+}
 
 public struct CarouselListView<Item: CarouselModel>: View {
+    @Environment(Router.self) var router
+
     let title: LocalizedStringResource
     let items: [Item]
     let showMore: Bool
@@ -38,7 +45,7 @@ public struct CarouselListView<Item: CarouselModel>: View {
 
                     if showMore {
                         Button {
-
+                            router.push(to: .showFull)
                         } label: {
                             Image(systemName: "arrow.right")
                                 .foregroundStyle(.primary)
@@ -58,6 +65,7 @@ public struct CarouselListView<Item: CarouselModel>: View {
 
 private struct CarouselCell<Item: CarouselModel>: View {
     @Environment(CommonDataStore.self) var commonDataStore
+    @Environment(Router.self) var router
 
     var config: Images? {
         commonDataStore.configuration?.images
@@ -66,30 +74,36 @@ private struct CarouselCell<Item: CarouselModel>: View {
     let item: Item
 
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
-            AsyncImage(url: config?.poster(for: item.posterPath)) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                case .failure:
-                    Image(systemName: "film")
-                        .foregroundStyle(.secondary)
-                case .empty:
-                    ProgressView()
-                @unknown default:
-                    EmptyView()
+        Button {
+            router.push(to: .details(id: item.id, listType: item.listType))
+        } label: {
+            VStack(alignment: .center, spacing: 8) {
+                AsyncImage(url: config?.poster(for: item.posterPath)) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    case .failure:
+                        Image(systemName: "film")
+                            .foregroundStyle(.secondary)
+                    case .empty:
+                        ProgressView()
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
-            }
-            .frame(width: 120, height: 180)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+                .frame(width: 120, height: 180)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
 
-            Text(item.title)
-                .font(.caption)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 120, alignment: .center)
+                Text(item.title)
+                    .foregroundStyle(.primary)
+                    .font(.caption)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 120, alignment: .center)
+            }
+            .buttonStyle(.glassProminent)
         }
     }
 }

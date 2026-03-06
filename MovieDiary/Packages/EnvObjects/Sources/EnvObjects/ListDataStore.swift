@@ -3,7 +3,9 @@ import Models
 import NetworkClient
 import OSLog
 
-public struct ListSectionState<T> {
+public struct ListSectionState<T>: Identifiable {
+    public let id: UUID
+
     public let title: LocalizedStringResource
 
     var fullList: [T]
@@ -20,6 +22,7 @@ public struct ListSectionState<T> {
     }
 
     init(_ title: LocalizedStringResource, fullList: [T] = []) {
+        self.id = UUID()
         self.title = title
         self.fullList = fullList
     }
@@ -37,15 +40,23 @@ public final class ListDataStore {
 
     // MARK: - MOVIES
 
-    public var popularMoviesState: ListSectionState<MovieModel> = .init("Popular")
-    public var topRatedMoviesState: ListSectionState<MovieModel> = .init("Top Rated")
-    public var upcomingMoviesState: ListSectionState<MovieModel> = .init("Upcoming")
+    public var moviesSections: [ListSectionState<MovieModel>] {
+        [popularMoviesState, upcomingMoviesState, topRatedMoviesState]
+    }
+
+    private var popularMoviesState: ListSectionState<MovieModel> = .init("Popular")
+    private var topRatedMoviesState: ListSectionState<MovieModel> = .init("Top Rated")
+    private var upcomingMoviesState: ListSectionState<MovieModel> = .init("Upcoming")
 
     // MARK: - TV SHOWS
 
-    public var popularTvState: ListSectionState<TvModel> = .init("Popular")
-    public var topRatedTvState: ListSectionState<TvModel> = .init("Top Rated")
-    public var airingTodayTvState: ListSectionState<TvModel> = .init("Airing Today")
+    public var tvShowsSections: [ListSectionState<TvModel>] {
+        [popularTvState, topRatedTvState, airingTodayTvState]
+    }
+
+    private var popularTvState: ListSectionState<TvModel> = .init("Popular")
+    private var topRatedTvState: ListSectionState<TvModel> = .init("Top Rated")
+    private var airingTodayTvState: ListSectionState<TvModel> = .init("Airing Today")
 
     private let listNetworkManager: ListNetworkManagerProtocol
     private let logger = Logger(category: "ListDataStore")

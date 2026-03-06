@@ -8,6 +8,7 @@ struct LoginView: View {
                 userSessionStore.startSession()
             }
             .navigationTitle("Profile")
+            .withRouter()
         }
     }
 }

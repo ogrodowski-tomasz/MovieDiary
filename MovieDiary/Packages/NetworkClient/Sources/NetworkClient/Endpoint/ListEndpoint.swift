@@ -1,22 +1,9 @@
 import Foundation
-
-enum ListType {
-    case movies(page: Int)
-    case tvShows(page: Int)
-
-    var pathComponent: String {
-        switch self {
-        case .movies:
-            "movie"
-        case .tvShows:
-            "tv"
-        }
-    }
-}
+import Models
 
 enum ListEndpoint {
-    case popular(ListType)
-    case topRated(ListType)
+    case popular(type: ListType, page: Int)
+    case topRated(type: ListType, page: Int)
 
     case moviesUpcoming(page: Int)
 
@@ -26,10 +13,10 @@ enum ListEndpoint {
 extension ListEndpoint: Endpoint {
     func path() -> String {
         switch self {
-        case .popular(let listType):
-            return "/\(listType.pathComponent)/popular"
-        case .topRated(let listType):
-            return "/\(listType.pathComponent)/top_rated"
+        case let .popular(type, _):
+            return "/\(type.endpointPathComponent)/popular"
+        case let .topRated(type, _):
+            return "/\(type.endpointPathComponent)/top_rated"
         case .moviesUpcoming:
             return "/movie/upcoming"
         case .tvShowsAiringToday:

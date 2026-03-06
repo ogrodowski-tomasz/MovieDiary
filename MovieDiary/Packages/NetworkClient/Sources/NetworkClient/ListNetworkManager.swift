@@ -21,24 +21,24 @@ public struct ListNetworkManager: ListNetworkManagerProtocol {
     // MARK: - POPULAR
 
     public func getPopularMovies(page: Int) async throws -> MovieListResponseModel {
-        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.popular(.movies(page: page)))
+        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .movies, page: page))
         return model
     }
 
     public func getPopularTv(page: Int) async throws -> TvListResponseModel {
-        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.popular(.tvShows(page: page)))
+        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .tvShows, page: page))
         return model
     }
 
     // MARK: - TOP RATED
 
     public func getTopRatedMovies(page: Int) async throws -> MovieListResponseModel {
-        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(.movies(page: page)))
+        let model: MovieListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .movies, page: page))
         return model
     }
 
     public func getTopRatedTv(page: Int) async throws -> TvListResponseModel {
-        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(.tvShows(page: page)))
+        let model: TvListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .tvShows, page: page))
         return model
     }
 
