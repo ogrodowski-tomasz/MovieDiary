@@ -74,10 +74,10 @@ private struct CarouselCell<Item: CarouselModel>: View {
     let item: Item
 
     var body: some View {
-        Button {
-            router.push(to: .details(id: item.id, listType: item.listType))
-        } label: {
-            VStack(alignment: .center, spacing: 8) {
+        VStack(alignment: .center, spacing: 8) {
+            Button {
+                router.push(to: .details(id: item.id, listType: item.listType))
+            } label: {
                 AsyncImage(url: config?.poster(for: item.posterPath)) { phase in
                     switch phase {
                     case .success(let image):
@@ -95,15 +95,14 @@ private struct CarouselCell<Item: CarouselModel>: View {
                 }
                 .frame(width: 120, height: 180)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-
-                Text(item.title)
-                    .foregroundStyle(.primary)
-                    .font(.caption)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 120, alignment: .center)
+                .buttonStyle(.glassProminent)
             }
-            .buttonStyle(.glassProminent)
+            Text(item.title)
+                .foregroundStyle(.primary)
+                .font(.caption)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 120, alignment: .center)
         }
     }
 }
