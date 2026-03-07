@@ -3,21 +3,22 @@ import ReusableComponents
 import EnvObjects
 import Models
 
-internal struct DetailsHeaderView: View {
+public struct DetailsHeaderView: View {
     
     @Environment(CommonDataStore.self) var commonDataStore
+    @Environment(UserSessionStore.self) var userSessionStore
     
-    let model: MovieDetailsModel
-    
-    internal init(model: MovieDetailsModel) {
-        self.model = model
+    public let viewModel: DetailsViewModel
+        
+    public init(viewModel: DetailsViewModel) {
+        self.viewModel = viewModel
     }
     
-    internal var body: some View {
+    public var body: some View {
         ZStack(alignment: .bottom) {
             BackdropImageView(
                 config: .init(
-                    url: commonDataStore.configuration?.images.poster(for: model.posterPath, original: true),
+                    url: commonDataStore.configuration?.images.poster(for: viewModel.posterPath, original: true),
                     height: 200,
                     cornerRadius: 0
                 )
@@ -32,17 +33,16 @@ internal struct DetailsHeaderView: View {
                 endPoint: .top
             )
             VStack {
-                Text(model.title)
+                Text(viewModel.title)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
                     .bold()
-                Text(model.genres.join())
+                Text(viewModel.genres ?? "")
+                    .redactWithPlaceholder(when: viewModel.genres == nil)
             }
             .frame(maxWidth: .infinity)
         }
     }
+    
+    
 }
-
-//#Preview {
-//    DetailsHeaderView()
-//}

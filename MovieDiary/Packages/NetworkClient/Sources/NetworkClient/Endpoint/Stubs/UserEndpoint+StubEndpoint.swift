@@ -10,6 +10,8 @@ extension UserEndpoint: StubEndpoint {
             return "UserRatedMoviesListStaticData"
         case .requestToken:
             return "RequestTokenStaticData"
+        case .movieAccountState:
+            return "MovieAccountStateStaticData"
         default:
             return nil
         }

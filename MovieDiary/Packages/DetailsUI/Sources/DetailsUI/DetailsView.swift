@@ -7,112 +7,124 @@ import ReusableComponents
 import UIKit
 
 public struct DetailsView: View {
-    struct ViewModel {
-        let model: MovieDetailsModel
-        let recommendations: MovieRecommendationsListResponse
-    }
-    enum ViewState {
-        case loading
-        case loaded(ViewModel)
-    }
-    let id: Int
-    let listType: ListType
-
+    @State private var viewModel: DetailsViewModel
+    
     @Environment(\.httpClient) var client
     
     @Environment(CommonDataStore.self) var commonDataStore
-    
-    @State private var viewState: ViewState = .loading
-
-    public init(id: Int, listType: ListType) {
-        self.id = id
-        self.listType = listType
+    @Environment(UserSessionStore.self) var userSessionStore
+        
+    public init(viewModel: DetailsViewModel) {
+        self.viewModel = viewModel
     }
-
+    
     public var body: some View {
         Group {
-            switch viewState {
-            case .loading:
-                ProgressView()
-            case let .loaded(viewModel):
-                ScrollView(.vertical) {
-                    LazyVStack(spacing: 0) {
-                        DetailsHeaderView(model: viewModel.model)
-                            .resizingOnScroll()
-                        VStack(spacing: 10) {
-                            HStack {
-                                Button {
-                                    // Favorite
-                                } label: {
-                                    Image(systemName: "heart")
-                                        .font(.title)
-                                        .foregroundStyle(.red)
-                                }
-                                .clipShape(.circle)
-                                .buttonStyle(.glass)
-                                
-                                Button {
-                                    // List
-                                } label: {
-                                    Image(systemName: "plus")
-                                        .font(.title)
-                                }
-                                .clipShape(.circle)
-                                .buttonStyle(.glass)
+            ScrollView(.vertical) {
+                LazyVStack(spacing: 0) {
+                    DetailsHeaderView(viewModel: viewModel)
+                        .resizingOnScroll()
+                    VStack(spacing: 10) {
+                        HStack {
+                            Button(action: onFavoriteTapped) {
+                                Image(systemName: viewModel.favoriteImageName)
+                                    .font(.title)
+                                    .foregroundStyle(.red)
                             }
+                            .clipShape(.circle)
+                            .buttonStyle(.glass)
                             
-                            if let overview = viewModel.model.overview {
-                                Text(overview)
-                                    .lineLimit(2)
+                            Button {
+                                // List
+                            } label: {
+                                Image(systemName: "plus")
+                                    .font(.title)
                             }
-                            Text(viewModel.model.additionalInfoString)
-                                .font(.headline)
+                            .clipShape(.circle)
+                            .buttonStyle(.glass)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(uiColor: .secondarySystemGroupedBackground))
                         
-                        VStack(alignment: .leading, spacing: 10) {
-                            CarouselListView(title: "Podobne", items: viewModel.recommendations.results, showMore: false)
+                        if let overview = viewModel.overview {
+                            Text(overview)
+                                .lineLimit(2)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text(viewModel.details?.additionalInfoString ?? "-")
+                            .font(.headline)
+                            .redactWithPlaceholder(when: viewModel.details == nil)
                     }
-                    .padding(.bottom, 150)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color(uiColor: .secondarySystemGroupedBackground))
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        if let recommendation = viewModel.recommendations?.results {
+                            CarouselListView(title: "Podobne", items: recommendation, showMore: false)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .redactWithPlaceholder(when: viewModel.recommendations?.results == nil)
                 }
-                .scrollIndicators(.hidden)
+                .padding(.bottom, 150)
             }
+            .scrollIndicators(.hidden)
         }
+        .backMenuTitle(viewModel.title)
         .ignoresSafeArea()
         .task {
+            await fetchAccountState()
             await fetchDetails()
         }
     }
-
+    
     private func fetchDetails() async {
-        viewState = .loading
         do {
-            let details: MovieDetailsModel = try await client.get(endpoint: DetailsEndpoint.movie(id: id))
-            let recommendations: MovieRecommendationsListResponse = try await client.get(endpoint: DetailsEndpoint.recommendations(id: id))
-            let viewModel = ViewModel(model: details, recommendations: recommendations)
-            viewState = .loaded(viewModel)
+            let id = viewModel.id
+            async let details: MovieDetailsModel = try await client.get(endpoint: DetailsEndpoint.movie(id: id))
+            async let recommendations: MovieRecommendationsListResponse = try await client.get(endpoint: DetailsEndpoint.recommendations(id: id))
+            let data = try await (details, recommendations)
+            viewModel.inject(recommendations: data.1, details: data.0)
         } catch {
             print(error)
+        }
+    }
+    
+    private func fetchAccountState() async {
+        do {
+            let id = viewModel.id
+            let model = try await userSessionStore.getMovieAccountState(id: id)
+            viewModel.inject(accountState: model)
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func onFavoriteTapped() {
+        guard let accountState = viewModel.accountState else { return }
+        Task {
+            do {
+                let id = viewModel.id
+                let newValue = !accountState.favorite
+                let updatedMovie = try await userSessionStore.toggleMovieFavorite(id: id, newValue: newValue)
+                viewModel.inject(accountState: updatedMovie)
+            } catch {
+                print(error)
+            }
         }
     }
 }
 
 private struct DetailsPreviewWrapper: View {
-
+    
     @State private var commonDataStore: CommonDataStore
-
+    
     init() {
         _commonDataStore = State(initialValue: .init())
         commonDataStore.configuration = .sample
         commonDataStore.genres = .init(movieGenres: GenreListModelResponse.sampleMovies.genres, tvGenres: GenreListModelResponse.sampleTV.genres)
     }
-
+    
     var body: some View {
-        DetailsView(id: 123141324123123, listType: .movies)
+        DetailsView(viewModel: .from(movieModel: .sample))
             .environment(\.httpClient, MockHTTPClient())
             .environment(commonDataStore)
     }

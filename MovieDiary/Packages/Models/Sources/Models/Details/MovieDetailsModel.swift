@@ -142,7 +142,7 @@ public struct MovieDetailsModel: Codable, Sendable, Identifiable {
         voteCount: 2052
     )}
 
-// MARK: - BelongsToCollection
+
 public struct BelongsToCollection: Codable, Sendable {
     public let id: Int?
     public let name, posterPath, backdropPath: String?
@@ -176,7 +176,6 @@ public struct ProductionCountry: Codable, Sendable {
     }
 }
 
-// MARK: - SpokenLanguage
 public struct SpokenLanguage: Codable, Sendable {
     public let englishName, iso639_1, name: String?
 

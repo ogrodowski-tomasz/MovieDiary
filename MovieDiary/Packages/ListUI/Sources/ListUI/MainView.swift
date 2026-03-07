@@ -41,8 +41,7 @@ public struct MainView: View {
                     }
                 }
             })
-            .navigationBarTitleDisplayMode(.inline)
-
+            .backMenuTitle("Main")
         .task {
             #warning("Improve")
             guard !viewDidAppear else { return }

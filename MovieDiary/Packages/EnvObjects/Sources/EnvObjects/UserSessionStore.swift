@@ -11,7 +11,6 @@ public final class UserSessionStore: NSObject, Store {
     public func injectClient(_ httpClient: any NetworkClient.HTTPClientProtocol) {
         self.client = httpClient
     }
-    
 
     private var client: HTTPClientProtocol?
 
@@ -82,6 +81,22 @@ public final class UserSessionStore: NSObject, Store {
         }
     }
     
+    public func toggleMovieFavorite(id: Int, newValue: Bool) async throws -> MovieAccountStateModel {
+        guard let client else { throw URLError(.unknown) }
+        guard let sessionid = sessionStorage.loadSession() else { throw URLError(.unknown) }
+        let response: FavoriteResponse = try await client.post(endpoint: UserEndpoint.toggleFavoriteMovie(movieId: id, sessionId: sessionid, newValue: newValue))
+        guard response.success else {
+            throw URLError(.unknown)
+        }
+        return try await getMovieAccountState(id: id)
+    }
+    
+    public func getMovieAccountState(id: Int) async throws -> MovieAccountStateModel {
+        guard let client else { throw URLError(.unknown) }
+        guard let sessionid = sessionStorage.loadSession() else { throw URLError(.unknown) }
+        return try await client.get(endpoint: UserEndpoint.movieAccountState(movieId: id, sessionId: sessionid))
+    }
+    
     private func startWebAuth(token: String, url: URL) {
 
         authSession = ASWebAuthenticationSession(
@@ -140,6 +155,12 @@ public final class UserSessionStore: NSObject, Store {
     private struct SessionResponse: Decodable {
         let success: Bool
         let session_id: String
+    }
+    
+    private struct FavoriteResponse: Decodable {
+        let success: Bool
+        let status_code: Int
+        let status_message: String
     }
 
     public func getCurrentUser(sessionId: String) async throws -> TmdbUser {

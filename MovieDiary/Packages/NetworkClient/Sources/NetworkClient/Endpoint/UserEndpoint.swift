@@ -5,6 +5,8 @@ public enum UserEndpoint: Endpoint {
     case currentUser(sessionID: String)
     case createSession(requestToken: String)
     case userRatedMoviesList(sessionId: String)
+    case movieAccountState(movieId: Int, sessionId: String)
+    case toggleFavoriteMovie(movieId: Int, sessionId: String, newValue: Bool)
     
     public func path() -> String {
         switch self {
@@ -16,6 +18,10 @@ public enum UserEndpoint: Endpoint {
             "/authentication/session/new"
         case .userRatedMoviesList:
             "/account/12719379/rated/movies"
+        case let .movieAccountState(movieId, _):
+            "/movie/\(movieId)/account_states"
+        case .toggleFavoriteMovie:
+            "/account/12719379/favorite"
         }
     }
     
@@ -29,6 +35,11 @@ public enum UserEndpoint: Endpoint {
             return nil
         case let .userRatedMoviesList(sessionId):
             return [.init(name: "session_id", value: sessionId)]
+        case let .movieAccountState(_, sessionId):
+            return [.init(name: "session_id", value: sessionId)]
+        case let .toggleFavoriteMovie(_, sessionId,_):
+            return [.init(name: "session_id", value: sessionId)]
+
         }
     }
     
@@ -38,8 +49,16 @@ public enum UserEndpoint: Endpoint {
             return [
                 "request_token": requestToken
             ] as Encodable
+        case let .toggleFavoriteMovie(movieId,_, newValue):
+            return FavoriteEncodable(media_type: "movie", media_id: movieId, favorite: newValue) as Encodable
         default:
             return nil
         }
+    }
+    
+    private struct FavoriteEncodable: Encodable {
+        let media_type: String
+        let media_id: Int
+        let favorite: Bool
     }
 }
