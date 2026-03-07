@@ -23,6 +23,10 @@ let package = Package(
             name: "DetailsUI",
             dependencies: [
                 .product(name: "EnvObjects", package: "EnvObjects")
+            ],
+            swiftSettings: [
+                .swiftLanguageMode(.v6),
+                .defaultIsolation(MainActor.self)
             ]
         ),
 

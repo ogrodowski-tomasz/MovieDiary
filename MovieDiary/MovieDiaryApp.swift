@@ -2,6 +2,8 @@ import EnvObjects
 import Models
 import NetworkClient
 import SwiftUI
+import ReusableComponents
+import Nuke
 
 @main
 struct MovieDiaryApp: App {
@@ -17,6 +19,7 @@ struct MovieDiaryApp: App {
         userSessionStore = UserSessionStore(sessionStorage: keychainService)
         commonDataStore = CommonDataStore()
         listDataStore = ListDataStore()
+        ImagePipeline.shared = ImagePipelineProvider.shared
     }
 
     var body: some Scene {

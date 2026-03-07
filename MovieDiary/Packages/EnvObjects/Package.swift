@@ -23,6 +23,9 @@ let package = Package(
             name: "EnvObjects",
             dependencies: [
                 .product(name: "NetworkClient", package: "NetworkClient")
+            ],
+            swiftSettings: [
+                .swiftLanguageMode(.v6)
             ]
         ),
         .testTarget(

@@ -26,6 +26,9 @@ let package = Package(
                 .product(name: "Models", package: "Models"),
                 .product(name: "Utils", package: "Utils"),
             ],
+            swiftSettings: [
+                .swiftLanguageMode(.v6)
+            ]
         ),
         .testTarget(
             name: "NetworkClientTests",

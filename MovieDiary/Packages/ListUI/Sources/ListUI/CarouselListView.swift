@@ -2,6 +2,7 @@ import Models
 import EnvObjects
 import NetworkClient
 import SwiftUI
+import Nuke
 
 public protocol CarouselModel: Identifiable {
     var posterPath: String { get }
@@ -59,50 +60,6 @@ public struct CarouselListView<Item: CarouselModel>: View {
                 .padding(.horizontal)
                 .frame(minHeight: 250)
             }
-        }
-    }
-}
-
-private struct CarouselCell<Item: CarouselModel>: View {
-    @Environment(CommonDataStore.self) var commonDataStore
-    @Environment(Router.self) var router
-
-    var config: Images? {
-        commonDataStore.configuration?.images
-    }
-
-    let item: Item
-
-    var body: some View {
-        VStack(alignment: .center, spacing: 8) {
-            Button {
-                router.push(to: .details(id: item.id, listType: item.listType))
-            } label: {
-                AsyncImage(url: config?.poster(for: item.posterPath)) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    case .failure:
-                        Image(systemName: "film")
-                            .foregroundStyle(.secondary)
-                    case .empty:
-                        ProgressView()
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-                .frame(width: 120, height: 180)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .buttonStyle(.glassProminent)
-            }
-            Text(item.title)
-                .foregroundStyle(.primary)
-                .font(.caption)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 120, alignment: .center)
         }
     }
 }
