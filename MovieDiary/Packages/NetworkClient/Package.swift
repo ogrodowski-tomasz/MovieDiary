@@ -26,6 +26,9 @@ let package = Package(
                 .product(name: "Models", package: "Models"),
                 .product(name: "Utils", package: "Utils"),
             ],
+            resources: [
+                .process("MockData")
+            ],
             swiftSettings: [
                 .swiftLanguageMode(.v6)
             ]
@@ -34,7 +37,7 @@ let package = Package(
             name: "NetworkClientTests",
             dependencies: ["NetworkClient"],
             resources: [
-                .process("MockData")
+//                .process("MockData")
             ]
         ),
     ]

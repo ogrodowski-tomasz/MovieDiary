@@ -34,7 +34,7 @@ struct MovieDiaryApp: App {
                     userSessionStore.injectClient(httpClient)
                     commonDataStore.injectClient(httpClient)
                     await userSessionStore.fetchCurrentUser()
-                    await commonDataStore.getConfiguration()
+                    await commonDataStore.getCommonData()
                 }
         }
     }

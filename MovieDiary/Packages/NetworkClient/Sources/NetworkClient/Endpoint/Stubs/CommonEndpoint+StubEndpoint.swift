@@ -1,5 +1,4 @@
 import Foundation
-@testable import NetworkClient
 
 extension CommonEndpoint: StubEndpoint {
 
@@ -7,6 +6,8 @@ extension CommonEndpoint: StubEndpoint {
         switch self {
         case .configuration:
             "AppConfigurationStaticData"
+        case .genres:
+            "GenreListStaticData"
         }
     }
 }

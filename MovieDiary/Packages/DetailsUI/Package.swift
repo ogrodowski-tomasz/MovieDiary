@@ -15,6 +15,8 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "EnvObjects", path: "../EnvObjects"),
+        .package(name: "ListUI", path: "../ListUI"),
+        .package(name: "ReusableComponents", path: "../ReusableComponents")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -22,7 +24,9 @@ let package = Package(
         .target(
             name: "DetailsUI",
             dependencies: [
-                .product(name: "EnvObjects", package: "EnvObjects")
+                .product(name: "EnvObjects", package: "EnvObjects"),
+                .product(name: "ListUI", package: "ListUI"),
+                .product(name: "ReusableComponents", package: "ReusableComponents")
             ],
             swiftSettings: [
                 .swiftLanguageMode(.v6),

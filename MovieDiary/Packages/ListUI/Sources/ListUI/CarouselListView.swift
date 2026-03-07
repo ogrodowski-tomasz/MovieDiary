@@ -14,8 +14,14 @@ public protocol CarouselModel: Identifiable {
 extension MovieModel: CarouselModel {
     public var listType: ListType { .movies }
 }
+
 extension TvModel: CarouselModel {
     public var listType: ListType { .tvShows }
+}
+
+extension MovieRecommendationModel: CarouselModel {
+    
+    public var listType: ListType { .movies }
 }
 
 public struct CarouselListView<Item: CarouselModel>: View {

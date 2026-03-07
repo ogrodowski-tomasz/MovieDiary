@@ -24,6 +24,8 @@
 		1E66675A2F5AD9D200C55B13 /* Models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Models; path = MovieDiary/Packages/Models; sourceTree = "<group>"; };
 		1E66675D2F5AE1A100C55B13 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Utils; path = MovieDiary/Packages/Utils; sourceTree = "<group>"; };
 		24AB470C2F5C6E8B00F033BE /* ReusableComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ReusableComponents; path = MovieDiary/Packages/ReusableComponents; sourceTree = "<group>"; };
+		24AB47112F5CA8B100F033BE /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
+		24AB47122F5CA90600F033BE /* ProductionCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionCompany.swift; sourceTree = "<group>"; };
 		24D479042F4C7FA60031C7D7 /* MovieDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,8 @@
 				1E65B8962F5AE45F00A1370D /* NetworkClient */,
 				1E66675D2F5AE1A100C55B13 /* Utils */,
 				24D479052F4C7FA60031C7D7 /* Products */,
+				24AB47112F5CA8B100F033BE /* Genre.swift */,
+				24AB47122F5CA90600F033BE /* ProductionCompany.swift */,
 			);
 			sourceTree = "<group>";
 		};

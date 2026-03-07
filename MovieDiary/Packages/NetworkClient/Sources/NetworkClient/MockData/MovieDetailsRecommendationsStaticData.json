@@ -1,0 +1,427 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/79PNOxNXSe5e0bhEj11QJPlsdCN.jpg",
+            "id": 1087192,
+            "title": "How to Train Your Dragon",
+            "original_title": "How to Train Your Dragon",
+            "overview": "On the rugged isle of Berk, where Vikings and dragons have been bitter enemies for generations, Hiccup stands apart, defying centuries of tradition when he befriends Toothless, a feared Night Fury dragon. Their unlikely bond reveals the true nature of dragons, challenging the very foundations of Viking society.",
+            "poster_path": "/53dsJ3oEnBhTBVMigWJ9tkA5bzJ.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                14,
+                10751,
+                28,
+                12
+            ],
+            "popularity": 25.4754,
+            "release_date": "2025-06-06",
+            "video": false,
+            "vote_average": 7.932,
+            "vote_count": 2647
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/stCEYCxA3SknIIne1H4LmaIJ8ii.jpg",
+            "id": 1263256,
+            "title": "Happy Gilmore 2",
+            "original_title": "Happy Gilmore 2",
+            "overview": "Happy Gilmore isn't done with golf — not by a long shot. Since his retirement after his first Tour Championship win, Gilmore returns to finance his daughter's ballet classes.",
+            "poster_path": "/nRwDPfYUzzzUQarfMxvPlasxzpL.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                35
+            ],
+            "popularity": 7.314,
+            "release_date": "2025-07-25",
+            "video": false,
+            "vote_average": 6.551,
+            "vote_count": 894
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/ukPu5xYOBAnh5H46uK4aQOirW2b.jpg",
+            "id": 1022787,
+            "title": "Elio",
+            "original_title": "Elio",
+            "overview": "Elio, a space fanatic with an active imagination, finds himself on a cosmic misadventure where he must form new bonds with eccentric alien lifeforms, navigate a crisis of intergalactic proportions and somehow discover who he is truly meant to be.",
+            "poster_path": "/7z8jDiTZZco9moIKpTUImFtTy7o.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                10751,
+                35,
+                12,
+                16,
+                878
+            ],
+            "popularity": 16.9953,
+            "release_date": "2025-06-18",
+            "video": false,
+            "vote_average": 6.942,
+            "vote_count": 880
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/538U9snNc2fpnOmYXAPUh3zn31H.jpg",
+            "id": 575265,
+            "title": "Mission: Impossible - The Final Reckoning",
+            "original_title": "Mission: Impossible - The Final Reckoning",
+            "overview": "Ethan Hunt and team continue their search for the terrifying AI known as the Entity — which has infiltrated intelligence networks all over the globe — with the world's governments and a mysterious ghost from Hunt's past on their trail. Joined by new allies and armed with the means to shut the Entity down for good, Hunt is in a race against time to prevent the world as we know it from changing forever.",
+            "poster_path": "/z53D72EAOxGRqdr7KXXWp9dJiDe.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                53,
+                12
+            ],
+            "popularity": 24.613,
+            "release_date": "2025-05-17",
+            "video": false,
+            "vote_average": 7.2,
+            "vote_count": 2611
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/zxjFabSJKMAvuu3acNg78nuTuCs.jpg",
+            "id": 1442776,
+            "title": "Crazy Lizard",
+            "original_title": "狂暴巨蜥",
+            "overview": "A young man climbs into the mountains to pick up a meteorite that has fallen there and is killed by something. The \"thing\" descends to the village and begins to eat the inhabitants one by one, terrorizing the entire island.",
+            "poster_path": "/9TFaFsSXedaALXTzba349euDeoY.jpg",
+            "media_type": "movie",
+            "original_language": "zh",
+            "genre_ids": [
+                28,
+                53,
+                27
+            ],
+            "popularity": 1.9118,
+            "release_date": "2024-03-27",
+            "video": false,
+            "vote_average": 6.2,
+            "vote_count": 28
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/uIpJPDNFoeX0TVml9smPrs9KUVx.jpg",
+            "id": 574475,
+            "title": "Final Destination Bloodlines",
+            "original_title": "Final Destination Bloodlines",
+            "overview": "Plagued by a violent recurring nightmare, college student Stefanie heads home to track down the one person who might be able to break the cycle and save her family from the grisly demise that inevitably awaits them all.",
+            "poster_path": "/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                9648
+            ],
+            "popularity": 17.8564,
+            "release_date": "2025-05-14",
+            "video": false,
+            "vote_average": 7.057,
+            "vote_count": 2679
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/lNYympQM5O6QSInusbyG9eJDIe4.jpg",
+            "id": 1311031,
+            "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
+            "original_title": "劇場版「鬼滅の刃」無限城編 第一章 猗窩座再来",
+            "overview": "The Demon Slayer Corps are drawn into the Infinity Castle, where Tanjiro, Nezuko, and the Hashira face terrifying Upper Rank demons in a desperate fight as the final battle against Muzan Kibutsuji begins.",
+            "poster_path": "/fWVSwgjpT2D78VUh6X8UBd2rorW.jpg",
+            "media_type": "movie",
+            "original_language": "ja",
+            "genre_ids": [
+                16,
+                28,
+                14
+            ],
+            "popularity": 84.4369,
+            "release_date": "2025-07-18",
+            "video": false,
+            "vote_average": 7.7,
+            "vote_count": 750
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/s94NjfKkcSczZ1FembwmQZwsuwY.jpg",
+            "id": 617126,
+            "title": "The Fantastic 4: First Steps",
+            "original_title": "The Fantastic 4: First Steps",
+            "overview": "Against the vibrant backdrop of a 1960s-inspired, retro-futuristic world, Marvel's First Family is forced to balance their roles as heroes with the strength of their family bond, while defending Earth from a ravenous space god called Galactus and his enigmatic Herald, Silver Surfer.",
+            "poster_path": "/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                878,
+                12,
+                28
+            ],
+            "popularity": 25.5024,
+            "release_date": "2025-07-23",
+            "video": false,
+            "vote_average": 6.972,
+            "vote_count": 3045
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/cT9ZfwoPDk8JbgkessmQgxAWiaM.jpg",
+            "id": 1071585,
+            "title": "M3GAN 2.0",
+            "original_title": "M3GAN 2.0",
+            "overview": "After the underlying tech for M3GAN is stolen and misused by a powerful defense contractor to create a military-grade weapon known as Amelia, M3GAN's creator Gemma realizes that the only option is to resurrect M3GAN and give her a few upgrades, making her faster, stronger, and more lethal.",
+            "poster_path": "/oekamLQrwlJjRNmfaBE4llIvkir.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                878,
+                53
+            ],
+            "popularity": 15.4555,
+            "release_date": "2025-06-25",
+            "video": false,
+            "vote_average": 7.257,
+            "vote_count": 1179
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/1yktYsxkmUtUFTUnCAUaqG6FEiz.jpg",
+            "id": 541671,
+            "title": "Ballerina",
+            "original_title": "Ballerina",
+            "overview": "Taking place during the events of John Wick: Chapter 3 – Parabellum, Eve Macarro begins her training in the assassin traditions of the Ruska Roma.",
+            "poster_path": "/2VUmvqsHb6cEtdfscEA6fqqVzLg.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                53,
+                80
+            ],
+            "popularity": 21.7233,
+            "release_date": "2025-06-04",
+            "video": false,
+            "vote_average": 7.256,
+            "vote_count": 2380
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/nAxGnGHOsfzufThz20zgmRwKur3.jpg",
+            "id": 1233413,
+            "title": "Sinners",
+            "original_title": "Sinners",
+            "overview": "Trying to leave their troubled lives behind, twin brothers return to their hometown to start again, only to discover that an even greater evil is waiting to welcome them back.",
+            "poster_path": "/qTvFWCGeGXgBRaINLY1zqgTPSpn.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                28,
+                53
+            ],
+            "popularity": 38.3572,
+            "release_date": "2025-04-16",
+            "video": false,
+            "vote_average": 7.487,
+            "vote_count": 3860
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/jYCyTdPfgT01IOJWDnnetr9RDX6.jpg",
+            "id": 986056,
+            "title": "Thunderbolts*",
+            "original_title": "Thunderbolts*",
+            "overview": "After finding themselves ensnared in a death trap, seven disillusioned castoffs must embark on a dangerous mission that will force them to confront the darkest corners of their pasts.",
+            "poster_path": "/hqcexYHbiTBfDIdDWxrxPtVndBX.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                878,
+                12
+            ],
+            "popularity": 21.6698,
+            "release_date": "2025-04-30",
+            "video": false,
+            "vote_average": 7.292,
+            "vote_count": 3269
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/2Nti3gYAX513wvhp8IiLL6ZDyOm.jpg",
+            "id": 950387,
+            "title": "A Minecraft Movie",
+            "original_title": "A Minecraft Movie",
+            "overview": "Four misfits find themselves struggling with ordinary problems when they are suddenly pulled through a mysterious portal into the Overworld: a bizarre, cubic wonderland that thrives on imagination. To get back home, they'll have to master this world while embarking on a magical quest with an unexpected, expert crafter, Steve.",
+            "poster_path": "/yFHHfHcUgGAxziP1C3lLt0q2T4s.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                10751,
+                14,
+                35,
+                12
+            ],
+            "popularity": 23.4859,
+            "release_date": "2025-03-31",
+            "video": false,
+            "vote_average": 6.273,
+            "vote_count": 2825
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/AcxbOWUbwtIEDisfuhNGHQNfnMK.jpg",
+            "id": 11544,
+            "title": "Lilo & Stitch",
+            "original_title": "Lilo & Stitch",
+            "overview": "As Stitch, a runaway genetic experiment from a faraway planet, wreaks havoc on the Hawaiian Islands, he becomes the mischievous adopted alien \"puppy\" of an independent little girl named Lilo and learns about loyalty, friendship, and ʻohana, the Hawaiian tradition of family.",
+            "poster_path": "/d73UqZWyw3MUMpeaFcENgLZ2kWS.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                16,
+                10751,
+                35
+            ],
+            "popularity": 11.0187,
+            "release_date": "2002-06-21",
+            "video": false,
+            "vote_average": 7.561,
+            "vote_count": 6997
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/yRBc6WY3r1Fz5Cjd6DhSvzqunED.jpg",
+            "id": 1061474,
+            "title": "Superman",
+            "original_title": "Superman",
+            "overview": "Superman, a journalist in Metropolis, embarks on a journey to reconcile his Kryptonian heritage with his human upbringing as Clark Kent.",
+            "poster_path": "/ldyfo0BKmz5rWtJJKCvwaNS4cJT.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                878,
+                12,
+                28
+            ],
+            "popularity": 36.2278,
+            "release_date": "2025-07-09",
+            "video": false,
+            "vote_average": 7.354,
+            "vote_count": 4419
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/6WqqEjiycNvDLjbEClM1zCwIbDD.jpg",
+            "id": 1100988,
+            "title": "28 Years Later",
+            "original_title": "28 Years Later",
+            "overview": "Twenty-eight years after the Rage virus outbreak, a heavily-defended island survives connected to the mainland by a single causeway. When one of the group leaves the island into the dark heart of the mainland, he discovers secrets, wonders, and horrors that have mutated not only the infected but other survivors as well.",
+            "poster_path": "/n5FygjEppOvac6yEaowi26nTyw3.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                53,
+                878
+            ],
+            "popularity": 22.0355,
+            "release_date": "2025-06-18",
+            "video": false,
+            "vote_average": 6.6,
+            "vote_count": 2288
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/5xgxXZ9C8KZDg0xWbk6rX0XcO9T.jpg",
+            "id": 986206,
+            "title": "Night Carnage",
+            "original_title": "Night Carnage",
+            "overview": "A blogger who is also a werewolf meets a dashing playboy with a dark secret of his own. Starring Logan Andrews and Christian Howard.",
+            "poster_path": "/w0wjPQKhlqisSbylf1sWZiNyc2h.jpg",
+            "media_type": "movie",
+            "original_language": "fr",
+            "genre_ids": [
+                28,
+                27,
+                10749
+            ],
+            "popularity": 7.5495,
+            "release_date": "2025-07-29",
+            "video": false,
+            "vote_average": 5.952,
+            "vote_count": 63
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/3amhHtHYHXIhWfUf5bpm31mDWB7.jpg",
+            "id": 1386877,
+            "title": "I Am the End of the World",
+            "original_title": "Io sono la fine del mondo",
+            "overview": "Forced to come back to Palermo to take care of his elderly parents, a deadpan driver-for-hire takes advantage of the situation to get back at the rigid authority figures who ruined his teenage years.",
+            "poster_path": "/5nDR8pgRvFmnhgpJnREdYQKYbys.jpg",
+            "media_type": "movie",
+            "original_language": "it",
+            "genre_ids": [
+                35
+            ],
+            "popularity": 11.2441,
+            "release_date": "2025-01-09",
+            "video": false,
+            "vote_average": 4.928,
+            "vote_count": 243
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/2nwhxEyefcIFKwOrSigiamoIzu2.jpg",
+            "id": 1119878,
+            "title": "Ice Road: Vengeance",
+            "original_title": "Ice Road: Vengeance",
+            "overview": "Big rig ice road driver Mike McCann travels to Nepal to scatter his late brother’s ashes on Mt. Everest. While on a packed tour bus traversing the deadly 12,000 ft. terrain of the infamous Road to the Sky, McCann and his mountain guide encounter a group of mercenaries and must fight to save themselves, the busload of innocent travelers, and the local villagers’ homeland.",
+            "poster_path": "/cQN9rZj06rXMVkk76UF1DfBAico.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                53,
+                18
+            ],
+            "popularity": 15.8691,
+            "release_date": "2025-06-27",
+            "video": false,
+            "vote_average": 6.244,
+            "vote_count": 585
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/w3Bi0wygeFQctn6AqFTwhGNXRwL.jpg",
+            "id": 803796,
+            "title": "KPop Demon Hunters",
+            "original_title": "KPop Demon Hunters",
+            "overview": "When K-pop superstars Rumi, Mira and Zoey aren't selling out stadiums, they're using their secret powers to protect their fans from supernatural threats.",
+            "poster_path": "/zT7Lhw3BhJbMkRqm9Zlx2YGMsY0.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                14,
+                10402,
+                35,
+                16
+            ],
+            "popularity": 44.1475,
+            "release_date": "2025-06-20",
+            "video": false,
+            "vote_average": 8.069,
+            "vote_count": 2466
+        }
+    ],
+    "total_pages": 2,
+    "total_results": 40
+}

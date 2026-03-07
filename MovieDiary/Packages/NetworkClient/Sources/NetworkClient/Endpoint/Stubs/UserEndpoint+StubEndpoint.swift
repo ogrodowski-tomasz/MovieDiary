@@ -1,5 +1,4 @@
 import Foundation
-@testable import NetworkClient
 
 extension UserEndpoint: StubEndpoint {
 

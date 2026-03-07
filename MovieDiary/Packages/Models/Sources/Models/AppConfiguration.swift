@@ -56,9 +56,28 @@ public struct Images: Codable, Sendable {
         return posterSizes[1]
     }
 
-    public func poster(for path: String?) -> URL? {
+    public func poster(for path: String?, original: Bool = false) -> URL? {
         guard let path else { return nil }
-        guard let url = URL(string: secureBaseURL), let size = posterSize() else { return nil }
+        guard let url = URL(string: secureBaseURL) else { return nil }
+        let size: String?
+        if original {
+            size = posterSizes.first(where: { $0.localizedCaseInsensitiveContains("original") }) ?? posterSize()
+        } else {
+            size = posterSize()
+        }
+        guard let size else { return nil }
+        return url.appending(path: "/\(size)/").appending(path: path)
+    }
+    
+    internal func backdropSize() -> String? {
+        guard !backdropSizes.isEmpty else { return nil }
+        guard backdropSizes.count > 1 else { return posterSizes.first }
+        return backdropSizes[1]
+    }
+
+    public func backdrop(for path: String?) -> URL? {
+        guard let path else { return nil }
+        guard let url = URL(string: secureBaseURL), let size = backdropSize() else { return nil }
         return url.appending(path: "/\(size)/").appending(path: path)
     }
 }

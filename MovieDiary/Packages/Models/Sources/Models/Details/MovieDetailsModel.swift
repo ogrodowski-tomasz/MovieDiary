@@ -5,7 +5,7 @@ public struct MovieDetailsModel: Codable, Sendable, Identifiable {
     public let backdropPath: String?
     public let belongsToCollection: BelongsToCollection?
     public let budget: Int?
-    public let genres: [Genre]?
+    public let genres: [Genre]
     public let homepage: String?
     public let id: Int
     public let imdbID: String?
@@ -16,9 +16,11 @@ public struct MovieDetailsModel: Codable, Sendable, Identifiable {
     public let productionCompanies: [ProductionCompany]?
     public let productionCountries: [ProductionCountry]?
     public let releaseDate: String?
-    public let revenue, runtime: Int?
+    public let revenue: Int?
+    public let runtime: Int
     public let spokenLanguages: [SpokenLanguage]?
-    public let status, tagline, title: String?
+    public let status, tagline: String?
+    public let title: String
     public let video: Bool?
     public let voteAverage: Double?
     public let voteCount: Int?
@@ -44,7 +46,7 @@ public struct MovieDetailsModel: Codable, Sendable, Identifiable {
         case voteCount = "vote_count"
     }
 
-    public init(adult: Bool?, backdropPath: String?, belongsToCollection: BelongsToCollection?, budget: Int?, genres: [Genre]?, homepage: String?, id: Int, imdbID: String?, originCountry: [String]?, originalLanguage: String?, originalTitle: String?, overview: String?, popularity: Double?, posterPath: String?, productionCompanies: [ProductionCompany]?, productionCountries: [ProductionCountry]?, releaseDate: String?, revenue: Int?, runtime: Int?, spokenLanguages: [SpokenLanguage]?, status: String?, tagline: String?, title: String?, video: Bool?, voteAverage: Double?, voteCount: Int?) {
+    public init(adult: Bool?, backdropPath: String?, belongsToCollection: BelongsToCollection?, budget: Int?, genres: [Genre], homepage: String?, id: Int, imdbID: String?, originCountry: [String]?, originalLanguage: String?, originalTitle: String?, overview: String?, popularity: Double?, posterPath: String?, productionCompanies: [ProductionCompany]?, productionCountries: [ProductionCountry]?, releaseDate: String?, revenue: Int?, runtime: Int, spokenLanguages: [SpokenLanguage]?, status: String?, tagline: String?, title: String, video: Bool?, voteAverage: Double?, voteCount: Int?) {
         self.adult = adult
         self.backdropPath = backdropPath
         self.belongsToCollection = belongsToCollection
@@ -71,6 +73,28 @@ public struct MovieDetailsModel: Codable, Sendable, Identifiable {
         self.video = video
         self.voteAverage = voteAverage
         self.voteCount = voteCount
+    }
+    public var additionalInfoString: String {
+        [releaseYear, runtimeFormatted , rateValue].compactMap { $0 }.joined(separator: " · ")
+    }
+    
+    public var runtimeFormatted: String {
+        let hours = runtime / 60
+        let minutes = runtime % 60
+        return hours > 0 ? "\(hours)h \(minutes)min" : "\(minutes)min"
+    }
+    
+    public var releaseYear: String? {
+        guard let releaseDate else { return nil }
+        let split = releaseDate.split(separator: "-")
+        guard let year = split.first(where: { $0.count == 4 }) else { return nil }
+        return String(year)
+    }
+    
+    public var rateValue: String? {
+        guard let voteAverage else { return nil }
+        let stringVal = String(format: "%.1f", voteAverage)
+        return "★\(stringVal)"
     }
 
     public static let sample = Self.init(
@@ -134,37 +158,6 @@ public struct BelongsToCollection: Codable, Sendable {
         self.name = name
         self.posterPath = posterPath
         self.backdropPath = backdropPath
-    }
-}
-
-// MARK: - Genre
-public struct Genre: Codable, Sendable {
-    public let id: Int?
-    public let name: String?
-
-    public init(id: Int?, name: String?) {
-        self.id = id
-        self.name = name
-    }
-}
-
-// MARK: - ProductionCompany
-public struct ProductionCompany: Codable, Sendable {
-    public let id: Int?
-    public let logoPath, name, originCountry: String?
-
-    public enum CodingKeys: String, CodingKey {
-        case id
-        case logoPath = "logo_path"
-        case name
-        case originCountry = "origin_country"
-    }
-
-    public init(id: Int?, logoPath: String?, name: String?, originCountry: String?) {
-        self.id = id
-        self.logoPath = logoPath
-        self.name = name
-        self.originCountry = originCountry
     }
 }
 

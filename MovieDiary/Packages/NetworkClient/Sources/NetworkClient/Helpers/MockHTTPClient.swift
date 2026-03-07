@@ -1,5 +1,4 @@
 import Foundation
-@testable import NetworkClient
 
 extension HTTPClientProtocol {
     func get<Entity: Decodable>(endpoint: any StubEndpoint) async throws -> Entity {
@@ -11,29 +10,36 @@ extension HTTPClientProtocol {
     }
 }
 
-final class MockHTTPClient: HTTPClientProtocol {
+public final class MockHTTPClient: HTTPClientProtocol {
+    
+    enum MockError: Error {
+        case wrongEndpoint(Endpoint)
+        case missingFilename(Endpoint)
+        case noFileInBundle(String)
+        case noDataAtPath(String)
+    }
 
-    init() { }
+    public init() { }
 
-    func get<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
+    public func get<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
         try getStaticData(endpoint: endpoint)
     }
 
-    func post<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
+    public func post<Entity>(endpoint: any Endpoint) async throws -> Entity where Entity : Decodable {
         try getStaticData(endpoint: endpoint)
     }
 
     private func getStaticData<Entity: Decodable>(endpoint: any Endpoint) throws -> Entity {
         guard let endpoint = endpoint as? StubEndpoint else {
-            throw URLError(.badServerResponse)
+            throw MockError.wrongEndpoint(endpoint)
 
         }
         guard let file = endpoint.stubDataFilename, !file.isEmpty else {
-            throw URLError(.badServerResponse)
+            throw MockError.missingFilename(endpoint)
         }
 
         guard let url = Bundle.module.url(forResource: file, withExtension: "json") else {
-            throw URLError(.badServerResponse)
+            throw MockError.noFileInBundle(file)
         }
 
         let data = try Data(contentsOf: url)
