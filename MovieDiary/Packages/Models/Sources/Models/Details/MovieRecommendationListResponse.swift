@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MovieRecommendationsListResponse: Codable, Sendable {
+public struct MovieRecommendationsListResponse: Codable, Sendable, Hashable {
     public let page: Int
     public let results: [MovieRecommendationModel]
     public let totalPages, totalResults: Int
@@ -19,7 +19,7 @@ public struct MovieRecommendationsListResponse: Codable, Sendable {
     }
 }
 
-public struct MovieRecommendationModel: Codable, Sendable, Identifiable {
+public struct MovieRecommendationModel: Codable, Sendable, Hashable, Identifiable {
     public let adult: Bool?
     public let backdropPath: String?
     public let id: Int
@@ -71,6 +71,6 @@ public struct MovieRecommendationModel: Codable, Sendable, Identifiable {
     }
 }
 
-public enum MediaType: String, Codable, Sendable {
+public enum MediaType: String, Codable, Sendable, Hashable {
     case movie = "movie"
 }

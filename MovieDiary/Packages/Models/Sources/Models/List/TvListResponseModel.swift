@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TvListResponseModel: Codable, Sendable {
+public struct TvListResponseModel: Codable, Sendable, Hashable {
     public let page: Int
     public let results: [TvModel]
     public let totalPages, totalResults: Int
@@ -19,7 +19,7 @@ public struct TvListResponseModel: Codable, Sendable {
     }
 }
 
-public struct TvModel: Codable, Identifiable, Sendable {
+public struct TvModel: Codable, Identifiable, Sendable, Hashable {
     public let adult: Bool?
     public let backdropPath: String?
     public let title: String

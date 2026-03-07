@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MovieDetailsModel: Codable, Sendable, Identifiable {
+public struct MovieDetailsModel: Codable, Sendable, Hashable, Identifiable {
     public let adult: Bool?
     public let backdropPath: String?
     public let belongsToCollection: BelongsToCollection?
@@ -143,7 +143,7 @@ public struct MovieDetailsModel: Codable, Sendable, Identifiable {
     )}
 
 
-public struct BelongsToCollection: Codable, Sendable {
+public struct BelongsToCollection: Codable, Sendable, Hashable {
     public let id: Int?
     public let name, posterPath, backdropPath: String?
 
@@ -162,7 +162,7 @@ public struct BelongsToCollection: Codable, Sendable {
 }
 
 // MARK: - ProductionCountry
-public struct ProductionCountry: Codable, Sendable {
+public struct ProductionCountry: Codable, Sendable, Hashable {
     public let iso3166_1, name: String?
 
     public enum CodingKeys: String, CodingKey {
@@ -176,7 +176,7 @@ public struct ProductionCountry: Codable, Sendable {
     }
 }
 
-public struct SpokenLanguage: Codable, Sendable {
+public struct SpokenLanguage: Codable, Sendable, Hashable {
     public let englishName, iso639_1, name: String?
 
     public enum CodingKeys: String, CodingKey {

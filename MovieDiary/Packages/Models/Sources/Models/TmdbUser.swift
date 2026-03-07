@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TmdbUser: Codable, Sendable {
+public struct TmdbUser: Codable, Sendable, Hashable {
     public let avatar: Avatar
     public let id: Int
     public let iso639_1, iso3166_1, name: String
@@ -18,18 +18,18 @@ public struct TmdbUser: Codable, Sendable {
 }
 
 // MARK: - Avatar
-public struct Avatar: Codable, Sendable {
+public struct Avatar: Codable, Sendable, Hashable {
     public let gravatar: Gravatar
     public let tmdb: Tmdb
 }
 
 // MARK: - Gravatar
-public struct Gravatar: Codable, Sendable {
+public struct Gravatar: Codable, Sendable, Hashable {
     public let hash: String
 }
 
 // MARK: - Tmdb
-public struct Tmdb: Codable, Sendable {
+public struct Tmdb: Codable, Sendable, Hashable {
     public let avatarPath: String
 
     enum CodingKeys: String, CodingKey {

@@ -18,11 +18,7 @@ struct CarouselCell<Item: CarouselModel>: View {
         VStack(alignment: .center, spacing: 8) {
             Button {
                 #warning("Improve")
-                if let item = item as? MovieModel {
-                    router.push(to: .details(id: item.id, posterPath: item.posterPath, title: item.title, overview: item.overview, listType: item.listType))
-                } else if let item = item as? MovieRecommendationModel {
-                    router.push(to: .details(id: item.id, posterPath: item.posterPath, title: item.title, overview: item.overview, listType: item.listType))
-                }
+                router.push(to: .details(item))
             } label: {
                 PosterImageView(config: .init(url: img, width: 120, height: 180, cornerRadius: 8))
                     .buttonStyle(.glassProminent)

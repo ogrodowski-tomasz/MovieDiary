@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ProductionCompany: Codable, Sendable {
+public struct ProductionCompany: Codable, Sendable, Hashable {
     public let id: Int?
     public let logoPath, name, originCountry: String?
 

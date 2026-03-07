@@ -4,26 +4,6 @@ import NetworkClient
 import SwiftUI
 import Nuke
 
-public protocol CarouselModel: Identifiable {
-    var posterPath: String { get }
-    var title: String { get }
-    var id: Int { get }
-    var listType: ListType { get }
-}
-
-extension MovieModel: CarouselModel {
-    public var listType: ListType { .movies }
-}
-
-extension TvModel: CarouselModel {
-    public var listType: ListType { .tvShows }
-}
-
-extension MovieRecommendationModel: CarouselModel {
-    
-    public var listType: ListType { .movies }
-}
-
 public struct CarouselListView<Item: CarouselModel>: View {
     @Environment(Router.self) var router
 

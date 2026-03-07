@@ -1,7 +1,7 @@
 import Foundation
-import Models
 
-public struct DetailsViewModel: Sendable {
+public struct DetailsViewModel: Sendable, Hashable {
+    
     public let id: Int
     public let posterPath: String?
     public let title: String
@@ -31,15 +31,18 @@ public struct DetailsViewModel: Sendable {
         return .init(id: movieModel.id, posterPath: movieModel.posterPath, title: movieModel.title, overview: movieModel.overview, listType: .movies)
     }
     
-    mutating
-    func inject(recommendations: MovieRecommendationsListResponse, details: MovieDetailsModel) {
+    public static func from(recommendationModel: MovieRecommendationModel) -> Self {
+        return .init(id: recommendationModel.id, posterPath: recommendationModel.posterPath, title: recommendationModel.title, overview: recommendationModel.overview, listType: .movies)
+    }
+    
+    public mutating func inject(recommendations: MovieRecommendationsListResponse, details: MovieDetailsModel) {
         self.recommendations = recommendations
         self.details = details
         self.genres = details.genres.join()
     }
     
-    mutating
-    func inject(accountState: MovieAccountStateModel) {
+    
+    public mutating func inject(accountState: MovieAccountStateModel) {
         self.accountState = accountState
         favoriteImageName = accountState.favorite ? "heart.fill" : "heart"
     }

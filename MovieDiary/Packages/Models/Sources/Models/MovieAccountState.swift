@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MovieAccountStateModel: Codable, Sendable {
+public struct MovieAccountStateModel: Codable, Sendable, Hashable {
     public let id: Int
     public let favorite: Bool
     public let rated: Rated?
@@ -22,7 +22,7 @@ public struct MovieAccountStateModel: Codable, Sendable {
     }
 }
 
-public struct Rated: Codable, Sendable {
+public struct Rated: Codable, Sendable, Hashable {
     public let value: Int?
 
     public init(value: Int?) {

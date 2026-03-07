@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AppConfiguration: Codable, Sendable {
+public struct AppConfiguration: Codable, Sendable, Hashable {
     public let changeKeys: [String]
     public let images: Images
 
@@ -23,7 +23,7 @@ public struct AppConfiguration: Codable, Sendable {
     )
 }
 
-public struct Images: Codable, Sendable {
+public struct Images: Codable, Sendable, Hashable {
     public let baseURL: String
     public let secureBaseURL: String
     public let backdropSizes, logoSizes, posterSizes, profileSizes: [String]

@@ -1,9 +1,11 @@
 import Foundation
+import Utils
+import OSLog
 
 public enum AppTab: Hashable, CaseIterable {
     case main
     case profile
-
+    
     public var title: String {
         switch self {
         case .main:
@@ -12,7 +14,7 @@ public enum AppTab: Hashable, CaseIterable {
             return "Profile"
         }
     }
-
+    
     public var systemImage: String {
         switch self {
         case .profile:
@@ -28,13 +30,15 @@ public enum AppTab: Hashable, CaseIterable {
 public final class Router {
     public var mainPath: [RouteDestination] = []
     public var profilePath: [RouteDestination] = []
-
+    
     public var selectedTab: AppTab = .main
-
+    
+    private let logger = Logger(category: "Router")
+    
     public init() {
         
     }
-
+    
     public func push(to route: RouteDestination) {
         switch selectedTab {
         case .main:
@@ -43,7 +47,7 @@ public final class Router {
             profilePath.append(route)
         }
     }
-
+    
     @discardableResult
     public func pop() -> RouteDestination? {
         switch selectedTab {
@@ -53,7 +57,7 @@ public final class Router {
             return profilePath.popLast()
         }
     }
-
+    
     public func popToRoot() {
         switch selectedTab {
         case .main:

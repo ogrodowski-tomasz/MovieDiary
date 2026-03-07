@@ -1,6 +1,6 @@
 import Foundation
 
-public struct GenreListModelResponse: Codable, Sendable {
+public struct GenreListModelResponse: Codable, Sendable, Hashable {
     public let genres: [Genre]
 
     public init(genres: [Genre]) {

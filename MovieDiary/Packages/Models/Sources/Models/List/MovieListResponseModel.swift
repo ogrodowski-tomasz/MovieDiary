@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MovieListResponseModel: Codable, Sendable {
+public struct MovieListResponseModel: Codable, Sendable, Hashable {
     public let page: Int
     public let results: [MovieModel]
     public let totalPages, totalResults: Int
@@ -19,7 +19,7 @@ public struct MovieListResponseModel: Codable, Sendable {
     }
 }
 
-public struct MovieModel: Codable, Identifiable, Sendable {
+public struct MovieModel: Codable, Identifiable, Sendable, Hashable {
     public let adult: Bool
     public let backdropPath: String?
     public let genreIDS: [Int]

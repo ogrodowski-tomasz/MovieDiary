@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Genre: Codable, Sendable, Identifiable {
+public struct Genre: Codable, Sendable, Hashable, Identifiable {
     public let id: Int
     public let name: String
 
