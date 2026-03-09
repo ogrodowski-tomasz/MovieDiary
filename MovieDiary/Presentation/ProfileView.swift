@@ -16,14 +16,14 @@ struct ProfileView: View {
                 ProfileImageView(appConfiguration: commonDataStore.configuration, profilePath: user.avatar.tmdb.avatarPath)
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(user.name)
+                        Text(verbatim: user.name)
                             .font(.largeTitle)
                     }
                 }
                 
-                Text("Rated Movies (\(rated.totalResults))")
+                Text(verbatim: "Rated Movies (\(rated.totalResults))")
                 ForEach(rated.results) { movie in
-                    Text(movie.title)
+                    Text(verbatim: movie.title)
                         .fontWeight(.semibold)
                 }
             }

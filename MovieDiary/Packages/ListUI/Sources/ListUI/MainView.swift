@@ -24,6 +24,7 @@ public struct MainView: View {
             .padding(.horizontal, 10)
 
             ScrollView(.vertical, content: {
+                
                 LazyVStack(alignment: .leading, spacing: 0) {
                     switch selectedList {
                     case .movies:

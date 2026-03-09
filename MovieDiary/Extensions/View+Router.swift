@@ -12,7 +12,7 @@ extension View {
                 let vm = DetailsViewModel.from(list: listModel)
                 DetailsView(viewModel: vm)
             case .showFull:
-                Text("SHOW FULL LIST HERE WITH PAGINATION")
+                Text(verbatim: "SHOW FULL LIST HERE WITH PAGINATION")
             }
         }
     }

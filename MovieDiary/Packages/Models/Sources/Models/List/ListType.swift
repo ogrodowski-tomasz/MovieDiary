@@ -8,9 +8,9 @@ public enum ListType: Hashable, CaseIterable, Sendable {
     public var title: LocalizedStringResource {
         switch self {
         case .movies:
-            "Movies"
+            "movies.title"
         case .tvShows:
-            "TV Shows"
+            "tv.title"
         }
     }
 

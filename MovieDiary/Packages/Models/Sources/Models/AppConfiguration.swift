@@ -81,4 +81,3 @@ public struct Images: Codable, Sendable, Hashable {
         return url.appending(path: "/\(size)/").appending(path: path)
     }
 }
-

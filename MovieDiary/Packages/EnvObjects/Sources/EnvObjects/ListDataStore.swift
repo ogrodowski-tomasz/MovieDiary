@@ -52,9 +52,9 @@ public final class ListDataStore: Store {
         [popularMoviesState, upcomingMoviesState, topRatedMoviesState]
     }
 
-    private var popularMoviesState: ListSectionState<ListModel> = .init("Popular")
-    private var topRatedMoviesState: ListSectionState<ListModel> = .init("Top Rated")
-    private var upcomingMoviesState: ListSectionState<ListModel> = .init("Upcoming")
+    private var popularMoviesState: ListSectionState<ListModel> = .init("section.title.popular")
+    private var topRatedMoviesState: ListSectionState<ListModel> = .init("section.title.top.rated")
+    private var upcomingMoviesState: ListSectionState<ListModel> = .init("section.title.upcoming")
 
     // MARK: - TV SHOWS
 
@@ -62,9 +62,9 @@ public final class ListDataStore: Store {
         [popularTvState, topRatedTvState, airingTodayTvState]
     }
 
-    private var popularTvState: ListSectionState<ListModel> = .init("Popular")
-    private var topRatedTvState: ListSectionState<ListModel> = .init("Top Rated")
-    private var airingTodayTvState: ListSectionState<ListModel> = .init("Airing Today")
+    private var popularTvState: ListSectionState<ListModel> = .init("section.title.popular")
+    private var topRatedTvState: ListSectionState<ListModel> = .init("section.title.top.rated")
+    private var airingTodayTvState: ListSectionState<ListModel> = .init("section.title.airing.today")
 
     private let logger = Logger(category: "ListDataStore")
 
