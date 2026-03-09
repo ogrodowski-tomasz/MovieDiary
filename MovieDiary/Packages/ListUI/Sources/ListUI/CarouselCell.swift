@@ -4,7 +4,7 @@ import NetworkClient
 import SwiftUI
 import ReusableComponents
 
-struct CarouselCell<Item: CarouselModel>: View {
+struct CarouselCell: View {
     @Environment(CommonDataStore.self) var commonDataStore
     @Environment(Router.self) var router
     
@@ -12,12 +12,11 @@ struct CarouselCell<Item: CarouselModel>: View {
         commonDataStore.configuration?.images.poster(for: item.posterPath)
     }
 
-    let item: Item
+    let item: ListModel
 
     var body: some View {
         VStack(alignment: .center, spacing: 8) {
             Button {
-                #warning("Improve")
                 router.push(to: .details(item))
             } label: {
                 PosterImageView(config: .init(url: img, width: 120, height: 180, cornerRadius: 8))

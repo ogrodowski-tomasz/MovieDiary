@@ -4,14 +4,14 @@ import NetworkClient
 import SwiftUI
 import Nuke
 
-public struct CarouselListView<Item: CarouselModel>: View {
+public struct CarouselListView: View {
     @Environment(Router.self) var router
 
     let title: LocalizedStringResource
-    let items: [Item]
+    let items: [ListModel]
     let showMore: Bool
 
-    public init(title: LocalizedStringResource, items: [Item], showMore: Bool) {
+    public init(title: LocalizedStringResource, items: [ListModel], showMore: Bool) {
         self.title = title
         self.items = items
         self.showMore = showMore
@@ -60,8 +60,11 @@ private struct CarouselPreviewWrapper: View {
     }
 
     var body: some View {
-        CarouselListView(title: "Top Rated", items: MovieModel.sampleList, showMore: true)
-            .environment(commonDataStore)
+        VStack {
+            CarouselListView(title: "Top Rated", items: [.sample(.movies)], showMore: true)
+            CarouselListView(title: "Popular", items: [.sample(.tvShows)], showMore: true)
+        }
+        .environment(commonDataStore)
     }
 }
 

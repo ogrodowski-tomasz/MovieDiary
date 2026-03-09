@@ -7,14 +7,12 @@ extension View {
     func withRouter() -> some View {
         navigationDestination(for: RouteDestination.self) { destination in
             switch destination {
-            case let .details(model as MovieModel):
-                DetailsView(viewModel: .from(movieModel: model))
-            case let .details(model as MovieRecommendationModel):
-                DetailsView(viewModel: .from(recommendationModel: model))
+            case .details(let listModel):
+                #warning("Improve. DetailsViewModel init should be internal?")
+                let vm = DetailsViewModel.from(list: listModel)
+                DetailsView(viewModel: vm)
             case .showFull:
                 Text("SHOW FULL LIST HERE WITH PAGINATION")
-            default:
-                Text("THIS ROUTE IS NOT SUPPORTED YET \(destination)")
             }
         }
     }

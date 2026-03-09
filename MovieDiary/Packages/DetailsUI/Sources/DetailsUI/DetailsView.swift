@@ -56,13 +56,13 @@ public struct DetailsView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color(uiColor: .secondarySystemGroupedBackground))
                     
-                    VStack(alignment: .leading, spacing: 10) {
-                        if let recommendation = viewModel.recommendations?.results {
-                            CarouselListView(title: "Podobne", items: recommendation, showMore: false)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .redactWithPlaceholder(when: viewModel.recommendations?.results == nil)
+//                    VStack(alignment: .leading, spacing: 10) {
+//                        if let recommendation = viewModel.recommendations?.results {
+//                            CarouselListView(title: "Podobne", items: recommendation, showMore: false)
+//                        }
+//                    }
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//                    .redactWithPlaceholder(when: viewModel.recommendations?.results == nil)
                 }
                 .padding(.bottom, 150)
             }
@@ -124,7 +124,7 @@ private struct DetailsPreviewWrapper: View {
     }
     
     var body: some View {
-        DetailsView(viewModel: .from(movieModel: .sample))
+        DetailsView(viewModel: .from(list: .sample(.movies)))
             .environment(\.httpClient, MockHTTPClient())
             .environment(commonDataStore)
     }

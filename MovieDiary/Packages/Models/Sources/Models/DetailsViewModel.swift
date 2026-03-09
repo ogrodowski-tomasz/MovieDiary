@@ -27,12 +27,8 @@ public struct DetailsViewModel: Sendable, Hashable {
         self.accountState = accountState
     }
     
-    public static func from(movieModel: MovieModel) -> Self {
-        return .init(id: movieModel.id, posterPath: movieModel.posterPath, title: movieModel.title, overview: movieModel.overview, listType: .movies)
-    }
-    
-    public static func from(recommendationModel: MovieRecommendationModel) -> Self {
-        return .init(id: recommendationModel.id, posterPath: recommendationModel.posterPath, title: recommendationModel.title, overview: recommendationModel.overview, listType: .movies)
+    public static func from(list: ListModel) -> Self {
+        return .init(id: list.id, posterPath: list.posterPath, title: list.title, overview: list.overview, listType: list.listType)
     }
     
     public mutating func inject(recommendations: MovieRecommendationsListResponse, details: MovieDetailsModel) {
