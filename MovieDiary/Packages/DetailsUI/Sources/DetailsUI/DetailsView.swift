@@ -55,13 +55,13 @@ public struct DetailsView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color(uiColor: .secondarySystemGroupedBackground))
                     
-//                    VStack(alignment: .leading, spacing: 10) {
-//                        if let recommendation = viewModel.recommendations?.results {
-//                            CarouselListView(title: "Podobne", items: recommendation, showMore: false)
-//                        }
-//                    }
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                    .redactWithPlaceholder(when: viewModel.recommendations?.results == nil)
+                    VStack(alignment: .leading, spacing: 10) {
+                        if let recommendation = viewModel.recommendations {
+                            CarouselListView(title: "section.title.similar", items: recommendation, showMore: false)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .redactWithPlaceholder(when: viewModel.recommendations == nil)
                 }
                 .padding(.bottom, 150)
             }
@@ -79,8 +79,10 @@ public struct DetailsView: View {
         do {
             let id = viewModel.id
             let listType = viewModel.listType
-            let details: DetailsWrapperModel = try await client.get(endpoint: DetailsEndpoint.details(listType, id: id))
-            viewModel.inject(details: details)
+            async let details: DetailsWrapperModel = try await client.get(endpoint: DetailsEndpoint.details(listType, id: id))
+            async let recommendation: ListResponseModel = try await client.get(endpoint: DetailsEndpoint.recommendations(listType, id: id))
+            let data = try await (details, recommendation.results)
+            viewModel.inject(details: data.0, recommendations: data.1)
         } catch {
             print(error)
         }

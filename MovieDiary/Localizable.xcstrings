@@ -139,6 +139,23 @@
         }
       }
     },
+    "section.title.similar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommendations"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podobne"
+          }
+        }
+      }
+    },
     "section.title.top.rated" : {
       "extractionState" : "manual",
       "localizations" : {

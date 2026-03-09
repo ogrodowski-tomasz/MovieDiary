@@ -3,7 +3,7 @@ import Models
 
 public enum DetailsEndpoint: Sendable {
     case details(ListType, id: Int)
-    case recommendations(id: Int)
+    case recommendations(ListType, id: Int)
 }
 
 extension DetailsEndpoint: Endpoint {
@@ -12,8 +12,8 @@ extension DetailsEndpoint: Endpoint {
         switch self {
         case let .details(listType, id):
             return "/\(listType.endpointPathComponent)/\(id)"
-        case let .recommendations(id):
-            return "/movie/\(id)/recommendations"
+        case let .recommendations(listType,id):
+            return "/\(listType.endpointPathComponent)/\(id)/recommendations"
         }
     }
 
