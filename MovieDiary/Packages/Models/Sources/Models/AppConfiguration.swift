@@ -55,6 +55,25 @@ public struct Images: Codable, Sendable, Hashable {
         guard posterSizes.count > 1 else { return posterSizes.first }
         return posterSizes[1]
     }
+    
+    public func profileSize() -> String? {
+        guard !profileSizes.isEmpty else { return nil }
+        guard profileSizes.count > 1 else { return posterSizes.first }
+        return profileSizes[1]
+    }
+    
+    public func profile(for path: String?, original: Bool = false) -> URL? {
+        guard let path else { return nil }
+        guard let url = URL(string: secureBaseURL) else { return nil }
+        let size: String?
+        if original {
+            size = profileSizes.first(where: { $0.localizedCaseInsensitiveContains("original") }) ?? profileSize()
+        } else {
+            size = profileSize()
+        }
+        guard let size else { return nil }
+        return url.appending(path: "/\(size)/").appending(path: path)
+    }
 
     public func poster(for path: String?, original: Bool = false) -> URL? {
         guard let path else { return nil }

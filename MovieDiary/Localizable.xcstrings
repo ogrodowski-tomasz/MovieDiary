@@ -122,6 +122,23 @@
         }
       }
     },
+    "section.title.cast" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cast"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obsada"
+          }
+        }
+      }
+    },
     "section.title.popular" : {
       "extractionState" : "manual",
       "localizations" : {

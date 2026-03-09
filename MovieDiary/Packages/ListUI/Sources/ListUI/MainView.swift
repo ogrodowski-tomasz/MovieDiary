@@ -30,13 +30,13 @@ public struct MainView: View {
                     case .movies:
                         ForEach(dataStore.moviesSections) { section in
                             if section.showData {
-                                CarouselListView(title: section.title, items: section.abbreviatedList, showMore: section.showMoreVisible)
+                                CarouselListView(title: section.title, type: .posters(section.abbreviatedList), showMore: section.showMoreVisible)
                             }
                         }
                     case .tvShows:
                         ForEach(dataStore.tvShowsSections) { section in
                             if section.showData {
-                                CarouselListView(title: section.title, items: section.abbreviatedList, showMore: section.showMoreVisible)
+                                CarouselListView(title: section.title, type: .posters(section.abbreviatedList), showMore: section.showMoreVisible)
                             }
                         }
                     }

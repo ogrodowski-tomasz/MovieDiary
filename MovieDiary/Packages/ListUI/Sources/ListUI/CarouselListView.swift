@@ -5,15 +5,27 @@ import SwiftUI
 import Nuke
 
 public struct CarouselListView: View {
+    public enum CarouselType {
+        case posters([ListModel])
+        case profiles([CastCrewModel])
+        
+        var height: CGFloat {
+            switch self {
+            case .posters: 250
+            case .profiles: 200
+            }
+        }
+    }
+    
     @Environment(Router.self) var router
 
     let title: LocalizedStringResource
-    let items: [ListModel]
+    let type: CarouselType
     let showMore: Bool
 
-    public init(title: LocalizedStringResource, items: [ListModel], showMore: Bool) {
+    public init(title: LocalizedStringResource, type: CarouselType, showMore: Bool) {
         self.title = title
-        self.items = items
+        self.type = type
         self.showMore = showMore
     }
 
@@ -26,10 +38,17 @@ public struct CarouselListView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .center, spacing: 12) {
-                    ForEach(items) { item in
-                        CarouselCell(item: item)
+                    switch type {
+                    case let .posters(items):
+                        ForEach(items) { item in
+                            CarouselCell(item: item)
+                        }
+                    case let .profiles(items):
+                        ForEach(items) { item in
+                            CastCarouselCell(item: item)
+                        }
                     }
-
+                    
                     if showMore {
                         Button {
                             router.push(to: .showFull)
@@ -44,7 +63,7 @@ public struct CarouselListView: View {
 
                 }
                 .padding(.horizontal)
-                .frame(minHeight: 250)
+                .frame(height: type.height)
             }
             Spacer()
         }
@@ -63,8 +82,9 @@ private struct CarouselPreviewWrapper: View {
     var body: some View {
         VStack {
             Rectangle()
-            CarouselListView(title: "Top Rated", items: [.sample(.movies)], showMore: true)
-            CarouselListView(title: "Popular", items: [.sample(.tvShows)], showMore: true)
+            CarouselListView(title: "Top rated", type: .posters([.sample(.movies)]), showMore: false)
+                
+            CarouselListView(title: "Cast", type: .profiles([.sample]), showMore: false)
             Rectangle()
             Rectangle()
             Rectangle()

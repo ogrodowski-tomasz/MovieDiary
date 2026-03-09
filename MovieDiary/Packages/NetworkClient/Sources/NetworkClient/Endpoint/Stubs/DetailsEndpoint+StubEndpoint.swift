@@ -14,6 +14,8 @@ extension DetailsEndpoint: StubEndpoint {
             }
         case .recommendations:
             "MovieDetailsRecommendationsStaticData"
+        case .credits:
+            "CastStaticData"
         }
     }
 }
