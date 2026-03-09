@@ -1,6 +1,6 @@
 import Foundation
 
-public struct DetailsViewModel: Sendable, Hashable {
+public struct DetailsViewModel: Sendable, Equatable {
     
     public let id: Int
     public let posterPath: String?
@@ -12,10 +12,10 @@ public struct DetailsViewModel: Sendable, Hashable {
     
     public private(set) var genres: String?
     public private(set) var recommendations: MovieRecommendationsListResponse?
-    public private(set) var details: MovieDetailsModel?
+    public private(set) var details: DetailsWrapperModel?
     public private(set) var accountState: MovieAccountStateModel?
     
-    public init(id: Int, posterPath: String?, title: String, overview: String?, listType: ListType, genres: String? = nil, recommendations: MovieRecommendationsListResponse? = nil, details: MovieDetailsModel? = nil, accountState: MovieAccountStateModel? = nil) {
+    public init(id: Int, posterPath: String?, title: String, overview: String?, listType: ListType, genres: String? = nil, recommendations: MovieRecommendationsListResponse? = nil, details: DetailsWrapperModel? = nil, accountState: MovieAccountStateModel? = nil) {
         self.id = id
         self.posterPath = posterPath
         self.title = title
@@ -31,10 +31,9 @@ public struct DetailsViewModel: Sendable, Hashable {
         return .init(id: list.id, posterPath: list.posterPath, title: list.title, overview: list.overview, listType: list.listType)
     }
     
-    public mutating func inject(recommendations: MovieRecommendationsListResponse, details: MovieDetailsModel) {
-        self.recommendations = recommendations
+    public mutating func inject(details: DetailsWrapperModel) {
         self.details = details
-        self.genres = details.genres.join()
+        self.genres = details.genresJoined
     }
     
     

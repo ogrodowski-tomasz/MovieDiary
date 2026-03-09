@@ -48,9 +48,8 @@ public struct DetailsView: View {
                             Text(overview)
                                 .lineLimit(2)
                         }
-                        Text(viewModel.details?.additionalInfoString ?? "-")
-                            .font(.headline)
-                            .redactWithPlaceholder(when: viewModel.details == nil)
+                        
+                        AdditionalInfoView(info: viewModel.details?.additionalInfo ?? [], redacted: viewModel.details == nil)
                     }
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -79,10 +78,9 @@ public struct DetailsView: View {
     private func fetchDetails() async {
         do {
             let id = viewModel.id
-            async let details: MovieDetailsModel = try await client.get(endpoint: DetailsEndpoint.movie(id: id))
-            async let recommendations: MovieRecommendationsListResponse = try await client.get(endpoint: DetailsEndpoint.recommendations(id: id))
-            let data = try await (details, recommendations)
-            viewModel.inject(recommendations: data.1, details: data.0)
+            let listType = viewModel.listType
+            let details: DetailsWrapperModel = try await client.get(endpoint: DetailsEndpoint.details(listType, id: id))
+            viewModel.inject(details: details)
         } catch {
             print(error)
         }
@@ -90,6 +88,7 @@ public struct DetailsView: View {
     
     private func fetchAccountState() async {
         do {
+            guard case .movies = viewModel.listType else { return }
             let id = viewModel.id
             let model = try await userSessionStore.getMovieAccountState(id: id)
             viewModel.inject(accountState: model)
