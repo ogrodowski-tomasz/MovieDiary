@@ -55,13 +55,15 @@ public struct ListModel: Decodable, Sendable, Hashable, Identifiable {
         if let movieTitle = try? container.decode(String.self, forKey: .title) {
             self.title = movieTitle
             listType = .movies
-        } else if let tvName = try? container.decode(String.self, forKey: .name) {
-            self.title = tvName
-            listType = .tvShows
         } else {
-            title = "#unkownName#"
-            listType = .movies
-            print("DEBUG: Could not decode title for id \(id)")
+            do {
+                let tvName = try container.decode(String.self, forKey: .name)
+                self.title = tvName
+                listType = .tvShows
+            } catch {
+                print("DEBUG: Could not decode title for id \(id)")
+                throw error
+            }
         }
     }
     
