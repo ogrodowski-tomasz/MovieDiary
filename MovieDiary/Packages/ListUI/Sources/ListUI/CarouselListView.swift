@@ -18,7 +18,7 @@ public struct CarouselListView: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 0) {
             Text(title)
                 .font(.largeTitle)
                 .fontWeight(.bold)
@@ -46,6 +46,7 @@ public struct CarouselListView: View {
                 .padding(.horizontal)
                 .frame(minHeight: 250)
             }
+            Spacer()
         }
     }
 }
@@ -61,10 +62,15 @@ private struct CarouselPreviewWrapper: View {
 
     var body: some View {
         VStack {
+            Rectangle()
             CarouselListView(title: "Top Rated", items: [.sample(.movies)], showMore: true)
             CarouselListView(title: "Popular", items: [.sample(.tvShows)], showMore: true)
+            Rectangle()
+            Rectangle()
+            Rectangle()
         }
         .environment(commonDataStore)
+        .environment(Router())
     }
 }
 

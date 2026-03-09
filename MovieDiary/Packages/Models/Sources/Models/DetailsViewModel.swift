@@ -33,7 +33,9 @@ public struct DetailsViewModel: Sendable, Equatable {
     
     public mutating func inject(details: DetailsWrapperModel, recommendations: [ListModel]) {
         self.details = details
-        self.recommendations = recommendations
+        if !recommendations.isEmpty {
+            self.recommendations = recommendations
+        }
         self.genres = details.genresJoined
     }
     

@@ -22,61 +22,35 @@ public struct ListModel: Decodable, Sendable, Hashable, Identifiable {
     public let title: String
     
     public let listType: ListType
-    
-    public enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case overview = "overview"
-        case posterPath = "poster_path"
-        
-        // Movie specific
-        case releaseDate = "release_date"
-        case title = "title"
-        // Tv specific
-        case firstAirDate = "first_air_date"
-        case name = "name"
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(Int.self, forKey: .id)
-        
-        overview = try container.decode(String.self, forKey: .overview)
-        posterPath = try container.decode(String.self, forKey: .posterPath)
-        
-        if let movieReleaseDate = try? container.decode(String.self, forKey: .releaseDate) {
-            self.releaseDate = movieReleaseDate
-        } else if let tvReleaseDate = try? container.decode(String.self, forKey: .firstAirDate) {
-            self.releaseDate = tvReleaseDate
-        } else {
-            releaseDate = "#unknownReleaseDate#"
-            print("DEBUG: Could not decode release date for id \(id)")
-        }
-        
-        if let movieTitle = try? container.decode(String.self, forKey: .title) {
-            self.title = movieTitle
-            listType = .movies
-        } else {
-            do {
-                let tvName = try container.decode(String.self, forKey: .name)
-                self.title = tvName
-                listType = .tvShows
-            } catch {
-                print("DEBUG: Could not decode title for id \(id)")
-                throw error
+}
+
+public extension ListModel {
+    init(from decoder: Decoder) throws {
+        do {
+            if let movie = try? MovieSpecificListModel(from: decoder) {
+                self.id = movie.id
+                self.overview = movie.overview ?? ""
+                self.posterPath = movie.poster_path ?? ""
+                self.releaseDate = movie.release_date.getYear
+                self.title = movie.title
+                self.listType = .movies
+            } else {
+                let tv = try TVSpecificListModel(from: decoder)
+                self.id = tv.id
+                self.overview = tv.overview ?? ""
+                self.posterPath = tv.poster_path ?? ""
+                self.releaseDate = tv.first_air_date.getYear
+                self.title = tv.name
+                self.listType = .tvShows
             }
+        } catch {
+            throw error
         }
     }
-    
-    public init(id: Int, overview: String, posterPath: String, releaseDate: String, title: String, listType: ListType) {
-        self.id = id
-        self.overview = overview
-        self.posterPath = posterPath
-        self.releaseDate = releaseDate
-        self.title = title
-        self.listType = listType
-    }
-    
-    public static func sample(_ listType: ListType) -> Self {
+}
+
+public extension ListModel {
+    static func sample(_ listType: ListType) -> Self {
         switch listType {
         case .movies:
             return .movieSample
