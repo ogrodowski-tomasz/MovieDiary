@@ -5,6 +5,7 @@ public enum CommonEndpoint: Endpoint {
 
     case configuration
     case genres(ListType)
+    case langauges
     
     public func path() -> String {
         switch self {
@@ -12,6 +13,8 @@ public enum CommonEndpoint: Endpoint {
             "/configuration"
         case let .genres(type):
             "/genre/\(type.endpointPathComponent)/list"
+        case .langauges:
+            "/configuration/languages"
         }
     }
     

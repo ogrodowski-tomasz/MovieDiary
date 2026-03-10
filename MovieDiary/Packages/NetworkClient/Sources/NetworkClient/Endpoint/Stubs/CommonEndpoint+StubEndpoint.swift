@@ -8,6 +8,8 @@ extension CommonEndpoint: StubEndpoint {
             "AppConfigurationStaticData"
         case .genres:
             "GenreListStaticData"
+        default:
+            nil
         }
     }
 }
