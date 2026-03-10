@@ -11,7 +11,7 @@ public struct DetailsViewModel: Sendable, Equatable {
     public private(set) var favoriteImageName: String = "heart"
     
     public private(set) var genres: String?
-    public private(set) var recommendations: [ListModel]?
+    public private(set) var recommendations: ListResponseModel?
     public private(set) var details: DetailsWrapperModel?
     public private(set) var credits: CreditsResponseModel?
     public private(set) var accountState: MovieAccountStateModel?
@@ -21,7 +21,7 @@ public struct DetailsViewModel: Sendable, Equatable {
         return credits.cast
     }
     
-    public init(id: Int, posterPath: String?, title: String, overview: String?, listType: ListType, genres: String? = nil, recommendations: [ListModel]? = nil, details: DetailsWrapperModel? = nil, accountState: MovieAccountStateModel? = nil) {
+    public init(id: Int, posterPath: String?, title: String, overview: String?, listType: ListType, genres: String? = nil, recommendations: ListResponseModel? = nil, details: DetailsWrapperModel? = nil, accountState: MovieAccountStateModel? = nil) {
         self.id = id
         self.posterPath = posterPath
         self.title = title
@@ -37,9 +37,9 @@ public struct DetailsViewModel: Sendable, Equatable {
         return .init(id: list.id, posterPath: list.posterPath, title: list.title, overview: list.overview, listType: list.listType)
     }
     
-    public mutating func inject(details: DetailsWrapperModel, recommendations: [ListModel], credits: CreditsResponseModel) {
+    public mutating func inject(details: DetailsWrapperModel, recommendations: ListResponseModel, credits: CreditsResponseModel) {
         self.details = details
-        if !recommendations.isEmpty {
+        if !recommendations.results.isEmpty {
             self.recommendations = recommendations
         }
         self.credits = credits

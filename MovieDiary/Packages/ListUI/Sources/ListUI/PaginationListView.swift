@@ -12,18 +12,36 @@ public struct PaginationListView: View {
 
     public var body: some View {
         List {
-            ForEach(viewModel.models) { model in
-                Text(model.title)
-            }
             switch viewModel.state {
-            case let .display(_ ,nextPageState):
-                ProgressView()
-                    .task {
-                        await nextPage()
+            case let .display(models, nextPageState):
+                Section {
+                    ForEach(models) { model in
+                        Text(model.title)
                     }
-            default:
-                EmptyView()
+                }
+                switch nextPageState {
+                case .hasNextPage:
+                    ProgressView()
+                        .task {
+                            await nextPage()
+                        }
+                case .none:
+                    EmptyView()
+                }
+            case .loading:
+                ProgressView()
+            case let .error(error):
+                Text(error.localizedDescription)
             }
+//            switch viewModel.state {
+//            case let .display(_ ,nextPageState):
+//                ProgressView()
+//                    .task {
+//                        await nextPage()
+//                    }
+//            default:
+//                EmptyView()
+//            }
         }
         .navigationTitle(viewModel.mode.title)
         .navigationBarTitleDisplayMode(.inline)

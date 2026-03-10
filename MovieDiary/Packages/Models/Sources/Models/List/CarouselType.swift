@@ -1,6 +1,6 @@
 import Foundation
 
-public enum CarouselType {
+public enum CarouselType: Sendable {
     case posters([ListModel])
     case profiles([CastCrewModel])
     

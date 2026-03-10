@@ -2,8 +2,6 @@ import Foundation
 import Models
 import NetworkClient
 
-
-
 @MainActor
 @Observable
 final class PaginationListViewModel {
@@ -51,6 +49,8 @@ final class PaginationListViewModel {
             newModels = try await httpClient.get(endpoint: ListEndpoint.moviesUpcoming(page: nextPageId))
         case .airingToday:
             newModels = try await httpClient.get(endpoint: ListEndpoint.tvShowsAiringToday(page: nextPageId))
+        case let .recommendations(type,id, _):
+            newModels = try await httpClient.get(endpoint: DetailsEndpoint.recommendations(type, id: id, page: nextPageId))
         }
         
         self.models.append(contentsOf: newModels.results)

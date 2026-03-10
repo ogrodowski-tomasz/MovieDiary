@@ -66,7 +66,7 @@ public struct DetailsView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         if let recommendation = viewModel.recommendations {
-//                            CarouselListView(title: "section.title.similar", type: .posters(recommendation), showMore: false)
+                            CarouselListView(paginableType: .recommendations(type: viewModel.listType, id: viewModel.id, initial: recommendation))
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -89,10 +89,10 @@ public struct DetailsView: View {
             let id = viewModel.id
             let listType = viewModel.listType
             async let details: DetailsWrapperModel = try await client.get(endpoint: DetailsEndpoint.details(listType, id: id))
-            async let recommendation: ListResponseModel = try await client.get(endpoint: DetailsEndpoint.recommendations(listType, id: id))
+            async let recommendation: ListResponseModel = try await client.get(endpoint: DetailsEndpoint.recommendations(listType, id: id, page: 1))
             async let credits: CreditsResponseModel = try await client.get(endpoint: DetailsEndpoint.credits(listType, id: id))
 
-            let data = try await (details, recommendation.results, credits)
+            let data = try await (details, recommendation, credits)
             viewModel.inject(details: data.0, recommendations: data.1, credits: data.2)
         } catch {
             print(error)

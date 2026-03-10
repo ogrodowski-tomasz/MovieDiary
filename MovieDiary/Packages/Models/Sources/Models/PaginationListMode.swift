@@ -5,6 +5,7 @@ public enum PaginationListMode: Hashable, Sendable {
     case popular(type: ListType, initial: ListResponseModel)
     case upcoming(initial: ListResponseModel)
     case airingToday(initial: ListResponseModel)
+    case recommendations(type: ListType, id: Int, initial: ListResponseModel)
     
     public var initial: ListResponseModel {
         switch self {
@@ -15,6 +16,8 @@ public enum PaginationListMode: Hashable, Sendable {
         case let .upcoming(initial):
             return initial
         case let .airingToday(initial):
+            return initial
+        case let .recommendations(_,_,initial):
             return initial
         }
     }
@@ -29,6 +32,8 @@ public enum PaginationListMode: Hashable, Sendable {
             "section.title.upcoming"
         case .airingToday:
             "section.title.airing.today"
+        case .recommendations:
+            "section.title.similar"
         }
     }
     
@@ -39,7 +44,8 @@ public enum PaginationListMode: Hashable, Sendable {
         case let .topRated(_, initial),
             let .popular(_, initial),
             let .upcoming(initial),
-            let .airingToday(initial):
+            let .airingToday(initial),
+            let .recommendations(_,_,initial):
             return .posters(Array(initial.results.prefix(Self.limiter)))
         }
     }
@@ -49,7 +55,8 @@ public enum PaginationListMode: Hashable, Sendable {
         case let .topRated(_, initial),
             let .popular(_, initial),
             let .upcoming(initial),
-            let .airingToday(initial):
+            let .airingToday(initial),
+            let .recommendations(_,_,initial):
             return (initial.results.count) > Self.limiter
         }
     }
