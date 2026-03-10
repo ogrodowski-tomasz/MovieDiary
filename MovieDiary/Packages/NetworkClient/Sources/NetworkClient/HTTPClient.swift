@@ -3,6 +3,8 @@ import Models
 import Utils
 import OSLog
 
+
+
 public protocol HTTPClientProtocol: Sendable {
     func get<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity
     func post<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity
@@ -11,7 +13,15 @@ public protocol HTTPClientProtocol: Sendable {
 public struct HTTPClient: HTTPClientProtocol {
 
     let environment: AppEnvironment
-    let urlSession: URLSession
+    let urlSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        let memoryCapacity: Int = 1024 * 1024 * 10
+        let diskCapacity: Int = 1024 * 1024 * 50
+        let cache = URLCache(memoryCapacity: memoryCapacity, diskCapacity: diskCapacity)
+        configuration.urlCache = cache
+        configuration.requestCachePolicy = .useProtocolCachePolicy // basing on Etag
+        return URLSession(configuration: configuration)
+    }()
     
     enum HTTPClientError: Error {
         case invalidRequest
@@ -21,7 +31,6 @@ public struct HTTPClient: HTTPClientProtocol {
 
     public init(environment: AppEnvironment = .prod) {
         self.environment = environment
-        urlSession = URLSession.shared
     }
     
     public func post<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity {
@@ -76,5 +85,3 @@ public struct HTTPClient: HTTPClientProtocol {
         return request
     }
 }
-
-
