@@ -1,5 +1,8 @@
 import SwiftUI
+import EnvObjects
 import Models
+import ReusableComponents
+import UIKit
 
 public struct PaginationListView: View {
     
@@ -16,9 +19,9 @@ public struct PaginationListView: View {
             case let .display(models, nextPageState):
                 Section {
                     ForEach(models) { model in
-                        Text(model.title)
+                        PaginationListCell(model: model)
                     }
-                }
+                }.listSectionMargins(.top, 0)
                 switch nextPageState {
                 case .hasNextPage:
                     ProgressView()
@@ -26,23 +29,18 @@ public struct PaginationListView: View {
                             await nextPage()
                         }
                 case .none:
-                    EmptyView()
+                    Text("🎉 " + "\(String(localized: "pagination.end.label"))")
+                        .listRowBackground(Color(uiColor: .systemBackground))
+                        .listRowSeparator(.hidden)
                 }
             case .loading:
-                ProgressView()
+                ProgressView("pagination.loading.label")
             case let .error(error):
                 Text(error.localizedDescription)
             }
-//            switch viewModel.state {
-//            case let .display(_ ,nextPageState):
-//                ProgressView()
-//                    .task {
-//                        await nextPage()
-//                    }
-//            default:
-//                EmptyView()
-//            }
         }
+        .listStyle(.grouped)
+        .listSectionSpacing(0)
         .navigationTitle(viewModel.mode.title)
         .navigationBarTitleDisplayMode(.inline)
         .task {
@@ -59,6 +57,55 @@ public struct PaginationListView: View {
     }
 }
 
-//#Preview {
-//    PaginationListView()
-//}
+struct PaginationListCell: View {
+    @Environment(CommonDataStore.self) var commonDataStore
+    @Environment(Router.self) var router
+    let model: ListModel
+    
+    var img: URL? {
+        commonDataStore.configuration?.images.poster(for: model.posterPath)
+    }
+    
+    var body: some View {
+        Button {
+            router.push(to: .details(model))
+        } label: {
+            HStack(alignment: .center, spacing: 10) {
+                PosterImageView(config: .init(url: img, width: 80, height: 120, cornerRadius: 8))
+                VStack(alignment: .leading, spacing: 7) {
+                    Text(model.title + " (\(model.releaseDate))")
+                        .font(.title3)
+                        .fontWeight(.medium)
+                    Text(model.overview)
+                        .lineLimit(2)
+                    Text("⭐️\(String(format: "%.1f", model.voteAverage ?? 0))")
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .listRowBackground(Color(uiColor: .systemBackground))
+        .listRowSeparator(.visible, edges: [.top])
+    }
+}
+
+private struct PaginationListPreviewWrapper: View {
+    
+    @State private var commonDataStore: CommonDataStore
+    
+    init() {
+        _commonDataStore = State(initialValue: .init())
+        commonDataStore.configuration = .sample
+    }
+    
+    var body: some View {
+        NavigationStack {
+            PaginationListView(mode: .topRated(type: .movies, initial: .sample))
+        }
+            .environment(commonDataStore)
+            .environment(Router())
+    }
+}
+
+#Preview {
+    PaginationListPreviewWrapper()
+}

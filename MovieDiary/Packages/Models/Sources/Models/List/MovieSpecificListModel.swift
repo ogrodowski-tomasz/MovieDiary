@@ -6,4 +6,5 @@ public struct MovieSpecificListModel: Decodable, Sendable, Hashable, Identifiabl
     public let poster_path: String?
     public let release_date: String
     public let title: String
+    public let vote_average: Double?
 }

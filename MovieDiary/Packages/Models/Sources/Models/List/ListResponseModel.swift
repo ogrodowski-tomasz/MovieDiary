@@ -12,6 +12,15 @@ public struct ListResponseModel: Decodable, Sendable, Hashable {
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }
+    
+    public init(page: Int, results: [ListModel], totalPages: Int, totalResults: Int) {
+        self.page = page
+        self.results = results
+        self.totalPages = totalPages
+        self.totalResults = totalResults
+    }
+    
+    public static let sample: Self = .init(page: 1, results: [.sample(.movies), .sample(.tvShows)], totalPages: 1, totalResults: 1)
 }
 
 public struct ListModel: Decodable, Sendable, Hashable, Identifiable {
@@ -20,6 +29,7 @@ public struct ListModel: Decodable, Sendable, Hashable, Identifiable {
     public let posterPath: String
     public let releaseDate: String
     public let title: String
+    public let voteAverage: Double?
     
     public let listType: ListType
 }
@@ -33,6 +43,7 @@ public extension ListModel {
                 self.posterPath = movie.poster_path ?? ""
                 self.releaseDate = movie.release_date.getYear
                 self.title = movie.title
+                self.voteAverage = movie.vote_average
                 self.listType = .movies
             } else {
                 let tv = try TVSpecificListModel(from: decoder)
@@ -41,6 +52,7 @@ public extension ListModel {
                 self.posterPath = tv.poster_path ?? ""
                 self.releaseDate = tv.first_air_date.getYear
                 self.title = tv.name
+                self.voteAverage = tv.vote_average
                 self.listType = .tvShows
             }
         } catch {
@@ -63,8 +75,9 @@ public extension ListModel {
         id: 228,
         overview: "Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
         posterPath: "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
-        releaseDate: "1994-09-23",
-        title: "The Shawshank Redemption",
+        releaseDate: "1994-09-23".getYear,
+        title: "Lord of the Rings: Fellowship of the Ring",
+        voteAverage: 7.932,
         listType: .movies
     )
     
@@ -72,8 +85,9 @@ public extension ListModel {
         id: 1396,
         overview: "Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and given a prognosis of only two years left to live. He becomes filled with a sense of fearlessness and an unrelenting desire to secure his family's financial future at any cost as he enters the dangerous world of drugs and crime.",
         posterPath: "/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg",
-        releaseDate: "2008-01-20",
+        releaseDate: "2008-01-20".getYear,
         title: "Breaking Bad",
+        voteAverage: 8.938,
         listType: .tvShows
     )
 }

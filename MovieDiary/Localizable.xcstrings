@@ -105,6 +105,40 @@
         }
       }
     },
+    "pagination.end.label" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End of the list!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koniec listy!"
+          }
+        }
+      }
+    },
+    "pagination.loading.label" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading next page"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ładowanie"
+          }
+        }
+      }
+    },
     "section.title.airing.today" : {
       "extractionState" : "manual",
       "localizations" : {
