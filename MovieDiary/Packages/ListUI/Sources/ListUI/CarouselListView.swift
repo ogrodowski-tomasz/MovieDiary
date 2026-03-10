@@ -5,40 +5,37 @@ import SwiftUI
 import Nuke
 
 public struct CarouselListView: View {
-    public enum CarouselType {
-        case posters([ListModel])
-        case profiles([CastCrewModel])
-        
-        var height: CGFloat {
-            switch self {
-            case .posters: 250
-            case .profiles: 200
-            }
-        }
-    }
     
     @Environment(Router.self) var router
 
-    let title: LocalizedStringResource
-    let type: CarouselType
-    let showMore: Bool
+    let paginableType: PaginationListMode
 
-    public init(title: LocalizedStringResource, type: CarouselType, showMore: Bool) {
-        self.title = title
-        self.type = type
-        self.showMore = showMore
+    public init(paginableType: PaginationListMode) {
+        self.paginableType = paginableType
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(title)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.horizontal)
+            Button {
+                router.push(to: .paginatedList(paginableType))
+            } label: {
+                HStack(alignment: .center, spacing: 8) {
+                    Text(paginableType.title)
+                        .font(.largeTitle)
+                    if paginableType.showMoreActive {
+                        Image(systemName: "chevron.right")
+                            .font(.title3)
+                    }
+                }
+            }
+            .disabled(!paginableType.showMoreActive)
+            .foregroundStyle(.primary)
+            .fontWeight(.bold)
+            .padding(.horizontal)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .center, spacing: 12) {
-                    switch type {
+                    switch paginableType.carouselType {
                     case let .posters(items):
                         ForEach(items) { item in
                             CarouselCell(item: item)
@@ -48,52 +45,41 @@ public struct CarouselListView: View {
                             CastCarouselCell(item: item)
                         }
                     }
-                    
-                    if showMore {
-                        Button {
-                            router.push(to: .showFull)
-                        } label: {
-                            Image(systemName: "arrow.right")
-                                .foregroundStyle(.primary)
-                                .padding()
-                                .background(Color.yellow)
-                                .clipShape(.circle)
-                        }
-                    }
-
                 }
                 .padding(.horizontal)
-                .frame(height: type.height)
+                .frame(height: paginableType.carouselType.height)
             }
             Spacer()
         }
     }
 }
-
-private struct CarouselPreviewWrapper: View {
-
-    @State private var commonDataStore: CommonDataStore
-
-    init() {
-        _commonDataStore = State(initialValue: .init())
-        commonDataStore.configuration = .sample
-    }
-
-    var body: some View {
-        VStack {
-            Rectangle()
-            CarouselListView(title: "Top rated", type: .posters([.sample(.movies)]), showMore: false)
-                
-            CarouselListView(title: "Cast", type: .profiles([.sample]), showMore: false)
-            Rectangle()
-            Rectangle()
-            Rectangle()
-        }
-        .environment(commonDataStore)
-        .environment(Router())
-    }
-}
-
-#Preview {
-    CarouselPreviewWrapper()
-}
+//
+//private struct CarouselPreviewWrapper: View {
+//
+//    @State private var commonDataStore: CommonDataStore
+//
+//    init() {
+//        _commonDataStore = State(initialValue: .init())
+//        commonDataStore.configuration = .sample
+//    }
+//
+//    var body: some View {
+//        VStack {
+//            Rectangle()
+//            CarouselListView(paginableType: .topRated(type: .movies, initial: .ini), carouselType: <#T##CarouselListView.CarouselType#>, showMore: <#T##Bool#>)
+//            CarouselListView(title: "Top rated", type: .posters([.sample(.movies)]), showMore: true)
+//            CarouselListView(title: "Top rated", type: .posters([.sample(.movies)]), showMore: false)
+//
+////            CarouselListView(title: "Cast", type: .profiles([.sample]), showMore: false)
+//            Rectangle()
+//            Rectangle()
+//            Rectangle()
+//        }
+//        .environment(commonDataStore)
+//        .environment(Router())
+//    }
+//}
+//
+//#Preview {
+//    CarouselPreviewWrapper()
+//}

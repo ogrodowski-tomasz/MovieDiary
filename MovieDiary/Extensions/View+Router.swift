@@ -2,6 +2,7 @@ import DetailsUI
 import EnvObjects
 import SwiftUI
 import Models
+import ListUI
 
 extension View {
     func withRouter() -> some View {
@@ -13,6 +14,8 @@ extension View {
                 DetailsView(viewModel: vm)
             case .showFull:
                 Text(verbatim: "SHOW FULL LIST HERE WITH PAGINATION")
+            case let .paginatedList(mode):
+                PaginationListView(mode: mode)
             }
         }
     }

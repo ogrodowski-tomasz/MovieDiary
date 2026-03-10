@@ -27,8 +27,14 @@ extension ListEndpoint: Endpoint {
     
     public func queryItems() -> [URLQueryItem]? {
         switch self {
-        default:
-            return nil
+        case let .popular(_, page):
+            return [URLQueryItem(name: "page", value: "\(page)")]
+        case let .topRated(_, page):
+            return [URLQueryItem(name: "page", value: "\(page)")]
+        case let .moviesUpcoming(page):
+            return [URLQueryItem(name: "page", value: "\(page)")]
+        case let .tvShowsAiringToday(page):
+            return [URLQueryItem(name: "page", value: "\(page)")]
         }
     }
 

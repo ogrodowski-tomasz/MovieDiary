@@ -57,7 +57,7 @@ public struct DetailsView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         if let cast = viewModel.cast {
-                            CarouselListView(title: "section.title.cast", type: .profiles(cast), showMore: false)
+//                            CarouselListView(title: "section.title.cast", type: .profiles(cast), showMore: false)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -66,7 +66,7 @@ public struct DetailsView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         if let recommendation = viewModel.recommendations {
-                            CarouselListView(title: "section.title.similar", type: .posters(recommendation), showMore: false)
+//                            CarouselListView(title: "section.title.similar", type: .posters(recommendation), showMore: false)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

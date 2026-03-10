@@ -4,9 +4,10 @@ import EnvObjects
 
 public struct MainView: View {
     @Environment(UserSessionStore.self) var userSessionStore
-    @Environment(ListDataStore.self) var dataStore
 
     @Environment(\.httpClient) var client
+    
+    @State private var viewModel = ListViewModel()
 
     public init() { }
 
@@ -24,33 +25,24 @@ public struct MainView: View {
             .padding(.horizontal, 10)
 
             ScrollView(.vertical, content: {
-                
                 LazyVStack(alignment: .leading, spacing: 0) {
                     switch selectedList {
                     case .movies:
-                        ForEach(dataStore.moviesSections) { section in
-                            if section.showData {
-                                CarouselListView(title: section.title, type: .posters(section.abbreviatedList), showMore: section.showMoreVisible)
-                            }
+                        ForEach(viewModel.viewState.moviesSections, id: \.self) { section in
+                            CarouselListView(paginableType: section)
                         }
                     case .tvShows:
-                        ForEach(dataStore.tvShowsSections) { section in
-                            if section.showData {
-                                CarouselListView(title: section.title, type: .posters(section.abbreviatedList), showMore: section.showMoreVisible)
-                            }
+                        ForEach(viewModel.viewState.tvShowsSections, id: \.self) { section in
+                            CarouselListView(paginableType: section)
                         }
                     }
                 }
             })
             .backMenuTitle("Main")
         .task {
-            #warning("Improve")
             guard !viewDidAppear else { return }
-            dataStore.injectClient(client)
-            await dataStore.fetchPopular()
-            await dataStore.fetchTopRated()
-            await dataStore.fetchAiringTodayTvShows()
-            await dataStore.fetchUpcomingMovies()
+            viewModel.injectClient(client)
+            await viewModel.fetchData()
             viewDidAppear = true
         }
     }

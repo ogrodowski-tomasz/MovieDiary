@@ -4,6 +4,7 @@ import Models
 public enum RouteDestination: Hashable, CustomDebugStringConvertible, Sendable {
     case details(ListModel)
     case showFull
+    case paginatedList(PaginationListMode)
     
     public var debugDescription: String {
         switch self {
@@ -11,6 +12,8 @@ public enum RouteDestination: Hashable, CustomDebugStringConvertible, Sendable {
             "Details (\(model.title))"
         case .showFull:
             "Show Full"
+        case .paginatedList:
+            "Paginated List"
         }
     }
 
