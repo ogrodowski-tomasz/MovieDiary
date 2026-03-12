@@ -11,6 +11,7 @@ struct MovieDiaryApp: App {
     @State private var userSessionStore: UserSessionStore
     @State private var commonDataStore: CommonDataStore
     @State private var router = Router()
+    @State private var userPreferences = UserPreferences.shared
     let httpClient = HTTPClient(environment: .prod)
 
     init() {
@@ -25,6 +26,7 @@ struct MovieDiaryApp: App {
                 .environment(userSessionStore)
                 .environment(commonDataStore)
                 .environment(router)
+                .environment(userPreferences)
                 .environment(\.httpClient, httpClient)
         }
     }

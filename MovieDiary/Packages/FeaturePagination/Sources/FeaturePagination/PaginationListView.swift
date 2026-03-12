@@ -6,6 +6,7 @@ import UIKit
 public struct PaginationListView: View {
     
     @Environment(\.httpClient) var httpClient
+    @Environment(UserPreferences.self) var userPreferences
     @State private var viewModel: PaginationListViewModel
     
     public init(mode: PaginationListMode) {
@@ -49,7 +50,8 @@ public struct PaginationListView: View {
     
     private func nextPage() async {
         do {
-            try await viewModel.fetchNextPage()
+            let appLanguage = userPreferences.appLanguage
+            try await viewModel.fetchNextPage(lang: appLanguage)
         } catch {
             print("DEBUG: Error fetching next page \(error)")
         }

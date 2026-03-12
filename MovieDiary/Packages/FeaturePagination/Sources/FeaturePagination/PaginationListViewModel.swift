@@ -37,20 +37,20 @@ final class PaginationListViewModel {
         self.httpClient = httpClient
     }
     
-    func fetchNextPage() async throws {
+    func fetchNextPage(lang: String) async throws {
         guard let httpClient, let nextPageId else { return }
         let newModels: ListResponseModel
         switch mode {
         case let .topRated(type, _):
-            newModels = try await httpClient.get(endpoint: ListEndpoint.topRated(type: type, page: nextPageId).endpoint)
+            newModels = try await httpClient.get(endpoint: ListEndpoint.topRated(type: type, page: nextPageId, language: lang).endpoint)
         case let .popular(type, _):
-            newModels = try await httpClient.get(endpoint: ListEndpoint.popular(type: type, page: nextPageId).endpoint)
+            newModels = try await httpClient.get(endpoint: ListEndpoint.popular(type: type, page: nextPageId, language: lang).endpoint)
         case .upcoming:
-            newModels = try await httpClient.get(endpoint: ListEndpoint.moviesUpcoming(page: nextPageId).endpoint)
+            newModels = try await httpClient.get(endpoint: ListEndpoint.moviesUpcoming(page: nextPageId, language: lang).endpoint)
         case .airingToday:
-            newModels = try await httpClient.get(endpoint: ListEndpoint.tvShowsAiringToday(page: nextPageId).endpoint)
+            newModels = try await httpClient.get(endpoint: ListEndpoint.tvShowsAiringToday(page: nextPageId, language: lang).endpoint)
         case let .recommendations(type,id, _):
-            newModels = try await httpClient.get(endpoint: DetailsEndpoint.recommendations(type, id: id, page: nextPageId).endpoint)
+            newModels = try await httpClient.get(endpoint: DetailsEndpoint.recommendations(type, id: id, page: nextPageId, language: lang).endpoint)
         }
         
         self.models.append(contentsOf: newModels.results)

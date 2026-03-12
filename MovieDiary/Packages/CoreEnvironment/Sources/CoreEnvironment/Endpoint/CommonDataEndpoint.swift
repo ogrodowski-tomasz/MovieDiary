@@ -14,10 +14,7 @@ public enum CommonEndpoint: Sendable {
         case let .genres(type, language):
             return .init(
                 path: "/genre/\(type.endpointPathComponent)/list",
-                queryItems: [.init(
-                    name: "language",
-                    value: language
-                )]
+                queryItems: [.language(language)]
             )
         case .langauges:
             return .init(path: "/configuration/languages")

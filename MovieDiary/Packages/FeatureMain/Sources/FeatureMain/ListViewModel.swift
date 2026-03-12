@@ -53,15 +53,15 @@ public final class ListViewModel {
 
     private let logger = Logger(subsystem: "MainViewModel", category: "ListViewModel")
     
-    public func fetchData() async {
+    public func fetchData(lang: String) async {
         do {
             let page = 1
-            async let popularMovies = try await getPopularMovies(page: page)
-            async let topRatedMovies = try await getTopRatedMovies(page: page)
-            async let upcomingMovies = try await getUpcomingMovies(page: page)
-            async let popularTv = try await getPopularTv(page: page)
-            async let topRatedTv = try await getTopRatedTv(page: page)
-            async let airingTodayTv = try await getAiringTodayTv(page: page)
+            async let popularMovies = try await getPopularMovies(page: page, lang: lang)
+            async let topRatedMovies = try await getTopRatedMovies(page: page, lang: lang)
+            async let upcomingMovies = try await getUpcomingMovies(page: page, lang: lang)
+            async let popularTv = try await getPopularTv(page: page, lang: lang)
+            async let topRatedTv = try await getTopRatedTv(page: page, lang: lang)
+            async let airingTodayTv = try await getAiringTodayTv(page: page, lang: lang)
             let data = try await (popularMovies, topRatedMovies, upcomingMovies, popularTv, topRatedTv, airingTodayTv)
             viewState.inject(
                 popularMovies: .popular(type: .movies, initial: data.0),
@@ -76,45 +76,45 @@ public final class ListViewModel {
         }
     }
 
-    private func getPopularMovies(page: Int) async throws -> ListResponseModel {
+    private func getPopularMovies(page: Int, lang: String) async throws -> ListResponseModel {
         guard let client else { throw StoreError.missingClient }
-        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .movies, page: page).endpoint)
+        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .movies, page: page, language: lang).endpoint)
         return model
     }
 
-    private func getPopularTv(page: Int) async throws -> ListResponseModel {
+    private func getPopularTv(page: Int, lang: String) async throws -> ListResponseModel {
         guard let client else { throw StoreError.missingClient }
-        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .tvShows, page: page).endpoint)
+        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.popular(type: .tvShows, page: page, language: lang).endpoint)
         return model
     }
 
     // MARK: - TOP RATED
 
-    private func getTopRatedMovies(page: Int) async throws -> ListResponseModel {
+    private func getTopRatedMovies(page: Int, lang: String) async throws -> ListResponseModel {
         guard let client else { throw StoreError.missingClient }
-        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .movies, page: page).endpoint)
+        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .movies, page: page, language: lang).endpoint)
         return model
     }
 
-    private func getTopRatedTv(page: Int) async throws -> ListResponseModel {
+    private func getTopRatedTv(page: Int, lang: String) async throws -> ListResponseModel {
         guard let client else { throw StoreError.missingClient }
-        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .tvShows, page: page).endpoint)
+        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.topRated(type: .tvShows, page: page, language: lang).endpoint)
         return model
     }
 
     // MARK: MOVIES
 
-    private func getUpcomingMovies(page: Int) async throws -> ListResponseModel {
+    private func getUpcomingMovies(page: Int, lang: String) async throws -> ListResponseModel {
         guard let client else { throw StoreError.missingClient }
-        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.moviesUpcoming(page: page).endpoint)
+        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.moviesUpcoming(page: page, language: lang).endpoint)
         return model
     }
 
     // MARK: - TV SHOWS
 
-    private func getAiringTodayTv(page: Int) async throws -> ListResponseModel {
+    private func getAiringTodayTv(page: Int, lang: String) async throws -> ListResponseModel {
         guard let client else { throw StoreError.missingClient }
-        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.tvShowsAiringToday(page: page).endpoint)
+        let model: ListResponseModel = try await client.get(endpoint: ListEndpoint.tvShowsAiringToday(page: page, language: lang).endpoint)
         return model
     }
 

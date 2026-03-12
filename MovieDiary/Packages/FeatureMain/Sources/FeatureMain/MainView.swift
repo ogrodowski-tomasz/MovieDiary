@@ -4,6 +4,7 @@ import CoreEnvironment
 
 public struct MainView: View {
     @Environment(UserSessionStore.self) var userSessionStore
+    @Environment(UserPreferences.self) var userPreferences
 
     @Environment(\.httpClient) var client
     
@@ -42,7 +43,7 @@ public struct MainView: View {
         .task {
             guard !viewDidAppear else { return }
             viewModel.injectClient(client)
-            await viewModel.fetchData()
+            await viewModel.fetchData(lang: userPreferences.appLanguage)
             viewDidAppear = true
         }
     }

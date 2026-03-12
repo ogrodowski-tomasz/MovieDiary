@@ -5,5 +5,11 @@ public struct AppLanguages: Decodable, Sendable, Hashable {
     public let english_name: String
     public let name: String
     
-    public static let `default`: AppLanguages = .init(iso_639_1: "pl", english_name: "Polish", name: "Polish")
+    internal static let `default`: AppLanguages = .init(iso_639_1: "en", english_name: "English", name: "English")
+}
+
+public extension Array where Element == AppLanguages {
+    func resolve(for id: String) -> AppLanguages {
+        first(where: { $0.iso_639_1.localizedCaseInsensitiveContains(id) }) ?? .default
+    }
 }

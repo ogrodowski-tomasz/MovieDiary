@@ -29,13 +29,16 @@ public class CommonDataStore {
     
     private let logger = Logger(subsystem: "CoreEnvironment", category: "CommonDataStore")
     
-    public func getCommonData() async {
+    public func getCommonData(lang: String) async {
         guard let client else { return }
         do {
             logger.info("Starting to fetch configuration")
             let configuration: AppConfiguration = try await client.get(endpoint: CommonEndpoint.configuration.endpoint)
-            async let movieGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.movies, language: AppLanguages.default.iso_639_1).endpoint)
-            async let tvGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.tvShows, language: AppLanguages.default.iso_639_1).endpoint)
+            let allLangauges: [AppLanguages] = try await client.get(endpoint: CommonEndpoint.langauges.endpoint)
+            let resultLanguage = allLangauges.resolve(for: lang)
+            logger.info("Resolved language: \(resultLanguage.iso_639_1) for id: \(lang)")
+            async let movieGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.movies, language: resultLanguage.iso_639_1).endpoint)
+            async let tvGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.tvShows, language: resultLanguage.iso_639_1).endpoint)
             let genreData = try await (movieGenreList, tvGenreList)
             self.genres = .init(movieGenres: genreData.0.genres, tvGenres: genreData.1.genres)
             self.configuration = configuration

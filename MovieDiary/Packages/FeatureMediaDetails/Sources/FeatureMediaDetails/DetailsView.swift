@@ -10,6 +10,7 @@ public struct DetailsView: View {
     @Environment(\.httpClient) var client
     
     @Environment(CommonDataStore.self) var commonDataStore
+    @Environment(UserPreferences.self) var userPreferences
     @Environment(UserSessionStore.self) var userSessionStore
     
     @State private var blockButtons: Bool = false
@@ -86,11 +87,12 @@ public struct DetailsView: View {
     
     private func fetchDetails() async {
         do {
+            let lang = userPreferences.appLanguage
             let id = viewModel.id
             let listType = viewModel.listType
-            async let details: DetailsWrapperModel = try await client.get(endpoint: DetailsEndpoint.details(listType, id: id).endpoint)
-            async let recommendation: ListResponseModel = try await client.get(endpoint: DetailsEndpoint.recommendations(listType, id: id, page: 1).endpoint)
-            async let credits: CreditsResponseModel = try await client.get(endpoint: DetailsEndpoint.credits(listType, id: id).endpoint)
+            async let details: DetailsWrapperModel = try await client.get(endpoint: DetailsEndpoint.details(listType, id: id, language: lang).endpoint)
+            async let recommendation: ListResponseModel = try await client.get(endpoint: DetailsEndpoint.recommendations(listType, id: id, page: 1, language: lang).endpoint)
+            async let credits: CreditsResponseModel = try await client.get(endpoint: DetailsEndpoint.credits(listType, id: id, language: lang).endpoint)
 
             let data = try await (details, recommendation, credits)
             viewModel.inject(details: data.0, recommendations: data.1, credits: data.2)
