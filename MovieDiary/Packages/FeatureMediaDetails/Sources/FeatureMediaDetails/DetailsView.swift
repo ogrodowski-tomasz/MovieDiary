@@ -11,6 +11,8 @@ public struct DetailsView: View {
     
     @Environment(CommonDataStore.self) var commonDataStore
     @Environment(UserSessionStore.self) var userSessionStore
+    
+    @State private var blockButtons: Bool = false
         
     public init(viewModel: DetailsViewModel) {
         self.viewModel = viewModel
@@ -40,7 +42,7 @@ public struct DetailsView: View {
                             }
                             .clipShape(.circle)
                             .buttonStyle(.glass)
-                        }
+                        }.disabled(blockButtons)
                         
                         if let overview = viewModel.overview {
                             Text(overview)
@@ -110,6 +112,8 @@ public struct DetailsView: View {
     
     private func onFavoriteTapped() {
         guard let accountState = viewModel.accountState else { return }
+        blockButtons = true
+        defer { blockButtons = false }
         Task {
             do {
                 let id = viewModel.id
