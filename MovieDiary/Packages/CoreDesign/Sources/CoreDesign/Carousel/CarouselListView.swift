@@ -2,50 +2,91 @@ import CoreEnvironment
 import SwiftUI
 import Nuke
 
+public enum CarouselListConfig {
+    case paginableList(PaginationListMode)
+    case castList([CastCrewModel], limiter: Int)
+    
+    var title: LocalizedStringResource {
+        switch self {
+        case let .paginableList(paginationListMode):
+            return paginationListMode.title
+        case .castList:
+            return "section.title.cast"
+        }
+    }
+    
+    var showMoreActive: Bool {
+        switch self {
+        case let .paginableList(paginationListMode):
+            return paginationListMode.showMoreActive
+        case let .castList(cast, limiter):
+            return cast.count > limiter
+        }
+    }
+    
+    var height: CGFloat {
+        switch self {
+        case let .paginableList(paginationListMode):
+            return paginationListMode.carouselType.height
+        case .castList:
+            return 200
+        }
+    }
+    
+    var destination: RouteDestination {
+        switch self {
+        case let .paginableList(mode):
+            return .paginatedList(mode)
+        case let .castList(cast,_):
+            return .castList(cast)
+        }
+    }
+}
+
 public struct CarouselListView: View {
     
     @Environment(Router.self) var router
 
-    let paginableType: PaginationListMode
+    let config: CarouselListConfig
 
-    public init(paginableType: PaginationListMode) {
-        self.paginableType = paginableType
+    public init(config: CarouselListConfig) {
+        self.config = config
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Button {
-                router.push(to: .paginatedList(paginableType))
+                router.push(to: config.destination)
             } label: {
                 HStack(alignment: .center, spacing: 8) {
-                    Text(paginableType.title)
+                    Text(config.title)
                         .font(.largeTitle)
-                    if paginableType.showMoreActive {
+                    if config.showMoreActive {
                         Image(systemName: "chevron.right")
                             .font(.title3)
                     }
                 }
             }
-            .disabled(!paginableType.showMoreActive)
+            .disabled(!config.showMoreActive)
             .foregroundStyle(.primary)
             .fontWeight(.bold)
             .padding(.horizontal)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .center, spacing: 12) {
-                    switch paginableType.carouselType {
-                    case let .posters(items):
-                        ForEach(items) { item in
+                    switch config {
+                    case let .paginableList(mode):
+                        ForEach(mode.initial.results) { item in
                             CarouselCell(item: item)
                         }
-                    case let .profiles(items):
-                        ForEach(items) { item in
+                    case let .castList(cast, limiter):
+                        ForEach(cast.prefix(limiter)) { item in
                             CastCarouselCell(item: item)
                         }
                     }
                 }
                 .padding(.horizontal)
-                .frame(height: paginableType.carouselType.height)
+                .frame(height: config.height)
             }
             Spacer()
         }

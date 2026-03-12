@@ -15,6 +15,8 @@ extension View {
                 Text(verbatim: "SHOW FULL LIST HERE WITH PAGINATION")
             case let .paginatedList(mode):
                 PaginationListView(mode: mode)
+            case let .castList(cast):
+                CastListView(cast: cast)
             }
         }
     }

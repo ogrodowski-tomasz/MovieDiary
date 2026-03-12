@@ -29,11 +29,11 @@ public struct MainView: View {
                     switch selectedList {
                     case .movies:
                         ForEach(viewModel.viewState.moviesSections, id: \.self) { section in
-                            CarouselListView(paginableType: section)
+                            CarouselListView(config: .paginableList(section))
                         }
                     case .tvShows:
                         ForEach(viewModel.viewState.tvShowsSections, id: \.self) { section in
-                            CarouselListView(paginableType: section)
+                            CarouselListView(config: .paginableList(section))
                         }
                     }
                 }

@@ -12,7 +12,7 @@ struct CastCarouselCell: View {
     let item: CastCrewModel
     
     var name: String {
-        item.name//.replacingOccurrences(of: "", with: "\n")
+        item.name
     }
 
     var body: some View {

@@ -55,7 +55,7 @@ public struct DetailsView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         if let cast = viewModel.cast {
-//                            CarouselListView(title: "section.title.cast", type: .profiles(cast), showMore: false)
+                            CarouselListView(config: .castList(cast, limiter: 5))
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -64,7 +64,7 @@ public struct DetailsView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         if let recommendation = viewModel.recommendations {
-                            CarouselListView(paginableType: .recommendations(type: viewModel.listType, id: viewModel.id, initial: recommendation))
+                            CarouselListView(config: .paginableList(.recommendations(type: viewModel.listType, id: viewModel.id, initial: recommendation)))
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
