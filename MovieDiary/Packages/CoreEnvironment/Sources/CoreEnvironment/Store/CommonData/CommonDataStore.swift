@@ -34,12 +34,14 @@ public class CommonDataStore {
         do {
             logger.info("Starting to fetch configuration")
             let configuration: AppConfiguration = try await client.get(endpoint: CommonEndpoint.configuration.endpoint)
-            async let movieGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.movies).endpoint)
-            async let tvGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.tvShows).endpoint)
+            async let movieGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.movies, language: AppLanguages.default.iso_639_1).endpoint)
+            async let tvGenreList: GenreListModelResponse = try await client.get(endpoint: CommonEndpoint.genres(.tvShows, language: AppLanguages.default.iso_639_1).endpoint)
             let genreData = try await (movieGenreList, tvGenreList)
             self.genres = .init(movieGenres: genreData.0.genres, tvGenres: genreData.1.genres)
             self.configuration = configuration
             logger.info("Successfully fetched configuration")
+        } catch let error as HTTPError {
+            logger.error("HTTPError fetching configuration: \(error.description)")
         } catch {
             logger.error("Error fetching configuration: \(error.localizedDescription)")
         }

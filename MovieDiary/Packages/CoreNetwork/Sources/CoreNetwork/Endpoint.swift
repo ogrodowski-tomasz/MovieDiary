@@ -13,4 +13,8 @@ public struct Endpoint: Sendable {
         self.queryItems = queryItems
         self.jsonValue = jsonValue
     }
+    
+    public var description: String {
+        return "\(path)?" + (queryItems.map(\.debugDescription) ?? "")
+    }
 }

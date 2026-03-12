@@ -26,12 +26,6 @@ struct MovieDiaryApp: App {
                 .environment(commonDataStore)
                 .environment(router)
                 .environment(\.httpClient, httpClient)
-                .task {
-                    userSessionStore.injectClient(httpClient)
-                    commonDataStore.injectClient(httpClient)
-                    await userSessionStore.fetchCurrentUser()
-                    await commonDataStore.getCommonData()
-                }
         }
     }
 }
