@@ -1,5 +1,4 @@
 import Foundation
-import Utils
 import OSLog
 
 public enum AppTab: Hashable, CaseIterable {
@@ -33,7 +32,7 @@ public final class Router {
     
     public var selectedTab: AppTab = .main
     
-    private let logger = Logger(category: "Router")
+//    private let logger = Logger(category: "Router")
     
     public init() {
         

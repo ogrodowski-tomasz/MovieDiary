@@ -1,4 +1,4 @@
-import Models
+import CoreEnvironment
 import SwiftUI
 
 struct ProfileImageView: View {

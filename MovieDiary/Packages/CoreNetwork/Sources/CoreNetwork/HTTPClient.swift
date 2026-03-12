@@ -1,7 +1,7 @@
 import Foundation
 import OSLog
 
-public protocol HTTPClientProtocol {
+public protocol HTTPClientProtocol: Sendable {
     func get<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity
     func post<Entity: Decodable>(endpoint: Endpoint) async throws -> Entity
 }

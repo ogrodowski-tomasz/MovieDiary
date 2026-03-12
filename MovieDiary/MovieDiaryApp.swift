@@ -1,8 +1,7 @@
-import EnvObjects
-import Models
-import NetworkClient
+import CoreDesign
+import CoreEnvironment
+import CoreNetwork
 import SwiftUI
-import ReusableComponents
 import Nuke
 
 @main
@@ -12,7 +11,7 @@ struct MovieDiaryApp: App {
     @State private var userSessionStore: UserSessionStore
     @State private var commonDataStore: CommonDataStore
     @State private var router = Router()
-    let httpClient = HTTPClient()
+    let httpClient = HTTPClient(environment: .prod)
 
     init() {
         userSessionStore = UserSessionStore(sessionStorage: keychainService)

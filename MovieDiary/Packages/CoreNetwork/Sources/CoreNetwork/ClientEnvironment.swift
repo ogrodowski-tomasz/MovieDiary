@@ -10,7 +10,7 @@
 
 import Foundation
 
-public enum ClientEnvironment {
+public enum ClientEnvironment: Sendable {
     case prod
     case mock
 

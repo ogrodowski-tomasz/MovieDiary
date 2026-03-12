@@ -7,28 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E3238D02F5B55E20081F9E9 /* EnvObjects in Frameworks */ = {isa = PBXBuildFile; productRef = 1E3238CF2F5B55E20081F9E9 /* EnvObjects */; };
-		1E3238D72F5B56AF0081F9E9 /* ListUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1E3238D62F5B56AF0081F9E9 /* ListUI */; };
-		1E3238DC2F5B74E40081F9E9 /* DetailsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1E3238DB2F5B74E40081F9E9 /* DetailsUI */; };
-		1E65B89A2F5AE6DC00A1370D /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 1E65B8992F5AE6DC00A1370D /* Models */; };
-		1E65B89C2F5AE6DF00A1370D /* NetworkClient in Frameworks */ = {isa = PBXBuildFile; productRef = 1E65B89B2F5AE6DF00A1370D /* NetworkClient */; };
-		1E65B89E2F5AE6E300A1370D /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = 1E65B89D2F5AE6E300A1370D /* Utils */; };
-		24AB47102F5C734400F033BE /* ReusableComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 24AB470F2F5C734400F033BE /* ReusableComponents */; };
+		24123BE62F62B3CB00571510 /* CoreDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BE52F62B3CB00571510 /* CoreDesign */; };
+		24123BE82F62B3CE00571510 /* CoreEnvironment in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BE72F62B3CE00571510 /* CoreEnvironment */; };
+		24123BEA2F62B3D400571510 /* CoreNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BE92F62B3D400571510 /* CoreNetwork */; };
+		24123BEC2F62B3D400571510 /* FeatureMain in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BEB2F62B3D400571510 /* FeatureMain */; };
+		24123BEE2F62B3D400571510 /* FeatureMediaDetails in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BED2F62B3D400571510 /* FeatureMediaDetails */; };
+		24123BF02F62B3D400571510 /* FeaturePagination in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BEF2F62B3D400571510 /* FeaturePagination */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1E3238CC2F5B54890081F9E9 /* EnvObjects */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = EnvObjects; path = MovieDiary/Packages/EnvObjects; sourceTree = "<group>"; };
-		1E3238D32F5B56A80081F9E9 /* ListUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ListUI; path = MovieDiary/Packages/ListUI; sourceTree = "<group>"; };
-		1E3238DA2F5B747F0081F9E9 /* DetailsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DetailsUI; path = MovieDiary/Packages/DetailsUI; sourceTree = "<group>"; };
 		1E3CA5132F6190E30049D328 /* CoreNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreNetwork; path = MovieDiary/Packages/CoreNetwork; sourceTree = "<group>"; };
 		1E3CA6372F619E6F0049D328 /* CoreDesign */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreDesign; path = MovieDiary/Packages/CoreDesign; sourceTree = "<group>"; };
 		1E3CA63E2F61A54F0049D328 /* CoreEnvironment */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreEnvironment; path = MovieDiary/Packages/CoreEnvironment; sourceTree = "<group>"; };
 		1E3CA6432F61A5FC0049D328 /* FeaturePagination */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeaturePagination; path = MovieDiary/Packages/FeaturePagination; sourceTree = "<group>"; };
 		1E3CA6492F61AAA00049D328 /* FeatureMediaDetails */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeatureMediaDetails; path = MovieDiary/Packages/FeatureMediaDetails; sourceTree = "<group>"; };
-		1E65B8962F5AE45F00A1370D /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NetworkClient; path = MovieDiary/Packages/NetworkClient; sourceTree = "<group>"; };
-		1E66675A2F5AD9D200C55B13 /* Models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Models; path = MovieDiary/Packages/Models; sourceTree = "<group>"; };
-		1E66675D2F5AE1A100C55B13 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Utils; path = MovieDiary/Packages/Utils; sourceTree = "<group>"; };
-		24AB470C2F5C6E8B00F033BE /* ReusableComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ReusableComponents; path = MovieDiary/Packages/ReusableComponents; sourceTree = "<group>"; };
+		24123BE22F62B1C800571510 /* FeatureMain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeatureMain; path = MovieDiary/Packages/FeatureMain; sourceTree = "<group>"; };
 		24D479042F4C7FA60031C7D7 /* MovieDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -58,13 +51,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E3238D72F5B56AF0081F9E9 /* ListUI in Frameworks */,
-				1E65B89E2F5AE6E300A1370D /* Utils in Frameworks */,
-				1E3238D02F5B55E20081F9E9 /* EnvObjects in Frameworks */,
-				24AB47102F5C734400F033BE /* ReusableComponents in Frameworks */,
-				1E65B89C2F5AE6DF00A1370D /* NetworkClient in Frameworks */,
-				1E65B89A2F5AE6DC00A1370D /* Models in Frameworks */,
-				1E3238DC2F5B74E40081F9E9 /* DetailsUI in Frameworks */,
+				24123BEC2F62B3D400571510 /* FeatureMain in Frameworks */,
+				24123BEE2F62B3D400571510 /* FeatureMediaDetails in Frameworks */,
+				24123BE62F62B3CB00571510 /* CoreDesign in Frameworks */,
+				24123BEA2F62B3D400571510 /* CoreNetwork in Frameworks */,
+				24123BE82F62B3CE00571510 /* CoreEnvironment in Frameworks */,
+				24123BF02F62B3D400571510 /* FeaturePagination in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,20 +73,14 @@
 		24D478FB2F4C7FA60031C7D7 = {
 			isa = PBXGroup;
 			children = (
+				24123BE22F62B1C800571510 /* FeatureMain */,
 				1E3CA6492F61AAA00049D328 /* FeatureMediaDetails */,
 				1E3CA6432F61A5FC0049D328 /* FeaturePagination */,
 				1E3CA63E2F61A54F0049D328 /* CoreEnvironment */,
 				1E3CA6372F619E6F0049D328 /* CoreDesign */,
 				1E3CA5132F6190E30049D328 /* CoreNetwork */,
-				24AB470C2F5C6E8B00F033BE /* ReusableComponents */,
 				24D479062F4C7FA60031C7D7 /* MovieDiary */,
 				1E6667522F5ACF1F00C55B13 /* Frameworks */,
-				1E3238DA2F5B747F0081F9E9 /* DetailsUI */,
-				1E3238CC2F5B54890081F9E9 /* EnvObjects */,
-				1E3238D32F5B56A80081F9E9 /* ListUI */,
-				1E66675A2F5AD9D200C55B13 /* Models */,
-				1E65B8962F5AE45F00A1370D /* NetworkClient */,
-				1E66675D2F5AE1A100C55B13 /* Utils */,
 				24D479052F4C7FA60031C7D7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -127,13 +113,12 @@
 			);
 			name = MovieDiary;
 			packageProductDependencies = (
-				1E65B8992F5AE6DC00A1370D /* Models */,
-				1E65B89B2F5AE6DF00A1370D /* NetworkClient */,
-				1E65B89D2F5AE6E300A1370D /* Utils */,
-				1E3238CF2F5B55E20081F9E9 /* EnvObjects */,
-				1E3238D62F5B56AF0081F9E9 /* ListUI */,
-				1E3238DB2F5B74E40081F9E9 /* DetailsUI */,
-				24AB470F2F5C734400F033BE /* ReusableComponents */,
+				24123BE52F62B3CB00571510 /* CoreDesign */,
+				24123BE72F62B3CE00571510 /* CoreEnvironment */,
+				24123BE92F62B3D400571510 /* CoreNetwork */,
+				24123BEB2F62B3D400571510 /* FeatureMain */,
+				24123BED2F62B3D400571510 /* FeatureMediaDetails */,
+				24123BEF2F62B3D400571510 /* FeaturePagination */,
 			);
 			productName = MovieDiary;
 			productReference = 24D479042F4C7FA60031C7D7 /* MovieDiary.app */;
@@ -407,33 +392,29 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1E3238CF2F5B55E20081F9E9 /* EnvObjects */ = {
+		24123BE52F62B3CB00571510 /* CoreDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = EnvObjects;
+			productName = CoreDesign;
 		};
-		1E3238D62F5B56AF0081F9E9 /* ListUI */ = {
+		24123BE72F62B3CE00571510 /* CoreEnvironment */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ListUI;
+			productName = CoreEnvironment;
 		};
-		1E3238DB2F5B74E40081F9E9 /* DetailsUI */ = {
+		24123BE92F62B3D400571510 /* CoreNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = DetailsUI;
+			productName = CoreNetwork;
 		};
-		1E65B8992F5AE6DC00A1370D /* Models */ = {
+		24123BEB2F62B3D400571510 /* FeatureMain */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Models;
+			productName = FeatureMain;
 		};
-		1E65B89B2F5AE6DF00A1370D /* NetworkClient */ = {
+		24123BED2F62B3D400571510 /* FeatureMediaDetails */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = NetworkClient;
+			productName = FeatureMediaDetails;
 		};
-		1E65B89D2F5AE6E300A1370D /* Utils */ = {
+		24123BEF2F62B3D400571510 /* FeaturePagination */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Utils;
-		};
-		24AB470F2F5C734400F033BE /* ReusableComponents */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ReusableComponents;
+			productName = FeaturePagination;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -14,7 +14,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-//        .package(name: "CoreEnvironment", path: "../CoreEnvironment"),
         .package(name: "CoreDesign", path: "../CoreDesign"),
     ],
     targets: [
@@ -23,7 +22,6 @@ let package = Package(
         .target(
             name: "FeaturePagination",
             dependencies: [
-//                .product(name: "CoreEnvironment", package: "CoreEnvironment"),
                 .product(name: "CoreDesign", package: "CoreDesign"),
             ],
             swiftSettings: [

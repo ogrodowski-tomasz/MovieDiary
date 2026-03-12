@@ -1,7 +1,7 @@
-import NetworkClient
-import Models
+import CoreNetwork
+import CoreEnvironment
 import SwiftUI
-import EnvObjects
+
 
 struct ProfileView: View {
     

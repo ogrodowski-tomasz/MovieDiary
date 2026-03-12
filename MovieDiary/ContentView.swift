@@ -1,5 +1,6 @@
-import EnvObjects
-import ListUI
+import CoreDesign
+import CoreEnvironment
+import FeatureMain
 import SwiftUI
 
 struct ContentView: View {

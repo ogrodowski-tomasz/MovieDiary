@@ -1,8 +1,7 @@
-import DetailsUI
-import EnvObjects
+import FeatureMediaDetails
 import SwiftUI
-import Models
-import ListUI
+import CoreEnvironment
+import FeaturePagination
 
 extension View {
     func withRouter() -> some View {

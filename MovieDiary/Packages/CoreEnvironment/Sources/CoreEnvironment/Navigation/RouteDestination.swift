@@ -1,5 +1,4 @@
 import Foundation
-import Models
 
 public enum RouteDestination: Hashable, CustomDebugStringConvertible, Sendable {
     case details(ListModel)

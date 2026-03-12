@@ -1,5 +1,5 @@
 import SwiftUI
-import EnvObjects
+import CoreEnvironment
 
 struct LoginView: View {
     @Environment(UserSessionStore.self) var userSessionStore
@@ -10,7 +10,6 @@ struct LoginView: View {
             } label: {
                 Text(verbatim: "Login")
             }
-//            .navigationTitle("Profile")
             .withRouter()
         }
     }
