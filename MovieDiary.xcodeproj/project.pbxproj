@@ -20,6 +20,11 @@
 		1E3238CC2F5B54890081F9E9 /* EnvObjects */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = EnvObjects; path = MovieDiary/Packages/EnvObjects; sourceTree = "<group>"; };
 		1E3238D32F5B56A80081F9E9 /* ListUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ListUI; path = MovieDiary/Packages/ListUI; sourceTree = "<group>"; };
 		1E3238DA2F5B747F0081F9E9 /* DetailsUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DetailsUI; path = MovieDiary/Packages/DetailsUI; sourceTree = "<group>"; };
+		1E3CA5132F6190E30049D328 /* CoreNetwork */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreNetwork; path = MovieDiary/Packages/CoreNetwork; sourceTree = "<group>"; };
+		1E3CA6372F619E6F0049D328 /* CoreDesign */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreDesign; path = MovieDiary/Packages/CoreDesign; sourceTree = "<group>"; };
+		1E3CA63E2F61A54F0049D328 /* CoreEnvironment */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CoreEnvironment; path = MovieDiary/Packages/CoreEnvironment; sourceTree = "<group>"; };
+		1E3CA6432F61A5FC0049D328 /* FeaturePagination */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeaturePagination; path = MovieDiary/Packages/FeaturePagination; sourceTree = "<group>"; };
+		1E3CA6492F61AAA00049D328 /* FeatureMediaDetails */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeatureMediaDetails; path = MovieDiary/Packages/FeatureMediaDetails; sourceTree = "<group>"; };
 		1E65B8962F5AE45F00A1370D /* NetworkClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NetworkClient; path = MovieDiary/Packages/NetworkClient; sourceTree = "<group>"; };
 		1E66675A2F5AD9D200C55B13 /* Models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Models; path = MovieDiary/Packages/Models; sourceTree = "<group>"; };
 		1E66675D2F5AE1A100C55B13 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Utils; path = MovieDiary/Packages/Utils; sourceTree = "<group>"; };
@@ -76,6 +81,11 @@
 		24D478FB2F4C7FA60031C7D7 = {
 			isa = PBXGroup;
 			children = (
+				1E3CA6492F61AAA00049D328 /* FeatureMediaDetails */,
+				1E3CA6432F61A5FC0049D328 /* FeaturePagination */,
+				1E3CA63E2F61A54F0049D328 /* CoreEnvironment */,
+				1E3CA6372F619E6F0049D328 /* CoreDesign */,
+				1E3CA5132F6190E30049D328 /* CoreNetwork */,
 				24AB470C2F5C6E8B00F033BE /* ReusableComponents */,
 				24D479062F4C7FA60031C7D7 /* MovieDiary */,
 				1E6667522F5ACF1F00C55B13 /* Frameworks */,
