@@ -92,33 +92,3 @@ public struct CarouselListView: View {
         }
     }
 }
-//
-//private struct CarouselPreviewWrapper: View {
-//
-//    @State private var commonDataStore: CommonDataStore
-//
-//    init() {
-//        _commonDataStore = State(initialValue: .init())
-//        commonDataStore.configuration = .sample
-//    }
-//
-//    var body: some View {
-//        VStack {
-//            Rectangle()
-//            CarouselListView(paginableType: .topRated(type: .movies, initial: .ini), carouselType: <#T##CarouselListView.CarouselType#>, showMore: <#T##Bool#>)
-//            CarouselListView(title: "Top rated", type: .posters([.sample(.movies)]), showMore: true)
-//            CarouselListView(title: "Top rated", type: .posters([.sample(.movies)]), showMore: false)
-//
-////            CarouselListView(title: "Cast", type: .profiles([.sample]), showMore: false)
-//            Rectangle()
-//            Rectangle()
-//            Rectangle()
-//        }
-//        .environment(commonDataStore)
-//        .environment(Router())
-//    }
-//}
-//
-//#Preview {
-//    CarouselPreviewWrapper()
-//}

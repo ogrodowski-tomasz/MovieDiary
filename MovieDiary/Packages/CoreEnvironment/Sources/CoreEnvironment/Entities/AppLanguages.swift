@@ -18,6 +18,11 @@ public struct AppLanguages: Decodable, Sendable, Hashable {
     }
 }
 
+
+extension AppLanguages: Previewable {
+    public static var sample: AppLanguages { .default }
+}
+
 public extension Array where Element == AppLanguages {
     func resolve(for id: String?) -> AppLanguages {
         guard let id else { return .default }

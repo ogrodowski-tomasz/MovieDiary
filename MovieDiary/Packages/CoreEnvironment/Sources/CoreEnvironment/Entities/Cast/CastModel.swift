@@ -1,9 +1,12 @@
 import Foundation
 
-public struct CreditsResponseModel: Decodable, Identifiable, Hashable, Sendable {
+public struct CreditsResponseModel: Decodable, Identifiable, Hashable, Sendable, Previewable {
     public let id: Int
     public let cast: [CastCrewModel]
     public let crew: [CastCrewModel]
+
+
+    public static var sample: CreditsResponseModel { .init(id: 100, cast: [.sample], crew: [.sample]) }
 }
 
 public struct CastCrewModel: Decodable, Identifiable, Hashable, Sendable {

@@ -1,12 +1,14 @@
 import Foundation
 
-public struct GenreListModelResponse: Codable, Sendable, Hashable {
+public struct GenreListModelResponse: Codable, Sendable, Hashable, Previewable {
     public let genres: [Genre]
 
     public init(genres: [Genre]) {
         self.genres = genres
     }
-    
+
+    public static var sample: GenreListModelResponse { sampleMovies }
+
     public static let sampleMovies = Self.init(
         genres: [
             Genre(id: 28, name: "Action"),

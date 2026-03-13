@@ -20,7 +20,6 @@ public struct ListResponseModel: Decodable, Sendable, Hashable {
         self.totalResults = totalResults
     }
     
-    public static let sample: Self = .init(page: 1, results: [.sample(.movies), .sample(.tvShows)], totalPages: 1, totalResults: 1)
 }
 
 public struct ListModel: Decodable, Sendable, Hashable, Identifiable {
@@ -90,4 +89,21 @@ public extension ListModel {
         voteAverage: 8.938,
         listType: .tvShows
     )
+}
+
+extension ListResponseModel: Previewable {
+    public static let sample: Self = .init(page: 1, results: [.sample], totalPages: 1, totalResults: 1)
+}
+
+extension ListModel: Previewable {
+    public static let sample: Self = .init(
+        id: 228,
+        overview: "Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
+        posterPath: "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+        releaseDate: "1994-09-23".getYear,
+        title: "Lord of the Rings: Fellowship of the Ring",
+        voteAverage: 7.932,
+        listType: .movies
+    )
+
 }

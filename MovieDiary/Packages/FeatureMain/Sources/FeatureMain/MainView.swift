@@ -57,4 +57,5 @@ public struct MainView: View {
 
 #Preview {
     MainView()
+        .previewEnvironment()
 }

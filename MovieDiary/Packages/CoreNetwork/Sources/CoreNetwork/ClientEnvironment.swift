@@ -12,7 +12,6 @@ import Foundation
 
 public enum ClientEnvironment: Sendable {
     case prod
-    case mock
 
     var host: String {
         "api.themoviedb.org"
@@ -22,8 +21,6 @@ public enum ClientEnvironment: Sendable {
         switch self {
         case .prod:
             "HTTPClient"
-        case .mock:
-            "MockHTTPClient"
         }
     }
 }
