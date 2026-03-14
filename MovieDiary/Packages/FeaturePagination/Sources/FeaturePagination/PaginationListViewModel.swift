@@ -40,6 +40,7 @@ final class PaginationListViewModel {
     func fetchNextPage(lang: String) async throws {
         guard let httpClient, let nextPageId else { return }
         let newModels: ListResponseModel
+        #warning("Improve this switch-case ")
         switch mode {
         case let .topRated(type, _):
             newModels = try await httpClient.get(endpoint: ListEndpoint.topRated(type: type, page: nextPageId, language: lang).endpoint)
@@ -51,8 +52,10 @@ final class PaginationListViewModel {
             newModels = try await httpClient.get(endpoint: ListEndpoint.tvShowsAiringToday(page: nextPageId, language: lang).endpoint)
         case let .recommendations(type,id, _):
             newModels = try await httpClient.get(endpoint: DetailsEndpoint.recommendations(type, id: id, page: nextPageId, language: lang).endpoint)
-        case let .userRated(userId, type, sessionId, initial):
+        case let .userRated(userId, _, sessionId, _):
             newModels = try await httpClient.get(endpoint: UserEndpoint.userRatedMoviesList(userId: userId, sessionId: sessionId, page: nextPageId, language: lang).endpoint)
+        case let .userWatchlist(userId, _, sessionId, _):
+            newModels = try await httpClient.get(endpoint: UserEndpoint.userWatchlistMoviesList(userId: userId, sessionId: sessionId, page: nextPageId, language: lang).endpoint)
         }
         
         self.models.append(contentsOf: newModels.results)

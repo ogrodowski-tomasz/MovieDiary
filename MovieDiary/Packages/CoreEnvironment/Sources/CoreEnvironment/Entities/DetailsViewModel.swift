@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 public struct DetailsViewModel: Sendable, Equatable {
     
@@ -9,6 +10,8 @@ public struct DetailsViewModel: Sendable, Equatable {
     public let listType: ListType
     
     public private(set) var favoriteImageName: String = "heart"
+    public private(set) var watchlistImageName: String = "eye"
+    public private(set) var watchlistColor: Color = .primary
     
     public private(set) var genres: String?
     public private(set) var recommendations: ListResponseModel?
@@ -50,5 +53,7 @@ public struct DetailsViewModel: Sendable, Equatable {
     public mutating func inject(accountState: MovieAccountStateModel) {
         self.accountState = accountState
         favoriteImageName = accountState.favorite ? "heart.fill" : "heart"
+        watchlistImageName = accountState.watchlist ? "eye.fill" : "eye"
+        watchlistColor = accountState.watchlist ? .green : .primary
     }
 }

@@ -5,8 +5,11 @@ public enum UserEndpoint: Sendable {
     case currentUser(id: String, sessionID: String)
     case createSession(requestToken: String)
     case userRatedMoviesList(userId: String, sessionId: String, page: Int, language: String)
+    case userWatchlistMoviesList(userId: String, sessionId: String, page: Int, language: String)
     case movieAccountState(movieId: Int, sessionId: String)
+    
     case toggleFavoriteMovie(userId: Int, movieId: Int, sessionId: String, newValue: Bool)
+    case toggleOnWatchListStatus(userId: Int, movieId: Int, sessionId: String, newValue: Bool)
     
     public var endpoint: Endpoint {
         switch self {
@@ -33,6 +36,11 @@ public enum UserEndpoint: Sendable {
                 path: "/account/\(userId)/rated/movies",
                 queryItems: [.sessionId(sessionId), .language(language), .page(page)]
             )
+        case let .userWatchlistMoviesList(userId, sessionId, page, language):
+            return .init(
+                path: "/account/\(userId)/watchlist/movies",
+                queryItems: [.sessionId(sessionId), .language(language), .page(page)]
+            )
         case let .movieAccountState(movieId, sessionId):
             return .init(
                 path: "/movie/\(movieId)/account_states",
@@ -48,6 +56,16 @@ public enum UserEndpoint: Sendable {
                     favorite: newValue
                 ) as JSONBodyCovertible
             )
+        case let .toggleOnWatchListStatus(userId, movieId, sessionId, newValue):
+            return .init(
+                path: "/account/\(userId)/watchlist",
+                queryItems: [.sessionId(sessionId)],
+                jsonValue: WatchlistEncodable(
+                    media_type: "movie",
+                    media_id: movieId,
+                    watchlist: newValue
+                ) as JSONBodyCovertible
+            )
         }
     }
     
@@ -55,5 +73,11 @@ public enum UserEndpoint: Sendable {
         let media_type: String
         let media_id: Int
         let favorite: Bool
+    }
+    
+    private struct WatchlistEncodable: Encodable {
+        let media_type: String
+        let media_id: Int
+        let watchlist: Bool
     }
 }

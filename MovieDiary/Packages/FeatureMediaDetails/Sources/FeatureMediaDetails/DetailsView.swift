@@ -26,24 +26,38 @@ public struct DetailsView: View {
                     DetailsHeaderView(viewModel: viewModel)
                         .resizingOnScroll()
                     VStack(spacing: 10) {
-                        HStack {
+                        HStack(spacing: 0) {
                             Button(action: onFavoriteTapped) {
                                 Image(systemName: viewModel.favoriteImageName)
                                     .font(.title)
                                     .foregroundStyle(.red)
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(.rect)
                             }
-                            .clipShape(.circle)
+                            .buttonStyle(.glass)
+                            
+                            Button(action: onWatchlistTapped) {
+                                Image(systemName: viewModel.watchlistImageName)
+                                    .font(.title)
+                                    .foregroundStyle(viewModel.watchlistColor)
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(.rect)
+                            }
                             .buttonStyle(.glass)
                             
                             Button {
                                 // List
                             } label: {
                                 Image(systemName: "plus")
-                                    .font(.title)
+                                    .font(.largeTitle)
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(.rect)
                             }
-                            .clipShape(.circle)
                             .buttonStyle(.glass)
-                        }.disabled(blockButtons)
+
+                        }
+                        .disabled(blockButtons)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         
                         if let overview = viewModel.overview {
                             Text(overview)
@@ -127,30 +141,25 @@ public struct DetailsView: View {
             }
         }
     }
-}
-
-private struct DetailsPreviewWrapper: View {
     
-    @State private var commonDataStore: CommonDataStore
-    @State private var userSessionStore: UserSessionStore
-    
-    init() {
-        _commonDataStore = State(initialValue: .init())
-        _userSessionStore = State(initialValue: .init(sessionStorage: KeychainService()))
-        commonDataStore.configuration = .sample
-        commonDataStore.genres = .init(movieGenres: GenreListModelResponse.sampleMovies.genres, tvGenres: GenreListModelResponse.sampleTV.genres)
-
-    }
-    
-    var body: some View {
-        DetailsView(viewModel: .from(list: .sample(.movies)))
-//            .environment(\.httpClient, MockHTTPClient())
-            .environment(commonDataStore)
-            .environment(userSessionStore)
-            .environment(Router())
+    private func onWatchlistTapped() {
+        guard let accountState = viewModel.accountState else { return }
+        blockButtons = true
+        defer { blockButtons = false }
+        Task {
+            do {
+                let id = viewModel.id
+                let newValue = !accountState.watchlist
+                let updatedMovie = try await userSessionStore.toggleMovieWatchlist(id: id, newValue: newValue)
+                viewModel.inject(accountState: updatedMovie)
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 
 #Preview {
-    DetailsPreviewWrapper()
+    DetailsView(viewModel: .from(list: .sample))
+        .previewEnvironment()
 }

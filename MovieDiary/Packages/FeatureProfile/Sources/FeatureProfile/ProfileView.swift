@@ -28,6 +28,14 @@ public struct ProfileView: View {
                         }
                     }
                 }
+                if let watchlist = userSessionStore.userWatchlistMoviesList {
+                    Section {
+                        #warning("Fix")
+                        NavigationLink(value: RouteDestination.paginatedList(.userWatchlist(userId: "\(user.id)", type: .movies, sessionId: currentSessionId, initial: watchlist))) {
+                            LabeledContent("Watchlist", value: "\(watchlist.totalResults)")
+                        }
+                    }
+                }
             }
             
             Section("Settings") {

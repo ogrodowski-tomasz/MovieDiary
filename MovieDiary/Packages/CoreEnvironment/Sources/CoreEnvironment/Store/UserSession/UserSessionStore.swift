@@ -15,6 +15,7 @@ public final class UserSessionStore: NSObject, Store {
 
     public var user: TmdbUser?
     public var userRatedMoviesList: ListResponseModel?
+    public var userWatchlistMoviesList: ListResponseModel?
     
     public var currentSessionId: String? {
         get { sessionStorage.currentSessionId }
@@ -59,8 +60,11 @@ public final class UserSessionStore: NSObject, Store {
         do {
             logger.info("Starting to fetch user rated movies")
             async let userRatedMoviesResponse = await getUserRatedMoviesList(lang: lang)
-            let data = try await userRatedMoviesResponse
-            self.userRatedMoviesList = data
+            async let userWatchlistMoviesResponse = await getUserWatchlistMoviesList(lang: lang)
+            #warning("Improve to reduce number of view redraws")
+            let data = try await (userRatedMoviesResponse, userWatchlistMoviesResponse)
+            self.userRatedMoviesList = data.0
+            self.userWatchlistMoviesList = data.1
             logger.info("Successfully fetched user rated movies")
         } catch let error as StoreError {
             logger.error("StoreError fetching user rated movies: \(error.localizedDescription)")
@@ -98,6 +102,24 @@ public final class UserSessionStore: NSObject, Store {
         guard let user else { throw StoreError.missingUser }
         let response: FavoriteResponse = try await client.post(
             endpoint: UserEndpoint.toggleFavoriteMovie(
+                userId: user.id,
+                movieId: id,
+                sessionId: currentSessionId,
+                newValue: newValue
+            ).endpoint
+        )
+        guard response.success else {
+            throw URLError(.unknown)
+        }
+        return try await getMovieAccountState(id: id)
+    }
+    
+    public func toggleMovieWatchlist(id: Int, newValue: Bool) async throws -> MovieAccountStateModel {
+        guard let client else { throw StoreError.missingClient }
+        guard let currentSessionId else { throw StoreError.missingSessionId }
+        guard let user else { throw StoreError.missingUser }
+        let response: FavoriteResponse = try await client.post(
+            endpoint: UserEndpoint.toggleOnWatchListStatus(
                 userId: user.id,
                 movieId: id,
                 sessionId: currentSessionId,
@@ -206,6 +228,13 @@ public final class UserSessionStore: NSObject, Store {
         guard let currentSessionId else { throw StoreError.missingSessionId }
         guard let id = sessionStorage.userId else { throw StoreError.missingUser }
         return try await client.get(endpoint: UserEndpoint.userRatedMoviesList(userId: id, sessionId: currentSessionId, page: 1, language: lang).endpoint)
+    }
+    
+    public func getUserWatchlistMoviesList(lang: String) async throws -> ListResponseModel {
+        guard let client else { throw StoreError.missingClient }
+        guard let currentSessionId else { throw StoreError.missingSessionId }
+        guard let id = sessionStorage.userId else { throw StoreError.missingUser }
+        return try await client.get(endpoint: UserEndpoint.userWatchlistMoviesList(userId: id, sessionId: currentSessionId, page: 1, language: lang).endpoint)
     }
 }
 

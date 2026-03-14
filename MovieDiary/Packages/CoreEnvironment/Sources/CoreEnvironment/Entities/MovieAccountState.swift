@@ -4,9 +4,9 @@ public struct MovieAccountStateModel: Codable, Sendable, Hashable {
     public let id: Int
     public let favorite: Bool
     public let rated: Rated?
-    public let watchlist: Bool?
+    public let watchlist: Bool
 
-    public init(id: Int, favorite: Bool, rated: Rated?, watchlist: Bool?) {
+    public init(id: Int, favorite: Bool, rated: Rated?, watchlist: Bool) {
         self.id = id
         self.favorite = favorite
         self.rated = rated
@@ -18,7 +18,7 @@ public struct MovieAccountStateModel: Codable, Sendable, Hashable {
         self.id = try container.decode(Int.self, forKey: .id)
         self.favorite = try container.decode(Bool.self, forKey: .favorite)
         self.rated = try? container.decodeIfPresent(Rated.self, forKey: .rated)
-        self.watchlist = try container.decodeIfPresent(Bool.self, forKey: .watchlist)
+        self.watchlist = try container.decode(Bool.self, forKey: .watchlist)
     }
 }
 
