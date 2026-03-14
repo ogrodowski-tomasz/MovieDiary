@@ -38,6 +38,11 @@ public final class Router {
         
     }
     
+    public func clear() {
+        mainPath.removeAll()
+        profilePath.removeAll()
+    }
+    
     public func push(to route: RouteDestination) {
         switch selectedTab {
         case .main:

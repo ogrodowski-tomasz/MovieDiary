@@ -46,6 +46,12 @@ public struct MainView: View {
             await viewModel.fetchData(lang: userPreferences.appLanguage)
             viewDidAppear = true
         }
+        .onChange(of: userPreferences.appLanguage, initial: false) { oldValue, newValue in
+            guard oldValue != newValue else { return }
+            Task {
+                await viewModel.fetchData(lang: newValue)
+            }
+        }
     }
 }
 

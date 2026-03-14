@@ -25,6 +25,7 @@ public class CommonDataStore {
     public init() { }
 
     public var configuration: AppConfiguration?
+    public var allLanguages: [AppLanguages] = []
     public var genres: AppGenreList?
     
     private let logger = Logger(subsystem: "CoreEnvironment", category: "CommonDataStore")
@@ -42,6 +43,7 @@ public class CommonDataStore {
             let genreData = try await (movieGenreList, tvGenreList)
             self.genres = .init(movieGenres: genreData.0.genres, tvGenres: genreData.1.genres)
             self.configuration = configuration
+            self.allLanguages = allLangauges
             logger.info("Successfully fetched configuration")
         } catch let error as HTTPError {
             logger.error("HTTPError fetching configuration: \(error.description)")

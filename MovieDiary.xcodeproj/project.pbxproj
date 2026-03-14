@@ -13,6 +13,7 @@
 		24123BEC2F62B3D400571510 /* FeatureMain in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BEB2F62B3D400571510 /* FeatureMain */; };
 		24123BEE2F62B3D400571510 /* FeatureMediaDetails in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BED2F62B3D400571510 /* FeatureMediaDetails */; };
 		24123BF02F62B3D400571510 /* FeaturePagination in Frameworks */ = {isa = PBXBuildFile; productRef = 24123BEF2F62B3D400571510 /* FeaturePagination */; };
+		24123CD32F62E98000571510 /* FeatureProfile in Frameworks */ = {isa = PBXBuildFile; productRef = 24123CD22F62E98000571510 /* FeatureProfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		1E3CA6432F61A5FC0049D328 /* FeaturePagination */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeaturePagination; path = MovieDiary/Packages/FeaturePagination; sourceTree = "<group>"; };
 		1E3CA6492F61AAA00049D328 /* FeatureMediaDetails */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeatureMediaDetails; path = MovieDiary/Packages/FeatureMediaDetails; sourceTree = "<group>"; };
 		24123BE22F62B1C800571510 /* FeatureMain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeatureMain; path = MovieDiary/Packages/FeatureMain; sourceTree = "<group>"; };
+		24123CCF2F62E91300571510 /* FeatureProfile */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FeatureProfile; path = MovieDiary/Packages/FeatureProfile; sourceTree = "<group>"; };
 		24D479042F4C7FA60031C7D7 /* MovieDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24123BEC2F62B3D400571510 /* FeatureMain in Frameworks */,
+				24123CD32F62E98000571510 /* FeatureProfile in Frameworks */,
 				24123BEE2F62B3D400571510 /* FeatureMediaDetails in Frameworks */,
 				24123BE62F62B3CB00571510 /* CoreDesign in Frameworks */,
 				24123BEA2F62B3D400571510 /* CoreNetwork in Frameworks */,
@@ -73,6 +76,7 @@
 		24D478FB2F4C7FA60031C7D7 = {
 			isa = PBXGroup;
 			children = (
+				24123CCF2F62E91300571510 /* FeatureProfile */,
 				24123BE22F62B1C800571510 /* FeatureMain */,
 				1E3CA6492F61AAA00049D328 /* FeatureMediaDetails */,
 				1E3CA6432F61A5FC0049D328 /* FeaturePagination */,
@@ -119,6 +123,7 @@
 				24123BEB2F62B3D400571510 /* FeatureMain */,
 				24123BED2F62B3D400571510 /* FeatureMediaDetails */,
 				24123BEF2F62B3D400571510 /* FeaturePagination */,
+				24123CD22F62E98000571510 /* FeatureProfile */,
 			);
 			productName = MovieDiary;
 			productReference = 24D479042F4C7FA60031C7D7 /* MovieDiary.app */;
@@ -415,6 +420,10 @@
 		24123BEF2F62B3D400571510 /* FeaturePagination */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FeaturePagination;
+		};
+		24123CD22F62E98000571510 /* FeatureProfile */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FeatureProfile;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
