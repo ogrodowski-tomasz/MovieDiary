@@ -1,11 +1,10 @@
 import CoreDesign
 import CoreEnvironment
 import FeatureMain
-import FeatureProfile
 import SwiftUI
 
 struct ContentView: View {
-    
+
     @Environment(\.httpClient) var httpClient
     @Environment(UserSessionStore.self) var userSessionStore
     @Environment(CommonDataStore.self) var commonDataStore
@@ -13,7 +12,7 @@ struct ContentView: View {
     @Environment(Router.self) var router
     
     @State private var presentOverlay: Bool = true
-    
+
     var body: some View {
         @Bindable var router = router
         TabView(selection: $router.selectedTab) {
@@ -26,9 +25,10 @@ struct ContentView: View {
                                 .withRouter()
                         }
                     case .profile:
-                        NavigationStack(path: $router.profilePath) {
-                            ProfileView()
-                                .withRouter()
+                        if let user = userSessionStore.user, let rated = userSessionStore.userRatedMoviesList {
+                            ProfileView(user: user, rated: rated)
+                        } else {
+                            LoginView()
                         }
                     }
                 }
@@ -42,7 +42,6 @@ struct ContentView: View {
                 return
             }
             presentOverlay = true
-            router.clear()
         }.fullScreenCover(isPresented: $presentOverlay) {
             ZStack {
                 Color.green.ignoresSafeArea()
@@ -55,7 +54,7 @@ struct ContentView: View {
                 userSessionStore.injectClient(httpClient)
                 commonDataStore.injectClient(httpClient)
                 await commonDataStore.getCommonData(lang: userPreferences.appLanguage)
-                await userSessionStore.fetchCurrentUser(lang: userPreferences.appLanguage)
+                await userSessionStore.fetchCurrentUser()
                 presentOverlay = false
             }
         }

@@ -28,7 +28,6 @@ struct MovieDiaryApp: App {
                 .environment(router)
                 .environment(userPreferences)
                 .environment(\.httpClient, httpClient)
-                .environment(\.locale, Locale(identifier: userPreferences.appLanguage))
         }
     }
 }

@@ -20,7 +20,7 @@ public class UserPreferences {
     }
     
     private init() {
-        let localeIdentifier = Locale.current.language.languageCode?.identifier ?? "en"
+        let localeIdentifier = Locale.current.language.languageCode!.identifier
         print("Current locale: \(localeIdentifier)")
         appLanguage = storage.appLanguage ?? localeIdentifier
     }

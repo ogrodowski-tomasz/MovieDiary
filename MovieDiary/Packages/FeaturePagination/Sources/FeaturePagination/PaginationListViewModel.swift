@@ -51,8 +51,6 @@ final class PaginationListViewModel {
             newModels = try await httpClient.get(endpoint: ListEndpoint.tvShowsAiringToday(page: nextPageId, language: lang).endpoint)
         case let .recommendations(type,id, _):
             newModels = try await httpClient.get(endpoint: DetailsEndpoint.recommendations(type, id: id, page: nextPageId, language: lang).endpoint)
-        case let .userRated(userId, type, sessionId, initial):
-            newModels = try await httpClient.get(endpoint: UserEndpoint.userRatedMoviesList(userId: userId, sessionId: sessionId, page: nextPageId, language: lang).endpoint)
         }
         
         self.models.append(contentsOf: newModels.results)

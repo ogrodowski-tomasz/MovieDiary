@@ -2,11 +2,11 @@ import CoreNetwork
 
 public enum UserEndpoint: Sendable {
     case requestToken
-    case currentUser(id: String, sessionID: String)
+    case currentUser(sessionID: String)
     case createSession(requestToken: String)
-    case userRatedMoviesList(userId: String, sessionId: String, page: Int, language: String)
+    case userRatedMoviesList(sessionId: String)
     case movieAccountState(movieId: Int, sessionId: String)
-    case toggleFavoriteMovie(userId: Int, movieId: Int, sessionId: String, newValue: Bool)
+    case toggleFavoriteMovie(movieId: Int, sessionId: String, newValue: Bool)
     
     public var endpoint: Endpoint {
         switch self {
@@ -15,12 +15,15 @@ public enum UserEndpoint: Sendable {
                 path: "/authentication/token/new",
                 queryItems: nil
             )
-        case let .currentUser(id, sessionID):
+        case .currentUser(let sessionID):
             return .init(
-                path: "/account/\(id)",
-                queryItems: [.sessionId(sessionID)]
+                path: "/account/12719379",
+                queryItems: [.init(
+                    name: "session_id",
+                    value: sessionID
+                )]
             )
-        case let .createSession(requestToken):
+        case .createSession(let requestToken):
             return .init(
                 path: "/authentication/session/new",
                 queryItems: nil,
@@ -28,20 +31,26 @@ public enum UserEndpoint: Sendable {
                     "request_token": requestToken
                 ] as JSONBodyCovertible
             )
-        case let .userRatedMoviesList(userId, sessionId, page, language):
+        case .userRatedMoviesList(let sessionId):
             return .init(
-                path: "/account/\(userId)/rated/movies",
-                queryItems: [.sessionId(sessionId), .language(language), .page(page)]
+                path: "/account/12719379/rated/movies",
+                queryItems: [.init(
+                    name: "session_id",
+                    value: sessionId
+                )]
             )
-        case let .movieAccountState(movieId, sessionId):
+        case .movieAccountState(let movieId, let sessionId):
             return .init(
                 path: "/movie/\(movieId)/account_states",
-                queryItems: [.sessionId(sessionId)]
+                queryItems: [.init(
+                    name: "session_id",
+                    value: sessionId
+                )]
             )
-        case let .toggleFavoriteMovie(userId, movieId, sessionId, newValue):
+        case .toggleFavoriteMovie(let movieId, let sessionId, let newValue):
             return .init(
-                path: "/account/\(userId)/favorite",
-                queryItems: [.sessionId(sessionId)],
+                path: "/account/12719379/favorite",
+                queryItems: [.init(name: "session_id", value: sessionId)],
                 jsonValue: FavoriteEncodable(
                     media_type: "movie",
                     media_id: movieId,

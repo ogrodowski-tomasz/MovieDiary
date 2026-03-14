@@ -14,21 +14,11 @@ public final class UserSessionStore: NSObject, Store {
     private var client: HTTPClientProtocol?
 
     public var user: TmdbUser?
-    public var userRatedMoviesList: ListResponseModel?
-    
-    public var currentSessionId: String? {
-        get { sessionStorage.currentSessionId }
-        set { sessionStorage.currentSessionId = newValue }
-    }
-    
-    public var currentUserId: String? {
-        get { sessionStorage.userId }
-        set { sessionStorage.userId = newValue }
-    }
-    
+    public var userRatedMoviesList: UserRatedMovieListResponse?
+    var currentSessionId: String?
     var shouldAuthenticateApp: Bool = false
 
-    private var sessionStorage: UserSessionStoreProtocol
+    private let sessionStorage: UserSessionStoreProtocol
     
     private var authSession: ASWebAuthenticationSession?
 
@@ -42,34 +32,32 @@ public final class UserSessionStore: NSObject, Store {
         self.sessionStorage = sessionStorage
     }
     
-    public func fetchCurrentUser(lang: String) async {
+    public func fetchCurrentUser() async {
         do {
             logger.info("Starting to fetch current user")
-            user = try await getCurrentUser()
+            guard let currentSessionId = sessionStorage.loadSession() else { return }
+            user = try await getCurrentUser(sessionId: currentSessionId)
             logger.info("Successfully fetched current user")
-            await fetchUserData(lang: lang)
-        } catch let error as StoreError {
-            logger.error("StoreError fetching current user: \(error.localizedDescription)")
+            await fetchUserData()
         } catch {
-            logger.error("Generic Error fetching current user: \(error.localizedDescription)")
+            logger.error("Error fetching current user: \(error.localizedDescription)")
         }
     }
     
-    public func fetchUserData(lang: String) async {
+    public func fetchUserData() async {
         do {
             logger.info("Starting to fetch user rated movies")
-            async let userRatedMoviesResponse = await getUserRatedMoviesList(lang: lang)
+            guard let currentSessionId = sessionStorage.loadSession() else { return }
+            async let userRatedMoviesResponse = await getUserRatedMoviesList(page: 1, sessionId: currentSessionId)
             let data = try await userRatedMoviesResponse
             self.userRatedMoviesList = data
             logger.info("Successfully fetched user rated movies")
-        } catch let error as StoreError {
-            logger.error("StoreError fetching user rated movies: \(error.localizedDescription)")
         } catch {
-            logger.error("Generic Error fetching user rated movies: \(error.localizedDescription)")
+            logger.error("Error fetching user rated movies: \(error.localizedDescription)")
         }
     }
     
-    public func startSession(lang: String) {
+    public func startSession() {
         Task {
             do {
                 let requestToken: String
@@ -85,25 +73,17 @@ public final class UserSessionStore: NSObject, Store {
                     "https://www.themoviedb.org/authenticate/\(requestToken)?redirect_to=myapp://auth"
                 )!
                 currentRequestToken = requestToken
-                startWebAuth(token: requestToken, url: authURL, lang: lang)
+                startWebAuth(token: requestToken, url: authURL)
             } catch {
-                logger.error("Error starting session: \(error.localizedDescription)")
+                
             }
         }
     }
     
     public func toggleMovieFavorite(id: Int, newValue: Bool) async throws -> MovieAccountStateModel {
-        guard let client else { throw StoreError.missingClient }
-        guard let currentSessionId else { throw StoreError.missingSessionId }
-        guard let user else { throw StoreError.missingUser }
-        let response: FavoriteResponse = try await client.post(
-            endpoint: UserEndpoint.toggleFavoriteMovie(
-                userId: user.id,
-                movieId: id,
-                sessionId: currentSessionId,
-                newValue: newValue
-            ).endpoint
-        )
+        guard let client else { throw URLError(.unknown) }
+        guard let sessionid = sessionStorage.loadSession() else { throw URLError(.unknown) }
+        let response: FavoriteResponse = try await client.post(endpoint: UserEndpoint.toggleFavoriteMovie(movieId: id, sessionId: sessionid, newValue: newValue).endpoint)
         guard response.success else {
             throw URLError(.unknown)
         }
@@ -111,12 +91,12 @@ public final class UserSessionStore: NSObject, Store {
     }
     
     public func getMovieAccountState(id: Int) async throws -> MovieAccountStateModel {
-        guard let client else { throw StoreError.missingClient }
-        guard let currentSessionId else { throw URLError(.unknown) }
-        return try await client.get(endpoint: UserEndpoint.movieAccountState(movieId: id, sessionId: currentSessionId).endpoint)
+        guard let client else { throw URLError(.unknown) }
+        guard let sessionid = sessionStorage.loadSession() else { throw URLError(.unknown) }
+        return try await client.get(endpoint: UserEndpoint.movieAccountState(movieId: id, sessionId: sessionid).endpoint)
     }
     
-    private func startWebAuth(token: String, url: URL, lang: String) {
+    private func startWebAuth(token: String, url: URL) {
 
         authSession = ASWebAuthenticationSession(
             url: url,
@@ -131,8 +111,7 @@ public final class UserSessionStore: NSObject, Store {
             Task {
                 await self.handleCallback(
                     callbackURL: callbackURL,
-                    token: token,
-                    lang: lang
+                    token: token
                 )
             }
         }
@@ -143,9 +122,10 @@ public final class UserSessionStore: NSObject, Store {
     }
     
     private func handleCallback(callbackURL: URL,
-                                token: String, lang: String) async {
+                                token: String) async {
 
-        guard let components = URLComponents(url: callbackURL, resolvingAgainstBaseURL: false),
+        guard
+            let components = URLComponents(url: callbackURL, resolvingAgainstBaseURL: false),
               let approved = components.queryItems?.first(where: {$0.name == "approved"})?.value,
               approved == "true",
             let currentRequestToken
@@ -154,10 +134,12 @@ public final class UserSessionStore: NSObject, Store {
         }
 
         do {
-            currentSessionId = try await createSession(requestToken: currentRequestToken)
+            let sessionId = try await createSession(requestToken: currentRequestToken)
+            sessionStorage.save(sessionId: sessionId)
+            currentSessionId = sessionStorage.loadSession()
             if let currentSessionId {
                 logger.info("Obtained current sessionId: \(currentSessionId)")
-                await fetchCurrentUser(lang: lang)
+                await fetchUserData()
             }
         } catch {
             logger.error("Error fetching sessionId: \(error.localizedDescription)")
@@ -180,32 +162,26 @@ public final class UserSessionStore: NSObject, Store {
         let status_message: String
     }
 
-    public func getCurrentUser() async throws -> TmdbUser {
-        guard let client else { throw StoreError.missingClient }
-        guard let currentSessionId else { throw StoreError.missingSessionId }
-        guard let id = sessionStorage.userId else { throw StoreError.missingUser }
-        let fetched: TmdbUser = try await client.get(endpoint: UserEndpoint.currentUser(id: id, sessionID: currentSessionId).endpoint)
-        sessionStorage.userId = "\(fetched.id)"
-        return fetched
+    public func getCurrentUser(sessionId: String) async throws -> TmdbUser {
+        guard let client else { throw URLError(.unknown) }
+        return try await client.get(endpoint: UserEndpoint.currentUser(sessionID: sessionId).endpoint)
     }
 
     public func getRequestToken() async throws -> String {
-        guard let client else { throw StoreError.missingClient }
+        guard let client else { throw URLError(.unknown) }
         let model: RequestTokenResponse = try await client.get(endpoint: UserEndpoint.requestToken.endpoint)
         return model.request_token
     }
 
     public func createSession(requestToken: String) async throws -> String {
-        guard let client else { throw StoreError.missingClient }
+        guard let client else { throw URLError(.unknown) }
         let model: SessionResponse = try await client.post(endpoint: UserEndpoint.createSession(requestToken: requestToken).endpoint)
         return model.session_id
     }
 
-    public func getUserRatedMoviesList(lang: String) async throws -> ListResponseModel {
-        guard let client else { throw StoreError.missingClient }
-        guard let currentSessionId else { throw StoreError.missingSessionId }
-        guard let id = sessionStorage.userId else { throw StoreError.missingUser }
-        return try await client.get(endpoint: UserEndpoint.userRatedMoviesList(userId: id, sessionId: currentSessionId, page: 1, language: lang).endpoint)
+    public func getUserRatedMoviesList(page: Int, sessionId: String) async throws -> UserRatedMovieListResponse {
+        guard let client else { throw URLError(.unknown) }
+        return try await client.get(endpoint: UserEndpoint.userRatedMoviesList(sessionId: sessionId).endpoint)
     }
 }
 

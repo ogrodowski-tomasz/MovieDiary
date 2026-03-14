@@ -4,54 +4,32 @@ import Foundation
 import Security
 
 public protocol UserSessionStoreProtocol: Sendable {
-    var currentSessionId: String? { get set }
-    var userId: String? { get set }
+    func save(sessionId: String)
+    func loadSession() -> String?
 }
 
 public struct KeychainService: UserSessionStoreProtocol {
-    
-    public enum Key: String {
-        case sessionId = "tmdb_session"
-        case userId = "tmdb_user"
-    }
 
-    public var currentSessionId: String? {
-        get { retrieve(key: .sessionId) }
-        set { update(newValue: newValue, key: .sessionId) }
-    }
-    
-    public var userId: String? {
-        get { retrieve(key: .userId) ?? "12719379" }
-        set { update(newValue: newValue, key: .userId) }
-    }
-    
     public init() { }
-    
-    private func update(newValue: String?, key: Key) {
-        if let newValue {
-            save(value: newValue, forKey: key)
-        } else {
-            delete(key: key)
-        }
-    }
 
-    private func save(value: String, forKey key: Key) {
-        let data = Data(value.utf8)
+    public func save(sessionId: String) {
+        let data = Data(sessionId.utf8)
 
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key.rawValue,
+            kSecAttrAccount as String: "tmdb_session",
             kSecValueData as String: data
         ]
 
         SecItemDelete(query as CFDictionary)
         SecItemAdd(query as CFDictionary, nil)
     }
-    
-    private func retrieve(key: Key) -> String? {
+
+    public func loadSession() -> String? {
+
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key.rawValue,
+            kSecAttrAccount as String: "tmdb_session",
             kSecReturnData as String: true
         ]
 
@@ -61,13 +39,13 @@ public struct KeychainService: UserSessionStoreProtocol {
         guard let data = result as? Data else { return nil }
         return String(data: data, encoding: .utf8)
     }
-    
-    private func delete(key: Key) {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key.rawValue
-        ]
+}
 
-        SecItemDelete(query as CFDictionary)
+struct MockUserSessionStore: UserSessionStoreProtocol {
+    
+    func save(sessionId: String) {}
+    
+    func loadSession() -> String? {
+        "DummySessionId"
     }
 }

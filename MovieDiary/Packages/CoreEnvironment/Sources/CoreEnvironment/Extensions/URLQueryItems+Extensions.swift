@@ -8,8 +8,4 @@ public extension URLQueryItem {
     static func language(_ language: String) -> Self {
         return .init(name: "language", value: language)
     }
-    
-    static func sessionId(_ sessionId: String) -> Self {
-        return .init(name: "session_id", value: sessionId)
-    }
 }
