@@ -144,7 +144,7 @@ private struct DetailsPreviewWrapper: View {
     
     var body: some View {
         DetailsView(viewModel: .from(list: .sample(.movies)))
-            .environment(\.httpClient, MockHTTPClient())
+//            .environment(\.httpClient, MockHTTPClient())
             .environment(commonDataStore)
             .environment(userSessionStore)
             .environment(Router())
